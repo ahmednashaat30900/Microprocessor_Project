@@ -5,7 +5,7 @@ STACK ENDS
 DATA SEGMENT PARA 'DATA'
     TEXT_GAME_OVER_MAIN_MENU DB 'Press E to exit to main menu','$' ;text with the game over main menu message
 	TEXT_MAIN_MENU_TITLE DB 'MAIN MENU press 1','$' ;text with the main menu title
-	TEXT_MAIN_MENU_SINGLEPLAYER DB 'HELP press 2','$' ;text with the singleplayer message
+	TEXT_MAIN_MENU_HELP DB 'HELP press 2','$' ;text with the singleplayer message
 	TEXT_MAIN_MENU_EXIT DB 'EXIT press 3','$' ;text with the exit game message
 DATA ENDS
 
@@ -45,7 +45,7 @@ MOV DL,04h                         ;set column
 INT 10h
 
 MOV AH,09h                       ;WRITE STRING TO STANDARD OUTPUT
-LEA DX,TEXT_MAIN_MENU_SINGLEPLAYER      ;give DX a pointer
+LEA DX,TEXT_MAIN_MENU_HELP     ;give DX a pointer
 INT 21h                          ;print the string
 
 
