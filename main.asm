@@ -3,9 +3,9 @@
 STACK ENDS
 
 DATA SEGMENT PARA 'DATA'
-    TEXT_GAME_OVER_MAIN_MENU DB 'Press E to exit to main menu','$' ;text with the game over main menu message
+    TEXT_GAME_OVER_MAIN_MENU DB 'Press E to exit to main menu','$' ;text main menu message
 	TEXT_MAIN_MENU_TITLE DB 'MAIN MENU press 1','$' ;text with the main menu title
-	TEXT_MAIN_MENU_HELP DB 'HELP press 2','$' ;text with the singleplayer message
+	TEXT_MAIN_MENU_HELP DB 'HELP press 2','$' ;text with the help message
 	TEXT_MAIN_MENU_EXIT DB 'EXIT press 3','$' ;text with the exit game message
 DATA ENDS
 
@@ -37,7 +37,7 @@ MOV AH,09h                       ;WRITE STRING TO STANDARD OUTPUT
 LEA DX,TEXT_MAIN_MENU_TITLE      ;give DX a pointer
 INT 21h                          ;print the string
 
-;       Shows the singleplayer message
+;       Shows the help message
 MOV AH,02h                       ;set cursor position
 MOV BH,00h                       ;set page number
 MOV DH,06h                       ;set row
@@ -47,8 +47,6 @@ INT 10h
 MOV AH,09h                       ;WRITE STRING TO STANDARD OUTPUT
 LEA DX,TEXT_MAIN_MENU_HELP     ;give DX a pointer
 INT 21h                          ;print the string
-
-
 
 ;       Shows the exit message
 MOV AH,02h                       ;set cursor position
@@ -72,13 +70,13 @@ MAIN_MENU_WAIT_FOR_KEY:
 			CMP AL,'2'
 			JE HELP
 			
-			CMP AL,'E'
+			CMP AL,'3'
 			JE EXIT
 			
 			JMP MAIN_MENU_WAIT_FOR_KEY	
 RET
-
 DRAW_MAIN_MENU ENDP
+
 CLEAR_SCREEN PROC NEAR               ;clear the screen by restarting the video mode
 MOV AH,00h                   ;set the configuration to video mode
 MOV AL,13h                   ;choose the video mode
