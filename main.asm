@@ -7,6 +7,60 @@ DATA SEGMENT PARA 'DATA'
 	TEXT_MAIN_MENU_TITLE DB 'MAIN MENU press 1','$' ;text with the main menu title
 	TEXT_MAIN_MENU_HELP DB 'HELP press 2','$' ;text with the help message
 	TEXT_MAIN_MENU_EXIT DB 'EXIT press 3','$' ;text with the exit game message
+	M1 DB 0AH,0DH,0AH,0DH,  '                   Welcome to Shobra Restaurants$' 
+M2 DB 0AH,0DH,0AH,0DH,                ' Please Enter your Choise $'
+  
+;Main menue  
+Menu1  DB 0AH,0DH, '  --                 1.Main Dishes             --$' 
+Menu2  DB 0AH,0DH, '  --                 2.Appetisers              --$'
+Menu3  DB 0AH,0DH, '  --                 3.Salads                  --$'
+Menu4  DB 0AH,0DH, '  --                 4.Desserts                --$'
+Menu5  DB 0AH,0DH, '  --                 5.Drinks                  --$'
+           
+               
+M8 DB 0AH,0DH,0AH,0DH,              '  Choise your food from the menu$' 
+
+MSG DB 0AH,0DH,0AH,0DH,       '  --          Dish                         Price                   --$'
+                                                                                         
+;Main Dishes  
+Dish1 DB 0AH,0DH,0AH,0DH,     '  --          1.Grilled Chicken            120LE                   --$' 
+Dish2 DB 0AH,0DH,             '  --          2.Fried Chicken              120LE                   --$'
+Dish3 DB 0AH,0DH,             '  --          3.Pasta                      100LE                   --$'
+Dish4 DB 0AH,0DH,             '  --          4.Beef stack                 160LE                   --$'
+Dish5 DB 0AH,0DH,             '  --          5.Grilled Shrimps            120LE                   --$'
+Dish6 DB 0AH,0DH,             '  --          6.Mix Grill                  140LE                   --$'
+Dish7 DB 0AH,0DH,             '  --          7.Stuffed cabbage            80LE                    --$'
+Dish8 DB 0AH,0DH,             '  --          8.Kofta                      120LE                   --$'
+                                                             
+
+Choice DB 10,13,10,13,'Enter your order: $'
+
+BR1 DB 0AH,0DH,'  --                                           --$'
+BR2 DB 0AH,0DH,'  -----------------------------------------------$'
+
+BR3 DB 0AH,0DH,'  --                                           --$'
+
+
+BR4 DB 0AH,0DH,'  --                                                               --$'
+BR5 DB 0AH,0DH,'  -------------------------------------------------------------------$'
+
+
+
+BR6 DB 0AH,0DH,'  --                                          --$'
+BR7 DB 0AH,0DH,'  ----------------------------------------------$'
+
+
+Invalid DB 0AH,0DH, ' Invalid choice$'
+
+
+New_line DB 0AH,0DH,0AH,0DH,' $'
+
+Quantitynum DB 0AH,0DH, 'Enter quantity$' 
+
+order DB ?
+quantity DB ?  
+sum DW ?
+
 DATA ENDS
 
     CODE SEGMENT PARA 'CODE'
