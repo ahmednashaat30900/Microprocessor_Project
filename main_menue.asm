@@ -64,7 +64,7 @@ Invalid DB 0AH,0DH, ' Invalid choice$'
 
 New_line DB 0AH,0DH,0AH,0DH,' $'
 
-Quantitynum DB 0AH,0DH, 'Enter quantity$' 
+Quantitynum DB 0AH,0DH, 'Enter quantity: $' 
 
 order DB ?
 quantity DB ?  
@@ -143,7 +143,8 @@ MAIN PROC
     JE Main_Dishes
     
     CMP BH,5
-    JE Drinks
+    JE Drinks 
+
     
  
    
@@ -536,7 +537,13 @@ MAIN PROC
     
     
     CMP order,5
-    JE calc7     
+    JE calc7
+    
+         
+    LEA DX,invalid
+    MOV AH,9
+    INT 21H
+    jmp Exit
     
     calc8:
     
@@ -632,6 +639,8 @@ MAIN PROC
     
     jmp Exit 
     
+
+
       
      EXIT:
     
