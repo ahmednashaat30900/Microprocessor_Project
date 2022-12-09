@@ -78,6 +78,7 @@ DATA ENDS
 		CALL CLEAR_SCREEN                ;set initial video mode configurations
         SHOW_MAIN_MENU:
         CALL DRAW_MAIN_MENU
+        MAIN ENDP
         DRAW_MAIN_MENU PROC NEAR
         CALL CLEAR_SCREEN
     ;       Shows the menu title
