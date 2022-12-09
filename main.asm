@@ -80,7 +80,7 @@ MAIN PROC
     CALL DRAW_MAIN_MENU
     
   TOP: 
-
+      CALL CLEAR_SCREEN
   
     LEA DX,M1
     MOV AH,9
@@ -696,7 +696,7 @@ DRAW_MAIN_MENU ENDP
 
 CLEAR_SCREEN PROC NEAR               ;clear the screen by restarting the video mode
 MOV AH,00h                   ;set the configuration to video mode
-MOV AL,13h                   ;choose the video mode
+MOV AL,12h                   ;choose the video mode
 INT 10h                         ;execute the configuration
 MOV AH,00h                      ;set the configuration
 MOV BH,00h                      ;to the background color
