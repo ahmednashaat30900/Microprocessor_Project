@@ -846,7 +846,7 @@ MAIN PROC
     
     call DISPLAY_NUM 
     
-     jmp Exit  
+     jmp Return_Menu  
     
     
     calc7: 
@@ -878,7 +878,7 @@ MAIN PROC
     
     call DISPLAY_NUM  
     
-    jmp Exit       
+    jmp Return_Menu       
           
     calc5:
     
@@ -909,7 +909,7 @@ MAIN PROC
     
     call DISPLAY_NUM  
     
-    jmp Exit 
+    jmp Return_Menu 
     
 
   DRAW_MAIN_MENU PROC NEAR
