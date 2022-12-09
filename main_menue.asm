@@ -50,8 +50,8 @@ Salad6 DB 0AH,0DH,                      '  --          6.Italian pasta salad    
                      
 ;return_to_menu
 
-Q1 DB 0AH,0DH,0AH,0DH,  '      --1.Back to Menu--       $ '
-Q2 DB 0AH,0DH,          '      --2.Finish order--       $ ' 
+Q1 DB 0AH,0DH,0AH,0DH,  '  --    1.Back to Menu                                             --$ '
+Q2 DB 0AH,0DH,          '  --    2.Finish order                                             --$ ' 
                      
 
 
