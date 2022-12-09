@@ -33,6 +33,8 @@ D1 DB 10,13,                  ' --           1.Shoft Drinks               8LE   
 D2 DB 10,13,                  ' --           2.Coffee                     7LE                     --$'
 D3 DB 10,13,                  ' --           3.Tea                        5LE                     --$'
 D4 DB 10,13,                  ' --           4.Orange juice               8LE                     --$'
+D5 DB 10,13,                  ' --           5.Milk                       7LE                     --$'
+
  
                      
 
@@ -456,8 +458,179 @@ MAIN PROC
     
     
         
-    Drinks:   
+    Drinks: 
+      
+    LEA DX,M8    
+    MOV AH,9
+    INT 21H
     
+    LEA DX,New_line
+    MOV AH,9
+    INT 21H
+    
+    
+    
+    LEA DX,BR5
+    MOV AH,9
+    INT 21H
+    
+    LEA DX,BR4
+    MOV AH,9
+    INT 21H 
+    
+    LEA DX,D1    
+    MOV AH,9
+    INT 21H 
+    
+    
+    LEA DX,D2  
+    MOV AH,9
+    INT 21H
+    
+    LEA DX,D3
+    MOV AH,9          
+    INT 21H 
+    
+    LEA DX,D4
+    MOV AH,9           
+    INT 21H
+    
+    
+    LEA DX,D5         
+    MOV AH,9
+    INT 21H  
+    
+    LEA DX,BR4
+    MOV AH,9
+    INT 21H
+    
+    LEA DX,BR5
+    MOV AH,9
+    INT 21H
+    
+    
+    LEA DX,Choice              
+    MOV AH,9
+    INT 21H 
+    
+    MOV AH,1
+    INT 21H
+    SUB AL,48 
+    
+    MOV order,AL
+   
+    
+    CMP order,1
+    JE calc8 
+    
+    CMP order,2
+    JE calc7
+    
+    
+    CMP order,3
+    JE calc5
+    
+    
+    CMP order,4
+    JE calc8
+    
+    
+    CMP order,5
+    JE calc7     
+    
+    calc8:
+    
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+    
+    
+    
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+     
+   
+    
+    
+    mov quantity,al 
+    mov al,8
+    
+   
+    
+    MUL quantity
+    
+    
+    mov sum, ax
+    
+    printn '  total price is'
+    
+    call DISPLAY_NUM 
+    
+     jmp Exit  
+    
+    
+    calc7: 
+    
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+    
+    
+    
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+     
+   
+    
+    
+    mov quantity,al 
+    mov al,7
+    
+   
+    
+    MUL quantity
+    
+    
+    mov sum, ax
+    
+    printn '  total price is'
+    
+    call DISPLAY_NUM  
+    
+    jmp Exit       
+          
+    calc5:
+    
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+    
+    
+    
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+     
+   
+    
+    
+    mov quantity,al 
+    mov al,5
+    
+   
+    
+    MUL quantity
+    
+    
+    mov sum, ax
+    
+    printn '  total price is'
+    
+    call DISPLAY_NUM  
+    
+    jmp Exit 
     
       
      EXIT:
