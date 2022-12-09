@@ -7,7 +7,7 @@ M2 DB 0AH,0DH,0AH,0DH,                ' Please Enter your Choise $'
   
 ;Main menue  
 Menu1  DB 0AH,0DH, '  --                 1.Main Dishes             --$' 
-Menu2  DB 0AH,0DH, '  --                 2.Appetisers              --$'
+Menu2  DB 0AH,0DH, '  --                 2.Appetizers              --$'
 Menu3  DB 0AH,0DH, '  --                 3.Salads                  --$'
 Menu4  DB 0AH,0DH, '  --                 4.Desserts                --$'
 Menu5  DB 0AH,0DH, '  --                 5.Drinks                  --$'
@@ -27,7 +27,19 @@ Dish5 DB 0AH,0DH,             '  --          5.Grilled Shrimps            120LE 
 Dish6 DB 0AH,0DH,             '  --          6.Mix Grill                  140LE                   --$'
 Dish7 DB 0AH,0DH,             '  --          7.Stuffed cabbage            80LE                    --$'
 Dish8 DB 0AH,0DH,             '  --          8.Kofta                      120LE                   --$'
-                                                             
+
+
+;apptizers 
+APP1 DB 0AH,0DH,0AH,0DH,     '  --          1.Mozzarella stickes         20LE                   --$' 
+APP2 DB 0AH,0DH,             '  --          2.French Fries               15LE                   --$'
+APP3 DB 0AH,0DH,             '  --          3.chips                      10LE                   --$'
+APP4 DB 0AH,0DH,             '  --          4.Hotdog Sandwich            20LE                   --$'
+APP5 DB 0AH,0DH,             '  --          5.Onion Rings                15LE                   --$'
+APP6 DB 0AH,0DH,             '  --          6.Wedge Fries                10LE                   --$'
+
+    
+    
+                                                                                                                          
 ;Drinks   
 D1 DB 10,13,                  ' --           1.Shoft Drinks               8LE                     --$'
 D2 DB 10,13,                  ' --           2.Coffee                     7LE                     --$'
@@ -38,7 +50,9 @@ D5 DB 10,13,                  ' --           5.Milk                       7LE   
 M9 DB 0AH,0DH,0AH,0DH,                  '  Choose your Salad from the menu$' 
 
 MSG2 DB 0AH,0DH,0AH,0DH,                 '  --          Salad                        Price                   --$'
- 
+
+MSG3 DB 0AH,0DH,0AH,0DH,                 '  --          Appetizer                        Price                   --$'
+  
 ;Salads
 Salad1 DB 0AH,0DH,0AH,0DH,              '  --          1.Green salad                20LE                    --$'   
 Salad2 DB 0AH,0DH,                      '  --          2.Chicken caesar salad       30LE                    --$'
@@ -163,7 +177,10 @@ MAIN PROC
     SUB BH,48
     
     CMP BH,1
-    JE Main_Dishes 
+    JE Main_Dishes
+    
+    CMP BH,2
+    JE Appetizers
     
     CMP BH,3
     JE Salads 
@@ -343,6 +360,128 @@ MAIN PROC
     
     CMP order,1
     JE calc120 
+           
+           
+           
+           
+    Appetizers:
+    
+    
+    LEA DX,M8
+    MOV AH,9 
+    INT 21H
+            
+    LEA DX,New_line
+    MOV AH,9
+    INT 21H
+    
+    
+    LEA DX,BR5
+    MOV AH,9
+    INT 21H
+    
+    LEA DX,BR4
+    MOV AH,9
+    INT 21H   
+    
+    LEA DX,MSG3   
+    MOV AH,9
+    INT 21H  
+    
+    
+    LEA DX,APP1    
+    MOV AH,9
+    INT 21H 
+    
+    
+    LEA DX,APP2  
+    MOV AH,9
+    INT 21H
+    
+    LEA DX,APP3
+    MOV AH,9          
+    INT 21H 
+    
+    LEA DX,APP4
+    MOV AH,9           
+    INT 21H
+    
+    
+    LEA DX,APP5         
+    MOV AH,9
+    INT 21H
+    
+    
+    LEA DX,APP6     
+    MOV AH,9
+    INT 21H
+             
+             
+             
+             
+             
+    LEA DX,BR4
+    MOV AH,9
+    INT 21H
+    
+    LEA DX,BR5
+    MOV AH,9
+    INT 21H
+    
+    
+    
+    
+    
+    
+    
+    LEA DX,Choice              
+    MOV AH,9
+    INT 21H 
+    
+    MOV AH,1
+    INT 21H
+    SUB AL,48  
+    
+    
+   
+    MOV order,AL
+   
+    
+    CMP order,1
+    JE calc20
+    
+    
+    CMP order,2
+    JE calc15
+    
+    
+    CMP order,3
+    JE calc10
+    
+    
+    CMP order,4
+    JE calc20
+    
+    
+    CMP order,5
+    JE calc15
+    
+    
+    CMP order,6
+    JE calc10
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     Salads:
@@ -706,7 +845,72 @@ MAIN PROC
     
     jmp Return_Menu
     
+          
+    calc10:
     
+
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+    
+    
+    
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+     
+   
+    
+    
+    mov quantity,al 
+    mov al,10
+    
+   
+    
+    MUL quantity
+    
+    
+    mov sum, ax
+    
+    printn '  total price is'
+    
+    call DISPLAY_NUM  
+    
+    jmp Return_Menu  
+    
+    
+    
+    calc15:
+    
+
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+    
+    
+    
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+     
+   
+    
+    
+    mov quantity,al 
+    mov al,15
+    
+   
+    
+    MUL quantity
+    
+    
+    mov sum, ax
+    
+    printn '  total price is'
+    
+    call DISPLAY_NUM  
+    
+    jmp Return_Menu 
     
    DISPLAY_NUM PROC NEAR
         XOR CX, CX ;To count the digits
@@ -846,7 +1050,7 @@ MAIN PROC
     
     call DISPLAY_NUM 
     
-     jmp Return_Menu  
+     jmp Exit  
     
     
     calc7: 
@@ -878,7 +1082,7 @@ MAIN PROC
     
     call DISPLAY_NUM  
     
-    jmp Return_Menu       
+    jmp Exit       
           
     calc5:
     
@@ -909,7 +1113,7 @@ MAIN PROC
     
     call DISPLAY_NUM  
     
-    jmp Return_Menu 
+    jmp Exit 
     
 
   DRAW_MAIN_MENU PROC NEAR
