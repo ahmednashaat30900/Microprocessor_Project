@@ -140,6 +140,9 @@ MAIN PROC
     CMP BH,1
     JE Main_Dishes
     
+    CMP BH,5
+    JE Drinks
+    
  
    
        
@@ -453,6 +456,8 @@ MAIN PROC
     
     
         
+    Drinks:   
+    
     
       
      EXIT:
