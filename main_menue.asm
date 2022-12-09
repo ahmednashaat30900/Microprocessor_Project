@@ -12,6 +12,7 @@ Menu3  DB 0AH,0DH, '  --                 3.Salads                  --$'
 Menu4  DB 0AH,0DH, '  --                 4.Desserts                --$'
 Menu5  DB 0AH,0DH, '  --                 5.Drinks                  --$'
            
+
                
 M8 DB 0AH,0DH,0AH,0DH,              '  Choise your food from the menu$' 
 
@@ -27,6 +28,17 @@ Dish6 DB 0AH,0DH,             '  --          6.Mix Grill                  140LE 
 Dish7 DB 0AH,0DH,             '  --          7.Stuffed cabbage            80LE                    --$'
 Dish8 DB 0AH,0DH,             '  --          8.Kofta                      120LE                   --$'
                                                              
+;Drinks   
+D1 DB 10,13,                  ' --           1.Shoft Drinks               8LE                     --$'
+D2 DB 10,13,                  ' --           2.Coffee                     7LE                     --$'
+D3 DB 10,13,                  ' --           3.Tea                        5LE                     --$'
+D4 DB 10,13,                  ' --           4.Orange juice               8LE                     --$'
+ 
+                     
+
+
+
+
 
 Choice DB 10,13,10,13,'Enter your order: $'
 
