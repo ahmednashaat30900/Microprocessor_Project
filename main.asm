@@ -35,12 +35,6 @@ D3 DB 10,13,                  ' --           3.Tea                        5LE   
 D4 DB 10,13,                  ' --           4.Orange juice               8LE                     --$'
 D5 DB 10,13,                  ' --           5.Milk                       7LE                     --$'
 
- 
-                     
-
-
-
-
 
 Choice DB 10,13,10,13,'Enter your order: $'
 
