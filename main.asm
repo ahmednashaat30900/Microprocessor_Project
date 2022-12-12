@@ -65,7 +65,12 @@ M9 DB 0AH,0DH,0AH,0DH,                  '  Choose your Salad from the menu$'
 
 MSG2 DB 0AH,0DH,0AH,0DH,                 '  --          Salad                        Price                   --$'
 
-MSG3 DB 0AH,0DH,0AH,0DH,                 '  --          Appetizer                        Price                   --$'
+MSG3 DB 0AH,0DH,0AH,0DH,                 '  --          Appetizer                        Price                   --$' 
+
+
+M10 DB 0AH,0DH,0AH,0DH,                  '  Choose your Drink from the menu$' 
+
+MSG4 DB 0AH,0DH,0AH,0DH,                 '  --          Drink                        Price                   --$'
   
 
 ;return_to_menu
@@ -1087,9 +1092,10 @@ CLEAR_SCREEN ENDP
     
    
         
-    Drinks: 
+    Drinks:
+     
       
-    LEA DX,M8    
+    LEA DX,M10   
     MOV AH,9
     INT 21H
     
@@ -1106,6 +1112,14 @@ CLEAR_SCREEN ENDP
     LEA DX,BR4
     MOV AH,9
     INT 21H 
+    
+    LEA DX,MSG4   
+    MOV AH,9
+    INT 21H 
+
+    LEA DX,New_line
+    MOV AH,9
+    INT 21H
     
     LEA DX,D1    
     MOV AH,9
@@ -1171,7 +1185,7 @@ CLEAR_SCREEN ENDP
     LEA DX,invalid
     MOV AH,9
     INT 21H
-    jmp Exit
+    jmp Return_Menu
     
     calc8:
     
@@ -1202,7 +1216,7 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM 
     
-     jmp Exit  
+     jmp Return_Menu  
     
     
     calc7: 
@@ -1234,7 +1248,7 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM  
     
-    jmp Exit       
+    jmp Return_Menu       
           
     calc5:
     
@@ -1265,7 +1279,7 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM  
     
-    jmp Exit 
+    jmp Return_Menu 
     
 
      DISPLAY_NUM PROC NEAR
