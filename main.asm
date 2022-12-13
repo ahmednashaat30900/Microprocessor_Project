@@ -59,7 +59,8 @@ D2 DB 10,13,                  ' --           2.Coffee                     7LE   
 D3 DB 10,13,                  ' --           3.Tea                        5LE                     --$'
 D4 DB 10,13,                  ' --           4.Orange juice               8LE                     --$'
 D5 DB 10,13,                  ' --           5.Milk                       7LE                     --$'
-
+D6 DB 10,13,                  ' --           6.Cocktail                   16LE                    --$'
+D7 DB 10,13,                  ' --           7.Chocolate                  23LE                    --$'                                             
 
 M9 DB 0AH,0DH,0AH,0DH,                  '  Choose your Salad from the menu$' 
 
@@ -103,7 +104,8 @@ BR6 DB 0AH,0DH,'  --                                          --$'
 BR7 DB 0AH,0DH,'  ----------------------------------------------$'
 
 
-Invalid DB 0AH,0DH, ' Invalid choice$'
+Invalid DB 10,13,10,13,'***&&INVALID ENTRY&&***$' 
+tr DB 10,13,'      ***&&Try Again&&***$'
 
 
 New_line DB 0AH,0DH,0AH,0DH,' $'
@@ -1143,6 +1145,14 @@ CLEAR_SCREEN ENDP
     MOV AH,9
     INT 21H  
     
+    LEA DX,D6         
+    MOV AH,9
+    INT 21H  
+    
+    LEA DX,D7         
+    MOV AH,9
+    INT 21H  
+    
     LEA DX,BR4
     MOV AH,9
     INT 21H
@@ -1151,6 +1161,7 @@ CLEAR_SCREEN ENDP
     MOV AH,9
     INT 21H
     
+    try_again:
     
     LEA DX,Choice              
     MOV AH,9
@@ -1181,11 +1192,22 @@ CLEAR_SCREEN ENDP
     CMP order,5
     JE calc7
     
-         
+    CMP order,6
+    JE calc16
+    
+    CMP order,7
+    JE calc23
+      
     LEA DX,invalid
     MOV AH,9
+    INT 21H 
+    
+    LEA DX,tr
+    MOV AH,9
     INT 21H
+       
     jmp Return_Menu
+    
     
     calc8:
     
@@ -1248,7 +1270,8 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM  
     
-    jmp Return_Menu       
+    jmp Return_Menu 
+          
           
     calc5:
     
@@ -1281,7 +1304,68 @@ CLEAR_SCREEN ENDP
     
     jmp Return_Menu 
     
-
+     
+      calc16: 
+    
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+    
+    
+    
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+     
+   
+    
+    
+    mov quantity,al 
+    mov al,16
+    
+   
+    
+    MUL quantity
+    
+    
+    mov sum, ax
+    
+    printn '  total price is'
+    
+    call DISPLAY_NUM  
+    
+    jmp Return_Menu       
+           
+           
+    calc23: 
+    
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+    
+    
+    mov quantity,al 
+    mov al,23
+    
+   
+    
+    MUL quantity
+    
+    
+    mov sum, ax
+    
+    printn '  total price is'
+    
+    call DISPLAY_NUM  
+    
+    jmp Return_Menu       
+               
+    
      DISPLAY_NUM PROC NEAR
         XOR CX, CX ;To count the digits
         MOV BX, 10 ;Fixed divider
