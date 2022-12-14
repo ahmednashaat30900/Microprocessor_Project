@@ -398,6 +398,8 @@ CLEAR_SCREEN ENDP
     MOV AH,9
     INT 21H
     
+    jmp selectOrder
+    
     jmp calcfun
     
     calcfun:
