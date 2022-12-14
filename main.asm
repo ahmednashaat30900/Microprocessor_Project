@@ -133,6 +133,68 @@ MAIN PROC
     MOV AX,@DATA
     MOV DS,AX
     CALL DRAW_MAIN_MENU 
+<<<<<<< HEAD
+=======
+    DRAW_MAIN_MENU PROC NEAR
+        CALL CLEAR_SCREEN
+    ;       Shows the menu title
+MOV AH,02h                       ;set cursor position
+MOV BH,00h                       ;set page number
+MOV DH,04h                       ;set row
+MOV DL,04h                         ;set column
+INT 10h
+
+MOV AH,09h                       ;WRITE STRING TO STANDARD OUTPUT
+LEA DX,TEXT_MAIN_MENU_TITLE      ;give DX a pointer
+INT 21h                          ;print the string
+
+;       Shows the help message
+MOV AH,02h                       ;set cursor position
+MOV BH,00h                       ;set page number
+MOV DH,06h                       ;set row
+MOV DL,04h                         ;set column
+INT 10h
+
+MOV AH,09h                       ;WRITE STRING TO STANDARD OUTPUT
+LEA DX,TEXT_MAIN_MENU_HELP     ;give DX a pointer
+INT 21h                          ;print the string
+
+;       Shows the exit message
+MOV AH,02h                       ;set cursor position
+MOV BH,00h                       ;set page number
+MOV DH,08h                       ;set row
+MOV DL,04h                         ;set column
+INT 10h   
+MOV AH,09h                       ;WRITE STRING TO STANDARD OUTPUT
+		LEA DX,TEXT_MAIN_MENU_EXIT      ;give DX a pointer 
+		INT 21h  
+                        ;print the string
+MAIN_MENU_WAIT_FOR_KEY:
+;       Waits for a key press
+			MOV AH,00h
+			INT 16h
+		
+;       Check whick key was pressed
+			CMP AL,'1'
+			JE TOP
+			
+			
+			
+			JMP MAIN_MENU_WAIT_FOR_KEY	
+RET
+DRAW_MAIN_MENU ENDP
+
+CLEAR_SCREEN PROC NEAR               ;clear the screen by restarting the video mode
+MOV AH,00h                   ;set the configuration to video mode
+MOV AL,12h                   ;choose the video mode
+INT 10h                         ;execute the configuration
+MOV AH,00h                      ;set the configuration
+MOV BH,00h                      ;to the background color
+MOV BL,00h                      ;choose black as background color
+INT 10h                         ;execute the configuration
+RET
+CLEAR_SCREEN ENDP
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
     
     
     
@@ -343,7 +405,38 @@ CLEAR_SCREEN ENDP
     CMP Ans,3
     JE Exit
 
+<<<<<<< HEAD
+=======
+     SelectOrder:
+    LEA DX,BR4
+    MOV AH,9
+    INT 21H
     
+    LEA DX,BR5
+    MOV AH,9
+    INT 21H
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
+    
+    LEA DX,Choice              
+    MOV AH,9
+    INT 21H 
+    
+    MOV AH,1
+    INT 21H
+    SUB AL,48    
+    mov order,AL
+    
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+      
+    MOV AH,1
+    INT 21H
+    SUB AL,48 
+    
+    mov quantity,AL 
+    
+    jmp calcfun
     
     
     
@@ -444,6 +537,7 @@ CLEAR_SCREEN ENDP
     INT 21H
     
     jmp selectOrder
+<<<<<<< HEAD
     
     jmp calcfun
     
@@ -455,6 +549,12 @@ CLEAR_SCREEN ENDP
   calcfun:
   
   
+=======
+    
+    jmp calcfun
+    
+    calcfun:
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
     CMP order,1
     JE calc120
     
@@ -491,9 +591,12 @@ CLEAR_SCREEN ENDP
     MOV AH,9
     INT 21H
     jmp Return_Menu
+<<<<<<< HEAD
     
     
     
+=======
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
            
     calc120:
 
@@ -507,10 +610,14 @@ CLEAR_SCREEN ENDP
     call DISPLAY_NUM  
     
     jmp Return_Menu 
+<<<<<<< HEAD
             
             
             
             
+=======
+    
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
     
     calc100:
 
@@ -523,10 +630,14 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM  
     
+<<<<<<< HEAD
     jmp Return_Menu 
     
     
       
+=======
+    jmp Return_Menu   
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
     
     calc160:
   
@@ -539,11 +650,15 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM  
     
+<<<<<<< HEAD
     jmp Return_Menu 
     
     
     
     
+=======
+    jmp Return_Menu
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
     
     calc80:
  
@@ -573,9 +688,13 @@ CLEAR_SCREEN ENDP
     
     jmp Return_Menu
     
+<<<<<<< HEAD
                
                
                
+=======
+           
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
     Appetizers:
     
     
@@ -713,6 +832,7 @@ CLEAR_SCREEN ENDP
     call DISPLAY_NUM  
     
     jmp Return_Menu  
+<<<<<<< HEAD
     
    
    
@@ -754,6 +874,12 @@ CLEAR_SCREEN ENDP
         
         
    calc20:
+=======
+    
+    
+    
+    calc15:
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
     
 
     LEA DX,Quantitynum              
@@ -770,11 +896,58 @@ CLEAR_SCREEN ENDP
     
     
     mov quantity,al 
+<<<<<<< HEAD
+=======
+    mov al,15
+    
+   
+    
+    MUL quantity
+    
+    
+    mov sum, ax
+    
+    printn '  total price is'
+    
+    call DISPLAY_NUM  
+    
+    jmp Return_Menu 
+     
+     calc20:
+    
+
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+    
+    
+    
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+     
+   
+    
+    
+    mov quantity,al 
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
     mov al,20
     
    
     
     MUL quantity
+<<<<<<< HEAD
+=======
+    
+    
+    mov sum, ax
+    
+    printn '  total price is'
+    
+    call DISPLAY_NUM  
+    
+    jmp Return_Menu 
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
     
     
     mov sum, ax
@@ -895,9 +1068,12 @@ CLEAR_SCREEN ENDP
     INT 21H
     jmp Return_Menu
     
+<<<<<<< HEAD
    
    
    
+=======
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
     calc25:
     
 
@@ -1060,6 +1236,13 @@ CLEAR_SCREEN ENDP
     
     
     
+<<<<<<< HEAD
+=======
+    
+    
+    
+   
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
         
     Drinks:
      
@@ -1128,6 +1311,7 @@ CLEAR_SCREEN ENDP
     MOV AH,9
     INT 21H
     
+    try_again:
     
     
     
@@ -1174,6 +1358,16 @@ CLEAR_SCREEN ENDP
     LEA DX,invalid
     MOV AH,9
     INT 21H 
+<<<<<<< HEAD
+=======
+    
+    LEA DX,tr
+    MOV AH,9
+    INT 21H
+       
+    jmp Return_Menu
+    
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
     
     LEA DX,tr
     MOV AH,9
@@ -1250,6 +1444,10 @@ CLEAR_SCREEN ENDP
     call DISPLAY_NUM  
     
     jmp Return_Menu 
+<<<<<<< HEAD
+=======
+          
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
           
           
     
@@ -1287,10 +1485,14 @@ CLEAR_SCREEN ENDP
     jmp Return_Menu 
     
      
+<<<<<<< HEAD
   
   
   
   calc16: 
+=======
+      calc16: 
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
     
     LEA DX,Quantitynum              
     MOV AH,9
@@ -1322,11 +1524,15 @@ CLEAR_SCREEN ENDP
     jmp Return_Menu       
            
            
+<<<<<<< HEAD
  
  
  
  
   calc23: 
+=======
+    calc23: 
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
     
     LEA DX,Quantitynum              
     MOV AH,9
@@ -1355,9 +1561,12 @@ CLEAR_SCREEN ENDP
     jmp Return_Menu       
                
     
+<<<<<<< HEAD
     
     
     
+=======
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
      DISPLAY_NUM PROC NEAR
         XOR CX, CX ;To count the digits
         MOV BX, 10 ;Fixed divider
@@ -1379,7 +1588,10 @@ CLEAR_SCREEN ENDP
         
         RET  
     
+<<<<<<< HEAD
      
+=======
+>>>>>>> abaeab92d187c21066feb04d61b4667ccb381686
         DISPLAY_NUM ENDP
       
     
