@@ -75,9 +75,9 @@ MSG4 DB 0AH,0DH,0AH,0DH,                 '  --          Drink                   
   
 
 ;return_to_menu
-
-Q1 DB 0AH,0DH,0AH,0DH,  '  --         1.Back to Menu                                        --$ '
-Q2 DB 0AH,0DH,          '  --         2.Finish order                                        --$ '
+Q1 DB 0AH,0DH,0AH,0DH,  '  --         1.Choose another item                                 --$ '
+Q2 DB 0AH,0DH,0AH,0DH,  '  --         2.Back to Menu                                        --$ '
+Q3 DB 0AH,0DH,          '  --         3.Finish order                                        --$ '
 
  
                      
@@ -204,10 +204,7 @@ CLEAR_SCREEN ENDP
     LEA DX,BR3
     MOV AH,9
     INT 21H   
-    
-    
-     
-    
+
     LEA DX,Menu1
     MOV AH,9
     INT 21H
@@ -227,9 +224,7 @@ CLEAR_SCREEN ENDP
     LEA DX,Menu5
     MOV AH,9
     INT 21H
-    
-    
-    
+ 
     LEA DX,BR1
     MOV AH,9
     INT 21H
@@ -242,9 +237,7 @@ CLEAR_SCREEN ENDP
     LEA DX,M2
     MOV AH,9
     INT 21H
-    
-     
-     
+
     MOV AH,1
     INT 21H
     MOV BH,AL
@@ -267,10 +260,7 @@ CLEAR_SCREEN ENDP
 
     
    Return_Menu:
-   
-    
-    
-    
+
     LEA DX,BR5
     MOV AH,9
     INT 21H
@@ -286,8 +276,11 @@ CLEAR_SCREEN ENDP
     LEA DX,Q2
     MOV AH,9
     INT 21H 
+
+    LEA DX,Q3
+    MOV AH,9
+    INT 21H 
     
-     
     LEA DX,BR4
     MOV AH,9
     INT 21H
@@ -306,20 +299,46 @@ CLEAR_SCREEN ENDP
     
     MOV Ans,AL
    
-    
     CMP Ans,1
-    JE TOP
-    
+    JE selectOrder
     
     CMP Ans,2
+    JE TOP
+
+    CMP Ans,3
     JE Exit
+
+     SelectOrder:
+    LEA DX,BR4
+    MOV AH,9
+    INT 21H
     
-   
-       
+    LEA DX,BR5
+    MOV AH,9
+    INT 21H
     
+    LEA DX,Choice              
+    MOV AH,9
+    INT 21H 
+    
+    MOV AH,1
+    INT 21H
+    SUB AL,48    
+    mov order,AL
+    
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+      
+    MOV AH,1
+    INT 21H
+    SUB AL,48 
+    
+    mov quantity,AL 
+    
+    jmp calcfun
     
    Main_Dishes:
-    
     
     LEA DX,M8    
     MOV AH,9
@@ -328,8 +347,6 @@ CLEAR_SCREEN ENDP
     LEA DX,New_line
     MOV AH,9
     INT 21H
-    
-    
     
     LEA DX,BR5
     MOV AH,9
@@ -381,32 +398,9 @@ CLEAR_SCREEN ENDP
     MOV AH,9
     INT 21H
     
-
+    jmp calcfun
     
-   
-    
-    LEA DX,BR4
-    MOV AH,9
-    INT 21H
-    
-    LEA DX,BR5
-    MOV AH,9
-    INT 21H
-    
-    
-    LEA DX,Choice              
-    MOV AH,9
-    INT 21H 
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48  
-    
-    
-   
-    MOV order,AL
-   
-    
+    calcfun:
     CMP order,1
     JE calc120
     
@@ -445,29 +439,10 @@ CLEAR_SCREEN ENDP
     jmp Return_Menu
            
     calc120:
-    
 
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-    
-    
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-     
-   
-    
-    
-    mov quantity,al 
     mov al,120
-    
-   
-    
     MUL quantity
-    
-    
+  
     mov sum, ax
     
     printn '  total price is'
@@ -478,28 +453,9 @@ CLEAR_SCREEN ENDP
     
     
     calc100:
-    
 
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-    
-    
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-     
-   
-    
-    
-    mov quantity,al 
     mov al,100
-    
-   
-    
     MUL quantity
-    
     
     mov sum, ax
     
@@ -510,29 +466,10 @@ CLEAR_SCREEN ENDP
     jmp Return_Menu   
     
     calc160:
-    
-
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-    
-    
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-     
-   
-    
-    
-    mov quantity,al 
+  
     mov al,160
-    
-   
-    
     MUL quantity
-    
-    
+ 
     mov sum, ax
     
     printn '  total price is'
@@ -542,29 +479,10 @@ CLEAR_SCREEN ENDP
     jmp Return_Menu
     
     calc80:
-    
-
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-    
-    
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-     
-   
-    
-    
-    mov quantity,al 
+ 
     mov al,80
-    
-   
-    
     MUL quantity
-    
-    
+ 
     mov sum, ax
     
     printn '  total price is'
@@ -576,29 +494,10 @@ CLEAR_SCREEN ENDP
      
      
     calc140:
-    
 
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-    
-    
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-     
-   
-    
-    
-    mov quantity,al 
     mov al,140
-    
-   
-    
+  
     MUL quantity
-    
-    
     mov sum, ax
     
     printn '  total price is'
@@ -607,17 +506,6 @@ CLEAR_SCREEN ENDP
     
     jmp Return_Menu
     
-     
-    
-   
-    
-   
-     
-     
-    
-     
-           
-           
            
     Appetizers:
     
