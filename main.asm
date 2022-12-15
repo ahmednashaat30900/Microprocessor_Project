@@ -27,6 +27,7 @@ Dish5 DB 0AH,0DH,             '  --          5.Grilled Shrimps            120LE 
 Dish6 DB 0AH,0DH,             '  --          6.Mix Grill                  140LE                   --$'
 Dish7 DB 0AH,0DH,             '  --          7.Stuffed cabbage            80LE                    --$'
 Dish8 DB 0AH,0DH,             '  --          8.Kofta                      120LE                   --$'
+B1 DB 0AH,0DH,                '  --          9.Back to Menu                                       --$'
 
 
 ;apptizers 
@@ -36,6 +37,7 @@ APP3 DB 0AH,0DH,             '  --          3.chips                      10LE   
 APP4 DB 0AH,0DH,             '  --          4.Hotdog Sandwich            20LE                   --$'
 APP5 DB 0AH,0DH,             '  --          5.Onion Rings                15LE                   --$'
 APP6 DB 0AH,0DH,             '  --          6.Wedge Fries                10LE                   --$'
+B2 DB 0AH,0DH,               '  --          7.Back to Menu                                      --$'
 
 ;Salads
 Salad1 DB 0AH,0DH,0AH,0DH,              '  --          1.Green salad                20LE                    --$'   
@@ -44,14 +46,15 @@ Salad3 DB 0AH,0DH,                      '  --          3.Caesar salad           
 Salad4 DB 0AH,0DH,                      '  --          4.Greek salad                20LE                    --$'
 Salad5 DB 0AH,0DH,                      '  --          5.Tuna salad                 25LE                    --$'
 Salad6 DB 0AH,0DH,                      '  --          6.Italian pasta salad        30LE                    --$' 
-                        
+B3 DB 0AH,0DH,                          '  --          7.Back to Menu                                       --$'                       
 ;Desserts
  
 Dess1 DB 0AH,0DH,0AH,0DH,     '  --          1.Cheesecake            30LE                   --$' 
 Dess2 DB 0AH,0DH,             '  --          2.Cobbler               25LE                   --$'
 Dess3 DB 0AH,0DH,             '  --          3.Cookies               10LE                   --$'
 Dess4 DB 0AH,0DH,             '  --          4.Cakes                 20LE                   --$'
-Dess5 DB 0AH,0DH,             '  --          5.Apple pie             15LE                   --$'    
+Dess5 DB 0AH,0DH,             '  --          5.Apple pie             15LE                   --$'
+B4 DB 0AH,0DH,                '  --          6.Back to Menu                                 --$'    
                                                                                                                           
 ;Drinks   
 D1 DB 10,13,                  ' --           1.Shoft Drinks               8LE                     --$'
@@ -60,7 +63,8 @@ D3 DB 10,13,                  ' --           3.Tea                        5LE   
 D4 DB 10,13,                  ' --           4.Orange juice               8LE                     --$'
 D5 DB 10,13,                  ' --           5.Milk                       7LE                     --$'
 D6 DB 10,13,                  ' --           6.Cocktail                   16LE                    --$'
-D7 DB 10,13,                  ' --           7.Chocolate                  23LE                    --$'                                             
+D7 DB 10,13,                  ' --           7.Chocolate                  23LE                    --$'
+B5 DB 10,13,                  ' --           8.Back to Menu                                       --$'                                             
 
 M9 DB 0AH,0DH,0AH,0DH,                  '  Choose your Salad from the menu$' 
 
@@ -76,8 +80,8 @@ MSG4 DB 0AH,0DH,0AH,0DH,                 '  --          Drink                   
 
 ;return_to_menu
 Q1 DB 0AH,0DH,0AH,0DH,  '  --         1.Choose another item                                 --$ '
-Q2 DB 0AH,0DH,0AH,0DH,  '  --                 6.Back to Menu             --$' 
-Q3 DB 0AH,0DH,          '  --                 6.Finish Order             --$' 
+Q2 DB 0AH,0DH,0AH,0DH,  '  --          2.Back to Menu                               --$'
+Q3 DB 0AH,0DH,          '  --                 6.Finish Order            --$' 
 
  
                      
@@ -293,7 +297,7 @@ CLEAR_SCREEN ENDP
 
     
      Finish_order:
-     
+        jmp EXIT
  
  
  
@@ -338,7 +342,7 @@ CLEAR_SCREEN ENDP
     MOV Ans,AL
    
     CMP Ans,1
-    JE selectOrder
+    ;JE selectOrder
     
     CMP Ans,2
     JE TOP
@@ -348,45 +352,12 @@ CLEAR_SCREEN ENDP
 
     
     
-    
-    
-    
-   SelectOrder:
-    
-    LEA DX,BR4
-    MOV AH,9
-    INT 21H
-    
-    LEA DX,BR5
-    MOV AH,9
-    INT 21H
-    
-    LEA DX,Choice              
-    MOV AH,9
-    INT 21H 
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48    
-    mov order,AL
-    
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-      
-    MOV AH,1
-    INT 21H
-    SUB AL,48 
-    
-    mov quantity,AL 
-    
-    jmp calcfun
-    
   
   
   
   
-   Main_Dishes:
+   Main_Dishes: 
+   CALL CLEAR_SCREEN
     
     LEA DX,M8    
     MOV AH,9
@@ -444,24 +415,32 @@ CLEAR_SCREEN ENDP
             
     LEA DX,Dish8      
     MOV AH,9
-    INT 21H 
+    INT 21H
     
-    LEA DX,Q2      
+    LEA DX,B1      
     MOV AH,9
     INT 21H
     
     
     
-    jmp selectOrder
+    LEA DX,BR4
+    MOV AH,9
+    INT 21H
     
-    jmp calcfun
+    LEA DX,BR5
+    MOV AH,9
+    INT 21H
     
-   
-   
-   
-   
-   
-  calcfun:
+    LEA DX,Choice              
+    MOV AH,9
+    INT 21H 
+    
+    MOV AH,1
+    INT 21H
+    SUB AL,48    
+    mov order,AL
+    
+  
   
   
     CMP order,1
@@ -492,19 +471,28 @@ CLEAR_SCREEN ENDP
     JE calc80  
     
     
-    CMP order,1
-    JE calc120 
+    CMP order,8
+    JE calc120
+    
+    CMP order,9
+    jE TOP 
     
           
     LEA DX,invalid
     MOV AH,9
     INT 21H
-    jmp Return_Menu
-    
-    
     
            
     calc120:
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+      
+    MOV AH,1
+    INT 21H
+    SUB AL,48 
+    
+    mov quantity,AL 
 
     mov al,120
     MUL quantity
@@ -522,6 +510,15 @@ CLEAR_SCREEN ENDP
             
     
     calc100:
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+      
+    MOV AH,1
+    INT 21H
+    SUB AL,48 
+    
+    mov quantity,AL 
 
     mov al,100
     MUL quantity
@@ -541,6 +538,15 @@ CLEAR_SCREEN ENDP
       
     
     calc160:
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+      
+    MOV AH,1
+    INT 21H
+    SUB AL,48 
+    
+    mov quantity,AL 
   
     mov al,160
     MUL quantity
@@ -559,7 +565,16 @@ CLEAR_SCREEN ENDP
     
     
     
-    calc80:
+    calc80: 
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+      
+    MOV AH,1
+    INT 21H
+    SUB AL,48 
+    
+    mov quantity,AL 
  
     mov al,80
     MUL quantity
@@ -580,6 +595,15 @@ CLEAR_SCREEN ENDP
      
      
     calc140:
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+      
+    MOV AH,1
+    INT 21H
+    SUB AL,48 
+    
+    mov quantity,AL 
 
     mov al,140
   
@@ -600,6 +624,7 @@ CLEAR_SCREEN ENDP
                
     Appetizers:
     
+    CALL CLEAR_SCREEN
     
     LEA DX,M8
     MOV AH,9 
@@ -647,6 +672,10 @@ CLEAR_SCREEN ENDP
     
     
     LEA DX,APP6     
+    MOV AH,9
+    INT 21H
+    
+    LEA DX,B2     
     MOV AH,9
     INT 21H
              
@@ -699,11 +728,14 @@ CLEAR_SCREEN ENDP
     CMP order,6
     JE calc10
     
+    CMP order,7
+    JE TOP
+    
           
     LEA DX,invalid
     MOV AH,9
     INT 21H
-    jmp Return_Menu
+    ; jmp Return_Menu
         
         
         
@@ -825,6 +857,7 @@ CLEAR_SCREEN ENDP
    
     Salads:
     
+    CALL CLEAR_SCREEN
     
     LEA DX,M9    
     MOV AH,9
@@ -873,6 +906,10 @@ CLEAR_SCREEN ENDP
     
     
     LEA DX,Salad6      
+    MOV AH,9
+    INT 21H
+    
+    LEA DX,B3      
     MOV AH,9
     INT 21H
             
@@ -924,6 +961,8 @@ CLEAR_SCREEN ENDP
     CMP order,6
     JE calc30
     
+    CMP order,7
+    JE TOP
           
     LEA DX,invalid
     MOV AH,9
@@ -1012,6 +1051,8 @@ CLEAR_SCREEN ENDP
     
     Desserts:
     
+    CALL CLEAR_SCREEN
+    
      LEA DX,M8    
     MOV AH,9
     INT 21H
@@ -1050,7 +1091,12 @@ CLEAR_SCREEN ENDP
     
     LEA DX,Dess5         
     MOV AH,9
-    INT 21H  
+    INT 21H
+    
+    LEA DX,B4         
+    MOV AH,9
+    INT 21H
+      
     
     
     LEA DX,BR4
@@ -1091,6 +1137,9 @@ CLEAR_SCREEN ENDP
     CMP order,5
     JE calc15
     
+    CMP order,6
+    JE TOP
+    
          
     LEA DX,invalid
     MOV AH,9
@@ -1103,7 +1152,8 @@ CLEAR_SCREEN ENDP
     
         
     Drinks:
-     
+    
+    CALL CLEAR_SCREEN
       
     LEA DX,M10   
     MOV AH,9
@@ -1159,7 +1209,11 @@ CLEAR_SCREEN ENDP
     
     LEA DX,D7         
     MOV AH,9
-    INT 21H  
+    INT 21H
+    
+    LEA DX,B5         
+    MOV AH,9
+    INT 21H 
     
     LEA DX,BR4
     MOV AH,9
@@ -1211,6 +1265,9 @@ CLEAR_SCREEN ENDP
     
     CMP order,7
     JE calc23
+    
+    CMP order,8
+    JE TOP
       
     LEA DX,invalid
     MOV AH,9
