@@ -107,7 +107,7 @@ BR6 DB 0AH,0DH,'  --                                          --$'
 BR7 DB 0AH,0DH,'  ----------------------------------------------$'
 
 
-Invalid DB 10,13,10,13,'***&&INVALID ENTRY&&***$' 
+Invalid DB 10,13,10,13,'     ***&&INVALID ENTRY&&***$      ' 
 tr DB 10,13,'      ***&&Try Again&&***$'
 
 
@@ -195,12 +195,7 @@ MAIN_MENU_WAIT_FOR_KEY:
 			JMP MAIN_MENU_WAIT_FOR_KEY	
 RET
 
-DRAW_MAIN_MENU ENDP
-
-
-
-
-
+DRAW_MAIN_MENU ENDp
 
 CLEAR_SCREEN PROC NEAR               ;clear the screen by restarting the video mode
 MOV AH,00h                   ;set the configuration to video mode
@@ -268,6 +263,7 @@ CLEAR_SCREEN ENDP
     MOV AH,9
     INT 21H
     
+    select_choice:
     LEA DX,M2
     MOV AH,9
     INT 21H
@@ -293,7 +289,14 @@ CLEAR_SCREEN ENDP
     JE Drinks
     
     CMP BH,6
-    JE Finish_order 
+    JE Finish_order
+    
+    LEA DX,invalid
+    MOV AH,9
+    INT 21H
+    jmp select_choice
+    
+     
 
     
      Finish_order:
@@ -342,7 +345,7 @@ CLEAR_SCREEN ENDP
     MOV Ans,AL
    
     CMP Ans,1
-    ;JE selectOrder
+   ; JE select_order
     
     CMP Ans,2
     JE TOP
@@ -352,7 +355,7 @@ CLEAR_SCREEN ENDP
 
     
     
-  
+         ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   
   
   
@@ -431,6 +434,8 @@ CLEAR_SCREEN ENDP
     MOV AH,9
     INT 21H
     
+    select_order1:
+    
     LEA DX,Choice              
     MOV AH,9
     INT 21H 
@@ -481,6 +486,8 @@ CLEAR_SCREEN ENDP
     LEA DX,invalid
     MOV AH,9
     INT 21H
+    jmp select_order1
+    
     
            
     calc120:
@@ -619,7 +626,8 @@ CLEAR_SCREEN ENDP
     
     jmp Main_Dishes
     
-               
+                 
+                 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
                
                
     Appetizers:
@@ -691,6 +699,7 @@ CLEAR_SCREEN ENDP
     MOV AH,9
     INT 21H
     
+    select_order2:
     
     LEA DX,Choice              
     MOV AH,9
@@ -735,10 +744,10 @@ CLEAR_SCREEN ENDP
     LEA DX,invalid
     MOV AH,9
     INT 21H
-    ; jmp Return_Menu
+    jmp select_order2
         
         
-        
+                   
         
         
    calc10: 
@@ -846,7 +855,7 @@ CLEAR_SCREEN ENDP
         
         
         
-  
+                ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     
     
    
@@ -920,6 +929,7 @@ CLEAR_SCREEN ENDP
     MOV AH,9
     INT 21H
     
+    select_order3:
     
     LEA DX,Choice              
     MOV AH,9
@@ -963,7 +973,7 @@ CLEAR_SCREEN ENDP
     LEA DX,invalid
     MOV AH,9
     INT 21H
-    jmp Return_Menu
+    jmp select_order3
     
    
      calc20:
@@ -1136,6 +1146,7 @@ CLEAR_SCREEN ENDP
     MOV AH,9
     INT 21H
     
+    select_order4:
     
     LEA DX,Choice              
     MOV AH,9
@@ -1173,7 +1184,7 @@ CLEAR_SCREEN ENDP
     LEA DX,invalid
     MOV AH,9
     INT 21H
-    jmp Return_Menu
+    jmp select_order4
     
     
     
@@ -1282,7 +1293,7 @@ CLEAR_SCREEN ENDP
     
     jmp Desserts
     
-    
+            ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     
         
     Drinks:
@@ -1363,7 +1374,7 @@ CLEAR_SCREEN ENDP
     
     
     
-    try_again:
+    select_order5:
     
     LEA DX,Choice              
     MOV AH,9
@@ -1405,13 +1416,9 @@ CLEAR_SCREEN ENDP
       
     LEA DX,invalid
     MOV AH,9
-    INT 21H 
-    
-    LEA DX,tr
-    MOV AH,9
     INT 21H
        
-    jmp Return_Menu
+    jmp select_order5
     
     
    
@@ -1601,7 +1608,7 @@ CLEAR_SCREEN ENDP
     
     jmp Drinks       
                
-    
+              ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     
     
     
