@@ -76,8 +76,8 @@ MSG4 DB 0AH,0DH,0AH,0DH,                 '  --          Drink                   
 
 ;return_to_menu
 Q1 DB 0AH,0DH,0AH,0DH,  '  --         1.Choose another item                                 --$ '
-Q2 DB 0AH,0DH,0AH,0DH,  '  --         2.Back to Menu                                        --$ '
-Q3 DB 0AH,0DH,          '  --         3.Finish order                                        --$ '
+Q2 DB 0AH,0DH,0AH,0DH,  '  --                 6.Back to Menu             --$' 
+Q3 DB 0AH,0DH,          '  --                 6.Finish Order             --$' 
 
  
                      
@@ -210,13 +210,6 @@ RET
 CLEAR_SCREEN ENDP
     
  
- 
- 
- 
- 
- 
- 
- 
   TOP: 
       CALL CLEAR_SCREEN
   
@@ -256,6 +249,11 @@ CLEAR_SCREEN ENDP
     LEA DX,Menu5
     MOV AH,9
     INT 21H
+    
+    LEA DX,Q3
+    MOV AH,9
+    INT 21H
+    
  
     LEA DX,BR1
     MOV AH,9
@@ -288,10 +286,14 @@ CLEAR_SCREEN ENDP
     JE Desserts 
     
     CMP BH,5
-    JE Drinks 
+    JE Drinks
+    
+    CMP BH,6
+    JE Finish_order 
 
     
- 
+     Finish_order:
+     
  
  
  
@@ -442,7 +444,13 @@ CLEAR_SCREEN ENDP
             
     LEA DX,Dish8      
     MOV AH,9
+    INT 21H 
+    
+    LEA DX,Q2      
+    MOV AH,9
     INT 21H
+    
+    
     
     jmp selectOrder
     
