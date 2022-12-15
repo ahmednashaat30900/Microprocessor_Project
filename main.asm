@@ -49,11 +49,11 @@ Salad6 DB 0AH,0DH,                      '  --          6.Italian pasta salad    
 B3 DB 0AH,0DH,                          '  --          7.Back to Menu                                       --$'                       
 ;Desserts
  
-Dess1 DB 0AH,0DH,0AH,0DH,     '  --          1.Cheesecake            30LE                   --$' 
-Dess2 DB 0AH,0DH,             '  --          2.Cobbler               25LE                   --$'
-Dess3 DB 0AH,0DH,             '  --          3.Cookies               10LE                   --$'
-Dess4 DB 0AH,0DH,             '  --          4.Cakes                 20LE                   --$'
-Dess5 DB 0AH,0DH,             '  --          5.Apple pie             15LE                   --$'
+Dess1 DB 0AH,0DH,0AH,0DH,     '  --          1.Cheesecake            35LE                   --$' 
+Dess2 DB 0AH,0DH,             '  --          2.Cobbler               50LE                   --$'
+Dess3 DB 0AH,0DH,             '  --          3.Cookies               60LE                   --$'
+Dess4 DB 0AH,0DH,             '  --          4.Cakes                 35LE                   --$'
+Dess5 DB 0AH,0DH,             '  --          5.Apple pie             60LE                   --$'
 B4 DB 0AH,0DH,                '  --          6.Back to Menu                                 --$'    
                                                                                                                           
 ;Drinks   
@@ -503,7 +503,7 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM  
     
-    jmp Return_Menu 
+    jmp Main_Dishes 
             
             
             
@@ -532,7 +532,7 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM  
     
-    jmp Return_Menu 
+    jmp Main_Dishes 
     
     
       
@@ -559,7 +559,7 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM  
     
-    jmp Return_Menu 
+    jmp Main_Dishes 
     
     
     
@@ -590,7 +590,7 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM  
     
-    jmp Return_Menu
+    jmp Main_Dishes
     
      
      
@@ -617,7 +617,7 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM  
     
-    jmp Return_Menu
+    jmp Main_Dishes
     
                
                
@@ -706,7 +706,7 @@ CLEAR_SCREEN ENDP
    
     
     CMP order,1
-    JE calc20
+    JE calc40
     
     
     CMP order,2
@@ -718,7 +718,7 @@ CLEAR_SCREEN ENDP
     
     
     CMP order,4
-    JE calc20
+    JE calc40
     
     
     CMP order,5
@@ -745,22 +745,15 @@ CLEAR_SCREEN ENDP
 
     LEA DX,Quantitynum              
     MOV AH,9
-    INT 21H 
-    
-    
+    INT 21H   
     
     MOV AH,1
     INT 21H
     SUB AL,48
-     
-   
-    
-    
+
     mov quantity,AL 
     mov AL,10
-    
-                   
-    
+     
     MUL quantity
     
     
@@ -773,7 +766,7 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM  
     
-    jmp Return_Menu  
+    jmp  Appetizers  
     
    
    
@@ -812,12 +805,10 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM  
     
-    jmp Return_Menu 
-        
-        
-        
-        
-   calc20:
+    jmp  Appetizers
+    
+    
+    calc40:
     
 
     LEA DX,Quantitynum              
@@ -834,23 +825,28 @@ CLEAR_SCREEN ENDP
     
     
     mov quantity,al 
-    mov al,20   
-    
+    mov al,15
     
    
     
     MUL quantity
     
     
-    mov sum, ax
+    mov sum, ax 
     mov    bx, [index]
     mov      [intArray+bx], ax 
     inc      [index]
+    
     printn '  total price is'
     
     call DISPLAY_NUM  
     
-    jmp Return_Menu 
+    jmp  Appetizers 
+        
+        
+        
+        
+  
     
     
    
@@ -970,7 +966,40 @@ CLEAR_SCREEN ENDP
     jmp Return_Menu
     
    
+     calc20:
+    
+
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+    
+    
+    
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+     
    
+    
+    
+    mov quantity,al 
+    mov al,20   
+    
+    
+   
+    
+    MUL quantity
+    
+    
+    mov sum, ax
+    mov    bx, [index]
+    mov      [intArray+bx], ax 
+    inc      [index]
+    printn '  total price is'
+    
+    call DISPLAY_NUM  
+    
+    jmp Salads
    
     calc25:
     
@@ -1005,7 +1034,7 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM  
     
-    jmp Return_Menu 
+    jmp Salads 
     
     
     
@@ -1044,10 +1073,10 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM  
     
-    jmp Return_Menu
+    jmp Salads
     
           
-    
+      ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     
     Desserts:
     
@@ -1120,22 +1149,22 @@ CLEAR_SCREEN ENDP
    
     
     CMP order,1
-    JE calc30 
+    JE calc35 
     
     CMP order,2
-    JE calc25
+    JE calc50
     
     
     CMP order,3
-    JE calc10
+    JE calc60
     
     
     CMP order,4
-    JE calc20
+    JE calc35
     
     
     CMP order,5
-    JE calc15
+    JE calc60
     
     CMP order,6
     JE TOP
@@ -1146,7 +1175,112 @@ CLEAR_SCREEN ENDP
     INT 21H
     jmp Return_Menu
     
+    
+    
+    calc35:
+    
+
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+    
+    
+    
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+     
    
+    
+    
+    mov quantity,al 
+    mov al,20   
+    
+    
+   
+    
+    MUL quantity
+    
+    
+    mov sum, ax
+    mov    bx, [index]
+    mov      [intArray+bx], ax 
+    inc      [index]
+    printn '  total price is'
+    
+    call DISPLAY_NUM  
+    
+    jmp Desserts
+    
+    calc50:
+    
+
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+    
+    
+    
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+     
+   
+    
+    
+    mov quantity,al 
+    mov al,20   
+    
+    
+   
+    
+    MUL quantity
+    
+    
+    mov sum, ax
+    mov    bx, [index]
+    mov      [intArray+bx], ax 
+    inc      [index]
+    printn '  total price is'
+    
+    call DISPLAY_NUM  
+    
+    jmp Desserts 
+    
+    calc60:
+    
+
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+    
+    
+    
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+     
+   
+    
+    
+    mov quantity,al 
+    mov al,20   
+    
+    
+   
+    
+    MUL quantity
+    
+    
+    mov sum, ax
+    mov    bx, [index]
+    mov      [intArray+bx], ax 
+    inc      [index]
+    printn '  total price is'
+    
+    call DISPLAY_NUM  
+    
+    jmp Desserts
     
     
     
@@ -1316,7 +1450,7 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM 
     
-     jmp Return_Menu  
+     jmp Drinks  
     
     
     
@@ -1353,7 +1487,7 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM  
     
-    jmp Return_Menu 
+    jmp Drinks 
           
           
     
@@ -1391,7 +1525,7 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM  
     
-    jmp Return_Menu 
+    jmp Drinks 
     
      
   
@@ -1429,7 +1563,7 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM  
     
-    jmp Return_Menu       
+    jmp Drinks       
            
            
  
@@ -1465,7 +1599,7 @@ CLEAR_SCREEN ENDP
     
     call DISPLAY_NUM  
     
-    jmp Return_Menu       
+    jmp Drinks       
                
     
     
