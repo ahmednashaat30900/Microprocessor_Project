@@ -495,15 +495,8 @@ CLEAR_SCREEN ENDP
     
            
     calc120:
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-      
-    MOV AH,1
-    INT 21H
-    SUB AL,48 
     
-    mov quantity,AL 
+    call QuantityNumber
 
     mov al,120
     MUL quantity
@@ -517,15 +510,8 @@ CLEAR_SCREEN ENDP
             
     
     calc100:
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-      
-    MOV AH,1
-    INT 21H
-    SUB AL,48 
     
-    mov quantity,AL 
+    call QuantityNumber
 
     mov al,100
     MUL quantity
@@ -534,19 +520,9 @@ CLEAR_SCREEN ENDP
     
     jmp Main_Dishes 
     
-    
-      
-    
     calc160:
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-      
-    MOV AH,1
-    INT 21H
-    SUB AL,48 
     
-    mov quantity,AL 
+    call QuantityNumber
   
     mov al,160
     MUL quantity
@@ -560,15 +536,8 @@ CLEAR_SCREEN ENDP
     
     
     calc80: 
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-      
-    MOV AH,1
-    INT 21H
-    SUB AL,48 
-    
-    mov quantity,AL 
+   
+   call QuantityNumber
  
     mov al,80
     MUL quantity
@@ -580,19 +549,11 @@ CLEAR_SCREEN ENDP
      
      
     calc140:
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-      
-    MOV AH,1
-    INT 21H
-    SUB AL,48 
-    
-    mov quantity,AL 
+     call QuantityNumber
 
     mov al,140
-  
     MUL quantity
+
     ADD sum, ax     
    
     jmp Main_Dishes
@@ -723,19 +684,10 @@ CLEAR_SCREEN ENDP
         
    calc10: 
 
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H   
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48
+   call QuantityNumber
 
-    mov quantity,AL 
-    mov AL,10
-     
+    mov AL,10  
     MUL quantity
-    
     
     ADD sum, ax 
  
@@ -747,26 +699,11 @@ CLEAR_SCREEN ENDP
     
     calc15:
     
+    call QuantityNumber
 
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-    
-    
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-     
-   
-    
-    
-    mov quantity,al 
     mov al,15
-    
-   
-    
     MUL quantity
+
     ADD sum, ax
     
     jmp  Appetizers
@@ -774,27 +711,10 @@ CLEAR_SCREEN ENDP
     
     calc40:
     
+    call QuantityNumber
 
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-    
-    
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-     
-   
-    
-    
-    mov quantity,al 
     mov al,40
-    
-   
-    
     MUL quantity
-    
     
     ADD sum, ax 
  
@@ -926,18 +846,9 @@ CLEAR_SCREEN ENDP
    
      calc20:
     
+    call QuantityNumber
 
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H   
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-    
-    mov quantity,al 
     mov al,20
-    
     MUL quantity
     
     ADD sum, ax
@@ -946,18 +857,9 @@ CLEAR_SCREEN ENDP
    
     calc25:
     
+    call QuantityNumber
 
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H    
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48 
-    
-    mov quantity,al 
     mov al,25
-    
     MUL quantity
      
     mov sum, ax     
@@ -967,20 +869,10 @@ CLEAR_SCREEN ENDP
      
     calc30:
     
+    call QuantityNumber
 
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-      
-    mov quantity,al 
     mov al,30
-    
     MUL quantity
-    
     
     ADD sum, ax     
    
@@ -1090,87 +982,33 @@ CLEAR_SCREEN ENDP
     
     
     calc35:
-    
 
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-    
-    
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-     
-   
-    
-    
-    mov quantity,al 
+    call QuantityNumber
+
     mov al,35   
-    
-    
-   
-    
     MUL quantity
-    
     
    ADD sum, ax
   
     jmp Desserts
     
     calc50:
-    
 
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-    
-    
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-     
-   
-    
-    
-    mov quantity,al 
-    mov al,50   
-    
-    
-   
-    
+    call QuantityNumber
+
+    mov al,50       
     MUL quantity
-    
-    
+
     ADD sum, ax
  
     jmp Desserts 
     
     calc60:
     
+    call QuantityNumber
 
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-    
-    
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-     
-   
-    
-    
-    mov quantity,al 
     mov al,60   
-    
-    
-   
-    
     MUL quantity
-    
     
     ADD sum, ax
   
@@ -1302,19 +1140,10 @@ CLEAR_SCREEN ENDP
 
    calc8:
     
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H  
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48 
-    
-    mov quantity,al 
-    mov al,8
+    call QuantityNumber
 
+    mov al,8
     MUL quantity
-    
     
     ADD sum, ax     
     
@@ -1323,26 +1152,10 @@ CLEAR_SCREEN ENDP
   
    calc7: 
     
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-    
-    
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-     
-   
-    
-    
-    mov quantity,al 
+    call QuantityNumber
+
     mov al,7
-    
-   
-    
     MUL quantity
-    
     
     ADD sum, ax       
     
@@ -1351,19 +1164,10 @@ CLEAR_SCREEN ENDP
          
    calc5:
     
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-   
-    MOV AH,1
-    INT 21H
-    SUB AL,48 
-    
-    mov quantity,al 
+    call QuantityNumber
+
     mov al,5
-    
     MUL quantity
-    
     
     ADD sum, ax      
     
@@ -1372,27 +1176,10 @@ CLEAR_SCREEN ENDP
    
   calc16: 
     
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
-    
-    
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-     
-   
-    
-    
-    mov quantity,al 
+    call QuantityNumber
+
     mov al,16
-    
-   
-    
     MUL quantity    
-   
-    
     
     ADD sum, ax  
     
@@ -1401,31 +1188,29 @@ CLEAR_SCREEN ENDP
        
   calc23: 
     
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-    
-    
-    mov quantity,al 
+    call QuantityNumber
     mov al,23
-    
-   
-    
     MUL quantity
-    
-    
+
     ADD sum, ax     
 
     jmp Drinks       
                
               ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     
+     QuantityNumber PROC
+
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al 
     
+    ENDP
     
      DISPLAY_NUM PROC NEAR
         XOR CX, CX ;To count the digits
