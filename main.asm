@@ -31,10 +31,10 @@ B1 DB 0AH,0DH,                '  --          9.Back to Menu                     
 
 
 ;apptizers 
-APP1 DB 0AH,0DH,0AH,0DH,     '  --          1.Mozzarella stickes         20LE                   --$' 
+APP1 DB 0AH,0DH,0AH,0DH,     '  --          1.Mozzarella stickes         40LE                   --$' 
 APP2 DB 0AH,0DH,             '  --          2.French Fries               15LE                   --$'
 APP3 DB 0AH,0DH,             '  --          3.chips                      10LE                   --$'
-APP4 DB 0AH,0DH,             '  --          4.Hotdog Sandwich            20LE                   --$'
+APP4 DB 0AH,0DH,             '  --          4.Hotdog Sandwich            40LE                   --$'
 APP5 DB 0AH,0DH,             '  --          5.Onion Rings                15LE                   --$'
 APP6 DB 0AH,0DH,             '  --          6.Wedge Fries                10LE                   --$'
 B2 DB 0AH,0DH,               '  --          7.Back to Menu                                      --$'
@@ -300,7 +300,11 @@ CLEAR_SCREEN ENDP
 
     
      Finish_order:
-        jmp EXIT
+        mov ax,sum
+        printn '  total price is'
+    
+    call DISPLAY_NUM
+        
  
  
  
@@ -503,13 +507,9 @@ CLEAR_SCREEN ENDP
 
     mov al,120
     MUL quantity
-  
-    mov sum, ax
     
-    printn '  total price is'
-    
-    call DISPLAY_NUM  
-    
+    ADD sum, ax
+   
     jmp Main_Dishes 
             
             
@@ -530,14 +530,7 @@ CLEAR_SCREEN ENDP
     mov al,100
     MUL quantity
     
-    mov sum, ax     
-    mov    bx, [index]
-    mov      [intArray+bx], ax 
-    inc      [index]
-    
-    printn '  total price is'
-    
-    call DISPLAY_NUM  
+    ADD sum, ax      
     
     jmp Main_Dishes 
     
@@ -558,13 +551,7 @@ CLEAR_SCREEN ENDP
     mov al,160
     MUL quantity
  
-    mov sum, ax
-    mov    bx, [index]
-    mov      [intArray+bx], ax 
-    inc      [index]
-    printn '  total price is'
-    
-    call DISPLAY_NUM  
+    ADD sum, ax  
     
     jmp Main_Dishes 
     
@@ -586,17 +573,8 @@ CLEAR_SCREEN ENDP
     mov al,80
     MUL quantity
  
-    mov sum, ax 
-    mov    bx, [index]
-    mov      [intArray+bx], ax 
-    inc      [index]
-    
-    
-    
-    printn '  total price is'
-    
-    call DISPLAY_NUM  
-    
+    ADD sum, ax 
+   
     jmp Main_Dishes
     
      
@@ -615,15 +593,8 @@ CLEAR_SCREEN ENDP
     mov al,140
   
     MUL quantity
-    mov sum, ax     
-    mov    bx, [index]
-    mov      [intArray+bx], ax 
-    inc      [index]
-    
-    printn '  total price is'
-    
-    call DISPLAY_NUM  
-    
+    ADD sum, ax     
+   
     jmp Main_Dishes
     
                  
@@ -766,15 +737,8 @@ CLEAR_SCREEN ENDP
     MUL quantity
     
     
-    mov sum, ax 
-    mov    bx, [index]
-    mov      [intArray+bx], ax 
-    inc      [index]  
-    
-    printn '  total price is'
-    
-    call DISPLAY_NUM  
-    
+    ADD sum, ax 
+ 
     jmp  Appetizers  
     
    
@@ -803,16 +767,7 @@ CLEAR_SCREEN ENDP
    
     
     MUL quantity
-    
-    
-    mov sum, ax 
-    mov    bx, [index]
-    mov      [intArray+bx], ax 
-    inc      [index]
-    
-    printn '  total price is'
-    
-    call DISPLAY_NUM  
+    ADD sum, ax
     
     jmp  Appetizers
     
@@ -834,22 +789,15 @@ CLEAR_SCREEN ENDP
     
     
     mov quantity,al 
-    mov al,15
+    mov al,40
     
    
     
     MUL quantity
     
     
-    mov sum, ax 
-    mov    bx, [index]
-    mov      [intArray+bx], ax 
-    inc      [index]
-    
-    printn '  total price is'
-    
-    call DISPLAY_NUM  
-    
+    ADD sum, ax 
+ 
     jmp  Appetizers 
         
         
@@ -981,34 +929,19 @@ CLEAR_SCREEN ENDP
 
     LEA DX,Quantitynum              
     MOV AH,9
-    INT 21H 
-    
-    
+    INT 21H   
     
     MOV AH,1
     INT 21H
     SUB AL,48
-     
-   
-    
     
     mov quantity,al 
-    mov al,20   
-    
-    
-   
+    mov al,20
     
     MUL quantity
     
-    
-    mov sum, ax
-    mov    bx, [index]
-    mov      [intArray+bx], ax 
-    inc      [index]
-    printn '  total price is'
-    
-    call DISPLAY_NUM  
-    
+    ADD sum, ax
+ 
     jmp Salads
    
     calc25:
@@ -1016,40 +949,22 @@ CLEAR_SCREEN ENDP
 
     LEA DX,Quantitynum              
     MOV AH,9
-    INT 21H 
-    
-    
+    INT 21H    
     
     MOV AH,1
     INT 21H
-    SUB AL,48
-     
-   
-    
+    SUB AL,48 
     
     mov quantity,al 
     mov al,25
     
-   
-    
     MUL quantity
-    
-    
+     
     mov sum, ax     
-    mov    bx, [index]
-    mov      [intArray+bx], ax 
-    inc      [index]
-    
-    printn '  total price is'
-    
-    call DISPLAY_NUM  
-    
+
     jmp Salads 
     
-    
-    
-    
-    
+     
     calc30:
     
 
@@ -1057,32 +972,18 @@ CLEAR_SCREEN ENDP
     MOV AH,9
     INT 21H 
     
-    
-    
     MOV AH,1
     INT 21H
     SUB AL,48
-     
-   
-    
-    
+      
     mov quantity,al 
     mov al,30
-    
-   
     
     MUL quantity
     
     
-    mov sum, ax     
-    mov    bx, [index]
-    mov      [intArray+bx], ax 
-    inc      [index]
-    
-    printn '  total price is'
-    
-    call DISPLAY_NUM  
-    
+    ADD sum, ax     
+   
     jmp Salads
     
           
@@ -1205,7 +1106,7 @@ CLEAR_SCREEN ENDP
     
     
     mov quantity,al 
-    mov al,20   
+    mov al,35   
     
     
    
@@ -1213,14 +1114,8 @@ CLEAR_SCREEN ENDP
     MUL quantity
     
     
-    mov sum, ax
-    mov    bx, [index]
-    mov      [intArray+bx], ax 
-    inc      [index]
-    printn '  total price is'
-    
-    call DISPLAY_NUM  
-    
+   ADD sum, ax
+  
     jmp Desserts
     
     calc50:
@@ -1240,7 +1135,7 @@ CLEAR_SCREEN ENDP
     
     
     mov quantity,al 
-    mov al,20   
+    mov al,50   
     
     
    
@@ -1248,14 +1143,8 @@ CLEAR_SCREEN ENDP
     MUL quantity
     
     
-    mov sum, ax
-    mov    bx, [index]
-    mov      [intArray+bx], ax 
-    inc      [index]
-    printn '  total price is'
-    
-    call DISPLAY_NUM  
-    
+    ADD sum, ax
+ 
     jmp Desserts 
     
     calc60:
@@ -1275,7 +1164,7 @@ CLEAR_SCREEN ENDP
     
     
     mov quantity,al 
-    mov al,20   
+    mov al,60   
     
     
    
@@ -1283,14 +1172,8 @@ CLEAR_SCREEN ENDP
     MUL quantity
     
     
-    mov sum, ax
-    mov    bx, [index]
-    mov      [intArray+bx], ax 
-    inc      [index]
-    printn '  total price is'
-    
-    call DISPLAY_NUM  
-    
+    ADD sum, ax
+  
     jmp Desserts
     
             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1369,11 +1252,6 @@ CLEAR_SCREEN ENDP
     INT 21H
     
     
-    
-    
-    
-    
-    
     select_order5:
     
     LEA DX,Choice              
@@ -1421,47 +1299,28 @@ CLEAR_SCREEN ENDP
     jmp select_order5
     
     
-   
-   
-   
-   
+
    calc8:
     
     LEA DX,Quantitynum              
     MOV AH,9
-    INT 21H 
-    
-    
+    INT 21H  
     
     MOV AH,1
     INT 21H
-    SUB AL,48
-     
-   
-    
+    SUB AL,48 
     
     mov quantity,al 
     mov al,8
-    
-   
-    
+
     MUL quantity
     
     
-    mov sum, ax     
-    mov    bx, [index]
-    mov      [intArray+bx], ax 
-    inc      [index]
+    ADD sum, ax     
     
-    printn '  total price is'
+    jmp Drinks  
     
-    call DISPLAY_NUM 
-    
-     jmp Drinks  
-    
-    
-    
-    
+  
    calc7: 
     
     LEA DX,Quantitynum              
@@ -1485,59 +1344,32 @@ CLEAR_SCREEN ENDP
     MUL quantity
     
     
-    mov sum, ax     
-    mov    bx, [index]
-    mov      [intArray+bx], ax 
-    inc      [index]
-    
-    printn '  total price is'
-    
-    call DISPLAY_NUM  
+    ADD sum, ax       
     
     jmp Drinks 
           
-          
-    
-    
-    
+         
    calc5:
     
     LEA DX,Quantitynum              
     MOV AH,9
     INT 21H 
-    
-    
-    
+   
     MOV AH,1
     INT 21H
-    SUB AL,48
-     
-   
-    
+    SUB AL,48 
     
     mov quantity,al 
     mov al,5
     
-   
-    
     MUL quantity
     
     
-    mov sum, ax     
-    mov    bx, [index]
-    mov      [intArray+bx], ax 
-    inc      [index]
-    
-    printn '  total price is'
-    
-    call DISPLAY_NUM  
+    ADD sum, ax      
     
     jmp Drinks 
     
-     
-  
-  
-  
+   
   calc16: 
     
     LEA DX,Quantitynum              
@@ -1562,21 +1394,11 @@ CLEAR_SCREEN ENDP
    
     
     
-    mov sum, ax
-   mov    bx, [index]
-    mov      [intArray+bx], ax 
-    inc      [index] 
-    printn '  total price is'
-    
-    call DISPLAY_NUM  
+    ADD sum, ax  
     
     jmp Drinks       
            
-           
- 
- 
- 
- 
+       
   calc23: 
     
     LEA DX,Quantitynum              
@@ -1597,15 +1419,8 @@ CLEAR_SCREEN ENDP
     MUL quantity
     
     
-    mov sum, ax     
-    mov    bx, [index]
-    mov      [intArray+bx], ax 
-    inc      [index]
-    
-    printn '  total price is'
-    
-    call DISPLAY_NUM  
-    
+    ADD sum, ax     
+
     jmp Drinks       
                
               ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
