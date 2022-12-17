@@ -1,6 +1,9 @@
 include 'emu8086.inc'
 .MODEL LARGE
-.STACK 1000H
+.STACK 1000H     
+    cseg segment 'code'
+    assume cs:cseg, ds:cseg, es:cseg, ss:cseg
+    org 100h
 .DATA
 M1 DB 0AH,0DH,0AH,0DH,  '                   Welcome to Shobra Restaurants$' 
 M2 DB 0AH,0DH,0AH,0DH,                ' Please Enter your Choise $'
@@ -122,10 +125,9 @@ counter DB  ?
 	TEXT_MAIN_MENU_TITLE DB 'MAIN MENU press 1','$' ;text with the main menu title
 	TEXT_MAIN_MENU_HELP DB 'HELP press 2','$' ;text with the help message
 	TEXT_MAIN_MENU_EXIT DB 'EXIT press 3','$' ;text with the exit game message
-
-
-
-
+      
+      
+      
 .CODE 
       
   
@@ -1404,37 +1406,10 @@ CLEAR_SCREEN ENDP
     jmp Return_Menu       
                
    
-   cseg segment 'code'
-    assume cs:cseg, ds:cseg, es:cseg, ss:cseg
-    org 100h
+ 
 
 
-
-        start:
-        
-        create_a_file:
-            mov dx, offset outputfile
-            mov cx, 0
-            mov ah, 3Ch
-            int 21h
-            mov outhandle, ax
-            jc  error_routine
-        
-            mov ah, 3Eh
-            mov bx, outhandle
-            int 21h
-        
-        error_routine:
-            mov ax, 4c00h
-            int 21h
-        
-        outputfile db "newfile.txt",0   
-        outhandle dw ?  
-        
-        cseg ends
-        
-        end start
-    
+           
     
     
      DISPLAY_NUM PROC NEAR
@@ -1463,10 +1438,34 @@ CLEAR_SCREEN ENDP
       
     
     
-     EXIT:
+    EXIT:
     
     MOV AH,4CH
     INT 21H
-    HELP:
+    start:
+        
+        create_a_file:
+            mov dx, offset outputfile
+            mov cx, 0
+            mov ah, 3Ch
+            int 21h
+            mov outhandle, ax
+            jc  error_routine
+        
+            mov ah, 3Eh
+            mov bx, outhandle
+            int 21h
+        
+        error_routine:
+            mov ax, 4c00h
+            int 21h
+        
+        outputfile db "newfile.txt",0   
+        outhandle dw ?  
+        
+        cseg ends
+        
+        end start
+    
     
 END MAIN
