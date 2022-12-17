@@ -127,7 +127,8 @@ counter DB  ?
 
 
 .CODE 
-
+      
+  
 
 MAIN PROC
     MOV AX,@DATA
@@ -1402,7 +1403,37 @@ CLEAR_SCREEN ENDP
     
     jmp Return_Menu       
                
-    
+   
+   cseg segment 'code'
+    assume cs:cseg, ds:cseg, es:cseg, ss:cseg
+    org 100h
+
+
+
+        start:
+        
+        create_a_file:
+            mov dx, offset outputfile
+            mov cx, 0
+            mov ah, 3Ch
+            int 21h
+            mov outhandle, ax
+            jc  error_routine
+        
+            mov ah, 3Eh
+            mov bx, outhandle
+            int 21h
+        
+        error_routine:
+            mov ax, 4c00h
+            int 21h
+        
+        outputfile db "newfile.txt",0   
+        outhandle dw ?  
+        
+        cseg ends
+        
+        end start
     
     
     
