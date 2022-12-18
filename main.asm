@@ -12,22 +12,23 @@ Menu3  DB 0AH,0DH, '  --                 3.Salads                  --$'
 Menu4  DB 0AH,0DH, '  --                 4.Desserts                --$'
 Menu5  DB 0AH,0DH, '  --                 5.Drinks                  --$'
            
-
+filename db "project.txt",0
+handler dw ?
                
 M8 DB 0AH,0DH,0AH,0DH,              '  Choise your food from the menu$' 
 
 MSG DB 0AH,0DH,0AH,0DH,       '  --          Dish                         Price                   --$'
                                                                                          
 ;Main Dishes  
-Dish1 DB 0AH,0DH,0AH,0DH,     '  --          1.Grilled Chicken            120LE                   --$' 
-Dish2 DB 0AH,0DH,             '  --          2.Fried Chicken              120LE                   --$'
-Dish3 DB 0AH,0DH,             '  --          3.Pasta                      100LE                   --$'
-Dish4 DB 0AH,0DH,             '  --          4.Beef stack                 160LE                   --$'
-Dish5 DB 0AH,0DH,             '  --          5.Grilled Shrimps            120LE                   --$'
-Dish6 DB 0AH,0DH,             '  --          6.Mix Grill                  140LE                   --$'
-Dish7 DB 0AH,0DH,             '  --          7.Stuffed cabbage            80LE                    --$'
-Dish8 DB 0AH,0DH,             '  --          8.Kofta                      120LE                   --$'
-B1 DB 0AH,0DH,                '  --          9.Back to Menu                                       --$'
+Dish1 DB 0AH,0DH,0AH,0DH,     '            1.Grilled Chicken            120LE$' 
+Dish2 DB 0AH,0DH,             '            2.Fried Chicken              120LE$'
+Dish3 DB 0AH,0DH,             '            3.Pasta                      100LE$'
+Dish4 DB 0AH,0DH,             '            4.Beef stack                 160LE$'
+Dish5 DB 0AH,0DH,             '            5.Grilled Shrimps            120LE$'
+Dish6 DB 0AH,0DH,             '            6.Mix Grill                  140LE$'
+Dish7 DB 0AH,0DH,             '            7.Stuffed cabbage            80LE $'
+Dish8 DB 0AH,0DH,             '            8.Kofta                      120LE$'
+B1 DB 0AH,0DH,                '            9.Back to Menu                    $'
 
 
 ;apptizers 
@@ -83,6 +84,15 @@ Q1 DB 0AH,0DH,0AH,0DH,  '  --         1.Choose another item                     
 Q2 DB 0AH,0DH,0AH,0DH,  '  --          2.Back to Menu                               --$'
 Q3 DB 0AH,0DH,          '  --                 6.Finish Order            --$' 
 
+<<<<<<< HEAD
+=======
+ 
+Dish DB ? 
+LEN DB 0AH                  
+
+intArray DW 100 dup (0)
+    index    DW 0
+>>>>>>> c6d454ec4f2728174e797aa30adc925c08727a38
 
 
 Choice DB 10,13,10,13,'Enter your order: $'
@@ -294,7 +304,70 @@ CLEAR_SCREEN ENDP
      Finish_order:
         mov ax,sum
         printn '  total price is'
+<<<<<<< HEAD
         call DISPLAY_NUM
+=======
+    
+    call DISPLAY_NUM
+ 
+    
+    
+    
+        
+ 
+ 
+ 
+   Return_Menu:
+
+    LEA DX,BR5
+    MOV AH,9
+    INT 21H
+    
+    LEA DX,BR4
+    MOV AH,9
+    INT 21H   
+    
+    LEA DX,Q1
+    MOV AH,9
+    INT 21H 
+    
+    LEA DX,Q2
+    MOV AH,9
+    INT 21H 
+
+    LEA DX,Q3
+    MOV AH,9
+    INT 21H 
+    
+    LEA DX,BR4
+    MOV AH,9
+    INT 21H
+    
+    LEA DX,BR5
+    MOV AH,9
+    INT 21H 
+    
+    LEA DX,M2              
+    MOV AH,9
+    INT 21H 
+    
+    MOV AH,1
+    INT 21H
+    SUB AL,48 
+    
+    MOV Ans,AL
+   
+    CMP Ans,1
+   ; JE select_order
+    
+    CMP Ans,2
+    JE TOP
+
+    CMP Ans,3
+    JE Exit
+
+    
+>>>>>>> c6d454ec4f2728174e797aa30adc925c08727a38
     
          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   
@@ -389,37 +462,42 @@ CLEAR_SCREEN ENDP
   
   
   
+<<<<<<< HEAD
     CMP order,1
     push offset Dish1
     JE calc120
+=======
+    CMP order,1 
+    JE calcDish1
+>>>>>>> c6d454ec4f2728174e797aa30adc925c08727a38
     
     
-    CMP order,2
-    JE calc120
+    CMP order,2 
+    JE calcDish2
     
     
-    CMP order,3
-    JE calc100
+    CMP order,3  
+    JE calcDish3
     
     
     CMP order,4
-    JE calc160
+    JE calcDish4
     
     
     CMP order,5
-    JE calc120
+    JE calcDish5
     
     
-    CMP order,6
-    JE calc140
+    CMP order,6                                                        
+    JE calcDish6
     
     
-    CMP order,7
-    JE calc80  
+    CMP order,7 
+    JE calcDish7  
     
     
     CMP order,8
-    JE calc120
+    JE calcDish8
     
     CMP order,9
     jE TOP 
@@ -431,41 +509,95 @@ CLEAR_SCREEN ENDP
     jmp select_order1
     
     
-           
-    calc120:
+    Movestring PROC
+        
+    CLD                           ; Clear the contents of Direction Flag
+    MOV CH,00H                    ; Since CX should be 00xx
+    MOV CL,100
+    REP MOVSB
+    
+    ret
+    ENDP
+     
+    calcDish1:
     
     call QuantityNumber
 
     mov al,120
     MUL quantity
     
-    ADD sum, ax
-   
+    ADD sum, ax 
+    
+    MOV AX, @DATA
+    MOV DS,AX
+    MOV ES,AX
+    LEA SI,Dish1                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring 
+    
+    call WriteFile
+                  
     jmp Main_Dishes 
-            
-            
-            
+    
+    
+    calcDish2:
+    
+    call QuantityNumber
+
+    mov al,120
+    MUL quantity
+    
+    ADD sum, ax 
+    
+    MOV AX, @DATA
+    MOV DS,AX
+    MOV ES,AX
+    LEA SI,Dish2                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring 
+    
+    call WriteFile
+                  
+    jmp Main_Dishes    
             
     
-    calc100:
+    calcDish3:
     
     call QuantityNumber
 
     mov al,100
     MUL quantity
     
-    ADD sum, ax      
+    ADD sum, ax  
+    
+    MOV AX, @DATA
+    MOV DS,AX
+    MOV ES,AX
+    LEA SI,Dish3                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring 
+    
+    call WriteFile    
     
     jmp Main_Dishes 
     
-    calc160:
+    calcDish4:
     
     call QuantityNumber
   
     mov al,160
     MUL quantity
  
-    ADD sum, ax  
+    ADD sum, ax   
+    
+    MOV AX, @DATA
+    MOV DS,AX
+    MOV ES,AX
+    LEA SI,Dish4                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring 
+    
+    call WriteFile
     
     jmp Main_Dishes 
     
@@ -473,26 +605,82 @@ CLEAR_SCREEN ENDP
     
     
     
-    calc80: 
+    calcDish5: 
    
    call QuantityNumber
  
-    mov al,80
+    mov al,120
     MUL quantity
  
-    ADD sum, ax 
+    ADD sum, ax  
+    
+    MOV AX, @DATA
+    MOV DS,AX
+    MOV ES,AX
+    LEA SI,Dish5                 ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring 
+    
+    call WriteFile
    
     jmp Main_Dishes
     
      
      
-    calc140:
+    calcDish6:
      call QuantityNumber
 
     mov al,140
     MUL quantity
 
-    ADD sum, ax     
+    ADD sum, ax  
+    
+    MOV AX, @DATA
+    MOV DS,AX
+    MOV ES,AX
+    LEA SI,Dish6                 ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring 
+    
+    call WriteFile   
+   
+    jmp Main_Dishes 
+    
+     calcDish7:
+     call QuantityNumber
+
+    mov al,80
+    MUL quantity
+
+    ADD sum, ax  
+    
+    MOV AX, @DATA
+    MOV DS,AX
+    MOV ES,AX
+    LEA SI,Dish7                 ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring 
+    
+    call WriteFile   
+   
+    jmp Main_Dishes 
+    
+     calcDish8:
+     call QuantityNumber
+
+    mov al,120
+    MUL quantity
+
+    ADD sum, ax  
+    
+    MOV AX, @DATA
+    MOV DS,AX
+    MOV ES,AX
+    LEA SI,Dish8                 ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring 
+    
+    call WriteFile   
    
     jmp Main_Dishes
     
@@ -1174,6 +1362,52 @@ CLEAR_SCREEN ENDP
      
         DISPLAY_NUM ENDP
       
+             WriteFile PROC
+
+        
+;INITIALIZE DATA SEGMENT.
+  mov  ax,@data
+  mov  ds,ax
+  
+  mov  ah, 3dh 
+  mov al,2
+  mov  dx, offset filename
+  int  21h  
+  mov [handler], ax
+
+   mov bx, ax
+   mov ah, 42h  ; "lseek"
+   mov al, 2    ; position relative to end of file
+   mov cx, 0    ; offset MSW
+   mov dx, 0    ; offset LSW
+   int 21h
+                                    
+                                    
+
+   mov bx, [handler]
+   mov dx, offset Dish
+   mov cx, 50
+   mov ah, 40h
+   int 21h ; write to file...   
+   
+   mov bx, [handler]
+   mov dx, ax
+   mov cx, 1
+   mov ah, 40h
+   int 21h ; write to file... 
+   
+   
+   
+
+
+  ;CLOSE FILE (OR DATA WILL BE LOST).
+  mov  ah, 3eh
+  mov  bx, handler
+  int  21h  
+  
+  RET    
+      
+           ENDP
     
     
      EXIT:
@@ -1182,4 +1416,9 @@ CLEAR_SCREEN ENDP
     INT 21H
     HELP:
     
-END MAIN
+END MAIN      
+
+
+
+
+  
