@@ -84,16 +84,9 @@ Q1 DB 0AH,0DH,0AH,0DH,  '  --         1.Choose another item                     
 Q2 DB 0AH,0DH,0AH,0DH,  '  --          2.Back to Menu                               --$'
 Q3 DB 0AH,0DH,          '  --                 6.Finish Order            --$' 
 
-<<<<<<< HEAD
-=======
  
 Dish DB ? 
-LEN DB 0AH                  
-
-intArray DW 100 dup (0)
-    index    DW 0
->>>>>>> c6d454ec4f2728174e797aa30adc925c08727a38
-
+LEN DB 0AH              
 
 Choice DB 10,13,10,13,'Enter your order: $'
 
@@ -202,18 +195,18 @@ RET
 DRAW_MAIN_MENU ENDp
 
 CLEAR_SCREEN PROC NEAR               ;clear the screen by restarting the video mode
-MOV AH,00h                   ;set the configuration to video mode
-MOV AL,12h                   ;choose the video mode
-INT 10h                         ;execute the configuration
-MOV AH,00h                      ;set the configuration
-MOV BH,00h                      ;to the background color
-MOV BL,00h                      ;choose black as background color
+xor cx,cx
+mov dh,25
+mov dl,80
+mov bh,7
+mov ax,700h                      ;choose black as background color
 INT 10h                         ;execute the configuration
 RET
 CLEAR_SCREEN ENDP
     
  
-  TOP: 
+  TOP:
+  CALL Open 
       CALL CLEAR_SCREEN
   
     LEA DX,M1
@@ -301,73 +294,17 @@ CLEAR_SCREEN ENDP
     jmp select_choice
     
    
-     Finish_order:
+     Finish_order: 
+     CALL Read
         mov ax,sum
         printn '  total price is'
-<<<<<<< HEAD
         call DISPLAY_NUM
-=======
-    
-    call DISPLAY_NUM
+    CALL Close
+    mov ah,08h
+    int 21h 
  
-    
-    
-    
-        
- 
- 
- 
-   Return_Menu:
-
-    LEA DX,BR5
-    MOV AH,9
-    INT 21H
-    
-    LEA DX,BR4
-    MOV AH,9
-    INT 21H   
-    
-    LEA DX,Q1
-    MOV AH,9
-    INT 21H 
-    
-    LEA DX,Q2
-    MOV AH,9
-    INT 21H 
-
-    LEA DX,Q3
-    MOV AH,9
-    INT 21H 
-    
-    LEA DX,BR4
-    MOV AH,9
-    INT 21H
-    
-    LEA DX,BR5
-    MOV AH,9
-    INT 21H 
-    
-    LEA DX,M2              
-    MOV AH,9
-    INT 21H 
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48 
-    
-    MOV Ans,AL
    
-    CMP Ans,1
-   ; JE select_order
-    
-    CMP Ans,2
-    JE TOP
 
-    CMP Ans,3
-    JE Exit
-
-    
->>>>>>> c6d454ec4f2728174e797aa30adc925c08727a38
     
          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   
@@ -460,16 +397,9 @@ CLEAR_SCREEN ENDP
     mov order,AL
     
   
-  
-  
-<<<<<<< HEAD
-    CMP order,1
-    push offset Dish1
-    JE calc120
-=======
+    
     CMP order,1 
     JE calcDish1
->>>>>>> c6d454ec4f2728174e797aa30adc925c08727a38
     
     
     CMP order,2 
@@ -521,15 +451,25 @@ CLEAR_SCREEN ENDP
      
     calcDish1:
     
-    call QuantityNumber
+   ; call QuantityNumber 
+   
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov al,120
     MUL quantity
     
     ADD sum, ax 
     
-    MOV AX, @DATA
-    MOV DS,AX
+    MOV Ax,Ds
     MOV ES,AX
     LEA SI,Dish1                  ; Location of STR1 is loaded to SI
     LEA DI,Dish                                                         
@@ -1362,18 +1302,7 @@ CLEAR_SCREEN ENDP
      
         DISPLAY_NUM ENDP
       
-             WriteFile PROC
-
-        
-;INITIALIZE DATA SEGMENT.
-  mov  ax,@data
-  mov  ds,ax
-  
-  mov  ah, 3dh 
-  mov al,2
-  mov  dx, offset filename
-  int  21h  
-  mov [handler], ax
+   WriteFile PROC NEAR
 
    mov bx, ax
    mov ah, 42h  ; "lseek"
@@ -1395,26 +1324,52 @@ CLEAR_SCREEN ENDP
    mov cx, 1
    mov ah, 40h
    int 21h ; write to file... 
-   
-   
-   
-
-
-  ;CLOSE FILE (OR DATA WILL BE LOST).
-  mov  ah, 3eh
-  mov  bx, handler
-  int  21h  
   
   RET    
       
-           ENDP
+  WriteFile ENDP
     
-    
+     Create PROC NEAR
+        mov ah,3ch
+        LEA DX,filename
+        mov cl,0
+        int 21h
+        mov handler,ax
+        RET
+        Create ENDP
+     
+     Close PROC NEAR 
+        mov ah,3eh
+        mov bx,handler
+        int 21h
+        RET
+        Close ENDP
+     Open PROC NEAR
+        mov ah,3dh
+        lea dx,filename
+        mov al,2
+        int 21h
+        mov handler,ax 
+        RET
+        Open ENDP
+     Read PROC NEAR
+        mov ah,3fh
+        lea dx,Dish
+        mov cx,100
+        mov bx,handler
+        int 21h
+        lea dx,Dish
+        mov ah,09h
+        int 21h
+        RET
+        Read ENDP
+     
      EXIT:
     
     MOV AH,4CH
     INT 21H
     HELP:
+    there:
     
 END MAIN      
 
