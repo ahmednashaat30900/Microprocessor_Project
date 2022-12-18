@@ -1,6 +1,6 @@
 # Resturant Billing System Project
 
-#### Project Contributers:
+### Project Contributers:
 
 | Name                        | Role        |
 | -----------                 | ----------- |
@@ -10,6 +10,11 @@
 | 4.Menna Mohamed             |             |
 | 5.Mai Adel                  |             |
 
-## Requirements to Run the program:
------------------------------------------------------------
+### Requirements to Run the program:
 EMU8086 Emulator must setup to Run the program
+
+### project Language:
+Assembly 8086
+
+### Project Features
+
