@@ -83,11 +83,6 @@ Q1 DB 0AH,0DH,0AH,0DH,  '  --         1.Choose another item                     
 Q2 DB 0AH,0DH,0AH,0DH,  '  --          2.Back to Menu                               --$'
 Q3 DB 0AH,0DH,          '  --                 6.Finish Order            --$' 
 
- 
-                     
-
-intArray DW 100 dup (0)
-    index    DW 0
 
 
 Choice DB 10,13,10,13,'Enter your order: $'
@@ -108,7 +103,6 @@ BR7 DB 0AH,0DH,'  ----------------------------------------------$'
 
 
 Invalid DB 10,13,10,13,'     ***&&INVALID ENTRY&&***$      ' 
-tr DB 10,13,'      ***&&Try Again&&***$'
 
 
 New_line DB 0AH,0DH,0AH,0DH,' $'
@@ -296,68 +290,11 @@ CLEAR_SCREEN ENDP
     INT 21H
     jmp select_choice
     
-     
-
-    
+   
      Finish_order:
         mov ax,sum
         printn '  total price is'
-    
-    call DISPLAY_NUM
-        
- 
- 
- 
-   Return_Menu:
-
-    LEA DX,BR5
-    MOV AH,9
-    INT 21H
-    
-    LEA DX,BR4
-    MOV AH,9
-    INT 21H   
-    
-    LEA DX,Q1
-    MOV AH,9
-    INT 21H 
-    
-    LEA DX,Q2
-    MOV AH,9
-    INT 21H 
-
-    LEA DX,Q3
-    MOV AH,9
-    INT 21H 
-    
-    LEA DX,BR4
-    MOV AH,9
-    INT 21H
-    
-    LEA DX,BR5
-    MOV AH,9
-    INT 21H 
-    
-    LEA DX,M2              
-    MOV AH,9
-    INT 21H 
-    
-    MOV AH,1
-    INT 21H
-    SUB AL,48 
-    
-    MOV Ans,AL
-   
-    CMP Ans,1
-   ; JE select_order
-    
-    CMP Ans,2
-    JE TOP
-
-    CMP Ans,3
-    JE Exit
-
-    
+        call DISPLAY_NUM
     
          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
   
@@ -453,6 +390,7 @@ CLEAR_SCREEN ENDP
   
   
     CMP order,1
+    push offset Dish1
     JE calc120
     
     
