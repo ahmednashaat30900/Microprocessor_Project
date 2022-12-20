@@ -1979,20 +1979,7 @@ CLEAR_SCREEN ENDP
                
               ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     
-     QuantityNumber PROC
-
-    printn " "
-    printn " Quantitynum"              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al 
-    
-    ENDP
+  
     
      DISPLAY_NUM PROC NEAR
         XOR CX, CX ;To count the digits
@@ -2016,7 +2003,11 @@ CLEAR_SCREEN ENDP
         RET  
     
      
-        DISPLAY_NUM ENDP
+        DISPLAY_NUM ENDP  
+     
+     
+     
+     
       
    WriteFile PROC NEAR
 
@@ -2046,8 +2037,14 @@ CLEAR_SCREEN ENDP
    int 21h ; write to file... 
   
   RET    
-      
-  WriteFile ENDP
+                  
+                  
+  WriteFile ENDP   
+   
+   
+   
+   
+   
     
      Create PROC NEAR 
         mov al,00h
@@ -2061,7 +2058,12 @@ CLEAR_SCREEN ENDP
         
         mov handler,ax
         RET
-        Create ENDP
+        Create ENDP  
+     
+     
+     
+     
+     
      
      Close PROC NEAR 
         mov ah,3eh
@@ -2069,6 +2071,11 @@ CLEAR_SCREEN ENDP
         int 21h
         RET
         Close ENDP
+     
+     
+     
+     
+     
      Open PROC NEAR
         mov ah,3dh
         lea dx,filename
@@ -2077,7 +2084,11 @@ CLEAR_SCREEN ENDP
         mov handler,ax 
         RET
         Open ENDP
-     
+                    
+                    
+                    
+                    
+                    
      Read PROC NEAR
         mov ah,3fh 
         mov bx,handler
@@ -2090,6 +2101,10 @@ CLEAR_SCREEN ENDP
         RET
         Read ENDP 
      
+     
+     
+     
+     
       convert proc
         
         push bp
@@ -2099,7 +2114,13 @@ CLEAR_SCREEN ENDP
         mov ax, [si]
     
         mov cl, "$"
-        mov [bx], cl
+        mov [bx], cl 
+        
+        
+        
+        
+        
+        
         
        divide:
        
