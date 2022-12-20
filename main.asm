@@ -473,10 +473,16 @@ CLEAR_SCREEN ENDP
     MOV ES,AX
     LEA SI,Dish1                  ; Location of STR1 is loaded to SI
     LEA DI,Dish                                                         
+<<<<<<< HEAD
     call Movestring 
     
     call convert
     
+=======
+    call Movestring
+     
+    call convert
+>>>>>>> c7ddf53274239ff8b5730ef276b814802588f259
     call WriteFile
                   
     jmp Main_Dishes 
@@ -496,7 +502,9 @@ CLEAR_SCREEN ENDP
     MOV ES,AX
     LEA SI,Dish2                  ; Location of STR1 is loaded to SI
     LEA DI,Dish                                                         
-    call Movestring 
+    call Movestring
+    
+    call convert 
     
     call WriteFile
                   
@@ -519,6 +527,8 @@ CLEAR_SCREEN ENDP
     LEA DI,Dish                                                         
     call Movestring 
     
+    call convert
+    
     call WriteFile    
     
     jmp Main_Dishes 
@@ -537,7 +547,9 @@ CLEAR_SCREEN ENDP
     MOV ES,AX
     LEA SI,Dish4                  ; Location of STR1 is loaded to SI
     LEA DI,Dish                                                         
-    call Movestring 
+    call Movestring
+    
+    call convert 
     
     call WriteFile
     
@@ -561,8 +573,14 @@ CLEAR_SCREEN ENDP
     MOV ES,AX
     LEA SI,Dish5                 ; Location of STR1 is loaded to SI
     LEA DI,Dish                                                         
+<<<<<<< HEAD
     call Movestring 
     call convert
+=======
+    call Movestring
+    
+    call convert 
+>>>>>>> c7ddf53274239ff8b5730ef276b814802588f259
     
     call WriteFile
    
@@ -583,7 +601,9 @@ CLEAR_SCREEN ENDP
     MOV ES,AX
     LEA SI,Dish6                 ; Location of STR1 is loaded to SI
     LEA DI,Dish                                                         
-    call Movestring 
+    call Movestring
+    
+    call convert 
     
     call WriteFile   
    
@@ -602,7 +622,13 @@ CLEAR_SCREEN ENDP
     MOV ES,AX
     LEA SI,Dish7                 ; Location of STR1 is loaded to SI
     LEA DI,Dish                                                         
+<<<<<<< HEAD
     
+=======
+    call Movestring
+    
+    call convert 
+>>>>>>> c7ddf53274239ff8b5730ef276b814802588f259
     
     call WriteFile   
    
@@ -621,7 +647,8 @@ CLEAR_SCREEN ENDP
     MOV ES,AX
     LEA SI,Dish8                 ; Location of STR1 is loaded to SI
     LEA DI,Dish                                                         
-    call Movestring 
+    call Movestring
+    call convert 
     
     call WriteFile   
    
@@ -1372,7 +1399,34 @@ CLEAR_SCREEN ENDP
         mov ah,09h
         int 21h
         RET
-        Read ENDP
+        Read ENDP 
+     
+      convert proc
+        
+        push bp
+        mov bp, sp
+    
+        mov si, offset quantity 
+        mov ax, [si]
+    
+        mov cl, "$"
+        mov [bx], cl
+        
+       divide:
+       
+        mov ah, 0
+        mov cl, 10
+        div cl         ; div number(in ax) by 10
+        dec bx
+        add ah, 48     ;Make into a character
+        mov quantity, ah  
+        cmp al, 0
+        jne divide
+    
+        pop bp
+        ret 4
+        
+        convert endp
      
      EXIT:
     
