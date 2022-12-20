@@ -85,7 +85,8 @@ Q2 DB 0AH,0DH,0AH,0DH,  '  --          2.Back to Menu                           
 Q3 DB 0AH,0DH,          '  --                 6.Finish Order            --$' 
 
  
-Dish DB ? 
+Dish DB ?
+Dishdess DB ? 
 space DB ' '             
 
 Choice DB 10,13,10,13,'Enter your order: $'
@@ -141,7 +142,7 @@ MAIN PROC
     
     
     DRAW_MAIN_MENU PROC NEAR
-        CALL CLEAR_SCREEN
+      ;  CALL CLEAR_SCREEN
     ;       Shows the menu title
 MOV AH,02h                       ;set cursor position
 MOV BH,00h                       ;set page number
@@ -196,19 +197,20 @@ RET
 DRAW_MAIN_MENU ENDp
 
 CLEAR_SCREEN PROC NEAR               ;clear the screen by restarting the video mode
-xor cx,cx
-mov dh,25
-mov dl,80
-mov bh,7
-mov ax,700h                      ;choose black as background color
+MOV AH,00h                   ;set the configuration to video mode
+MOV AL,12h                   ;choose the video mode
 INT 10h                         ;execute the configuration
+MOV AH,00h                      ;set the configuration
+MOV BH,00h                      ;to the background color
+MOV BL,00h                      ;choose black as background color
+INT 10h                            ;execute the configuration
 RET
 CLEAR_SCREEN ENDP
     
  
   TOP:
    
-      CALL CLEAR_SCREEN
+     ; CALL CLEAR_SCREEN
   
     LEA DX,M1
     MOV AH,9
@@ -296,6 +298,7 @@ CLEAR_SCREEN ENDP
     
    
      Finish_order: 
+    ; CALL CLEAR_SCREEN
      CALL Read
         mov ax,sum
         printn '  total price is'
@@ -312,7 +315,7 @@ CLEAR_SCREEN ENDP
   
   
    Main_Dishes: 
-   CALL CLEAR_SCREEN
+  ; CALL CLEAR_SCREEN
     
     LEA DX,M8    
     MOV AH,9
@@ -477,11 +480,6 @@ CLEAR_SCREEN ENDP
 
     call Movestring 
     
-    call convert
-    
-
-    call Movestring
-     
     call convert
 
     call WriteFile
@@ -661,7 +659,7 @@ CLEAR_SCREEN ENDP
                
     Appetizers:
     
-    CALL CLEAR_SCREEN
+  ;  CALL CLEAR_SCREEN
     
     LEA DX,M8
     MOV AH,9 
@@ -915,7 +913,7 @@ CLEAR_SCREEN ENDP
    
     Salads:
     
-    CALL CLEAR_SCREEN
+   ; CALL CLEAR_SCREEN
     
     LEA DX,M9    
     MOV AH,9
@@ -1068,7 +1066,7 @@ CLEAR_SCREEN ENDP
     
     Desserts:
     
-    CALL CLEAR_SCREEN
+   ; CALL CLEAR_SCREEN
     
      LEA DX,M8    
     MOV AH,9
@@ -1204,7 +1202,7 @@ CLEAR_SCREEN ENDP
         
     Drinks:
     
-    CALL CLEAR_SCREEN
+   ; CALL CLEAR_SCREEN
       
     LEA DX,M10   
     MOV AH,9
@@ -1423,15 +1421,13 @@ CLEAR_SCREEN ENDP
       
    WriteFile PROC NEAR
 
-   mov bx, ax
    mov ah, 42h  ; "lseek"
    mov al, 2    ; position relative to end of file
    mov cx, 0    ; offset MSW
    mov dx, 0    ; offset LSW
    int 21h
                                     
-                                    
-
+                                   
    mov bx, [handler]
    mov dx, offset Dish
    mov cx, 50
@@ -1479,12 +1475,12 @@ CLEAR_SCREEN ENDP
         Open ENDP
      
      Read PROC NEAR
-        mov ah,3fh
-        lea dx,Dish
-        mov cx,100
+        mov ah,3fh 
         mov bx,handler
+        mov cx,10000
+        lea dx,Dishdess
         int 21h
-        lea dx,Dish
+        mov dx,offset Dishdess
         mov ah,09h
         int 21h
         RET
@@ -1522,6 +1518,7 @@ CLEAR_SCREEN ENDP
     MOV AH,4CH
     INT 21H
     HELP:
+   
     
     
 END MAIN      
