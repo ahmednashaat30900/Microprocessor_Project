@@ -1235,22 +1235,22 @@ CLEAR_SCREEN ENDP
    
     
     CMP order,1
-    JE calc35 
+    JE calcDess1 
     
     CMP order,2
-    JE calc50
+    JE calcDess2
     
     
     CMP order,3
-    JE calc60
+    JE calcDess3
     
     
     CMP order,4
-    JE calc35
+    JE calcDess4
     
     
     CMP order,5
-    JE calc60
+    JE calcDess5
     
     CMP order,6
     JE TOP
@@ -1260,42 +1260,147 @@ CLEAR_SCREEN ENDP
     MOV AH,9
     INT 21H
     jmp select_order4
-    
-    
-    
-    calc35:
+             
+             
+         
+         
+               
+             
+         
+   calcDess1: 
 
-    call QuantityNumber
+   call QuantityNumber
 
-    mov al,35   
+    mov AL,35 
     MUL quantity
     
-   ADD sum, ax
-  
-    jmp Desserts
+    ADD sum, ax 
     
-    calc50:
-
-    call QuantityNumber
-
-    mov al,50       
-    MUL quantity
-
-    ADD sum, ax
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,Dess1                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile
  
-    jmp Desserts 
+    jmp  Desserts 
     
-    calc60:
     
+    
+         
+         
+         
+    
+    calcDess2: 
+
     call QuantityNumber
 
-    mov al,60   
+    mov AL,50 
     MUL quantity
     
-    ADD sum, ax
-  
-    jmp Desserts
+    ADD sum, ax 
     
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,Dess2                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile
+ 
+    jmp  Desserts 
+    
+    
+    
+    
+    
+     
+   calcDess3: 
+
+    call QuantityNumber
+
+    mov AL,60 
+    MUL quantity
+    
+    ADD sum, ax 
+    
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,Dess3                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile
+ 
+    jmp  Desserts  
+    
+    
+    
+    
+    
+    
+    calcDess4: 
+
+    call QuantityNumber
+
+    mov AL,35 
+    MUL quantity
+    
+    ADD sum, ax 
+    
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,Dess4                ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile
+ 
+    jmp  Desserts  
+    
+    
+    
+    
+    
+    
+    
+    
+    calcDess5: 
+
+    call QuantityNumber
+
+    mov AL,60
+    MUL quantity
+    
+    ADD sum, ax 
+    
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,Dess5                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile
+ 
+    jmp  Desserts 
+
+    
+    
+   
+            ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+    
+             
             ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     
         
