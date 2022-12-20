@@ -133,6 +133,7 @@ counter DB  ?
 MAIN PROC
     MOV AX,@DATA
     MOV DS,AX
+    CALL Open
     MOV counter, 01h
     CALL DRAW_MAIN_MENU 
     
@@ -206,7 +207,7 @@ CLEAR_SCREEN ENDP
     
  
   TOP:
-  CALL Open 
+   
       CALL CLEAR_SCREEN
   
     LEA DX,M1
@@ -443,7 +444,7 @@ CLEAR_SCREEN ENDP
         
     CLD                           ; Clear the contents of Direction Flag
     MOV CH,00H                    ; Since CX should be 00xx
-    MOV CL,100
+    MOV CL,50
     REP MOVSB
     
     ret
@@ -497,7 +498,7 @@ CLEAR_SCREEN ENDP
     
     ADD sum, ax 
     
-    MOV AX, @DATA
+    
     MOV Ax,Ds
     MOV ES,AX
     LEA SI,Dish2                  ; Location of STR1 is loaded to SI
@@ -542,7 +543,7 @@ CLEAR_SCREEN ENDP
  
     ADD sum, ax   
     
-    MOV AX, @DATA
+    
     MOV Ax,Ds
     MOV ES,AX
     LEA SI,Dish4                  ; Location of STR1 is loaded to SI
@@ -568,7 +569,7 @@ CLEAR_SCREEN ENDP
  
     ADD sum, ax  
     
-    MOV AX, @DATA
+    
     MOV Ax,Ds
     MOV ES,AX
     LEA SI,Dish5                 ; Location of STR1 is loaded to SI
@@ -596,7 +597,7 @@ CLEAR_SCREEN ENDP
 
     ADD sum, ax  
     
-    MOV AX, @DATA
+    
     MOV Ax,Ds
     MOV ES,AX
     LEA SI,Dish6                 ; Location of STR1 is loaded to SI
@@ -617,7 +618,7 @@ CLEAR_SCREEN ENDP
 
     ADD sum, ax  
     
-    MOV AX, @DATA
+  
     MOV Ax,Ds
     MOV ES,AX
     LEA SI,Dish7                 ; Location of STR1 is loaded to SI
@@ -642,7 +643,7 @@ CLEAR_SCREEN ENDP
 
     ADD sum, ax  
     
-    MOV AX, @DATA
+    
     MOV Ax,Ds
     MOV ES,AX
     LEA SI,Dish8                 ; Location of STR1 is loaded to SI
@@ -743,27 +744,27 @@ CLEAR_SCREEN ENDP
    
     
     CMP order,1
-    JE calc40
+    JE calcAPP1
     
     
     CMP order,2
-    JE calc15
+    JE calcAPP2
     
     
     CMP order,3
-    JE calc10
+    JE calcAPP3
     
     
     CMP order,4
-    JE calc40
+    JE calcAPP4
     
     
     CMP order,5
-    JE calc15
+    JE calcAPP5
     
     
     CMP order,6
-    JE calc10
+    JE calcAPP6
     
     CMP order,7
     JE TOP
@@ -778,14 +779,24 @@ CLEAR_SCREEN ENDP
                    
         
         
-   calc10: 
+   calcAPP1: 
 
    call QuantityNumber
 
-    mov AL,10  
+    mov AL,40 
     MUL quantity
     
     ADD sum, ax 
+    
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,APP1                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile
  
     jmp  Appetizers  
     
@@ -793,19 +804,48 @@ CLEAR_SCREEN ENDP
    
     
     
-    calc15:
+    calcAPP2:
     
     call QuantityNumber
 
     mov al,15
     MUL quantity
 
-    ADD sum, ax
+    ADD sum, ax 
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,APP2                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile
     
     jmp  Appetizers
     
     
-    calc40:
+    calcAPP3:
+    
+    call QuantityNumber
+
+    mov al,10
+    MUL quantity
+    
+    ADD sum, ax 
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,APP3                 ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile
+ 
+    jmp  Appetizers
+    
+    calcAPP4:
     
     call QuantityNumber
 
@@ -813,8 +853,57 @@ CLEAR_SCREEN ENDP
     MUL quantity
     
     ADD sum, ax 
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,APP4                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile
+ 
+    jmp  Appetizers
+    
+    calcAPP5:
+    
+    call QuantityNumber
+
+    mov al,15
+    MUL quantity
+    
+    ADD sum, ax 
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,APP5                 ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile
  
     jmp  Appetizers 
+    
+    calcAPP6:
+    
+    call QuantityNumber
+
+    mov al,10
+    MUL quantity
+    
+    ADD sum, ax 
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,APP6                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile
+ 
+    jmp  Appetizers   
         
         
         
