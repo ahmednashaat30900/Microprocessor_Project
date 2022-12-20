@@ -261,7 +261,10 @@ CLEAR_SCREEN ENDP
     LEA DX,BR2
     MOV AH,9
     INT 21H
-    
+            
+            
+            
+            
     select_choice:
     LEA DX,M2
     MOV AH,9
@@ -486,12 +489,21 @@ CLEAR_SCREEN ENDP
     call WriteFile
                   
     jmp Main_Dishes 
-    
+               
+               
     
     calcDish2:
     
-    call QuantityNumber
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
 
+    mov quantity,al 
+    
     mov al,120
     MUL quantity
     
@@ -510,10 +522,20 @@ CLEAR_SCREEN ENDP
                   
     jmp Main_Dishes    
             
-    
+            
+            
+            
     calcDish3:
     
-    call QuantityNumber
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
 
     mov al,100
     MUL quantity
@@ -533,9 +555,22 @@ CLEAR_SCREEN ENDP
     
     jmp Main_Dishes 
     
+    
+    
+    
+    
+    
     calcDish4:
     
-    call QuantityNumber
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
   
     mov al,160
     MUL quantity
@@ -561,7 +596,15 @@ CLEAR_SCREEN ENDP
     
     calcDish5: 
    
-   call QuantityNumber
+  LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
  
     mov al,120
     MUL quantity
@@ -589,7 +632,15 @@ CLEAR_SCREEN ENDP
      
      
     calcDish6:
-     call QuantityNumber
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
 
     mov al,140
     MUL quantity
@@ -609,9 +660,23 @@ CLEAR_SCREEN ENDP
    
     jmp Main_Dishes 
     
-     calcDish7:
-     call QuantityNumber
+    
+    
+    
+    
+    
+    
+    calcDish7:    
+    
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
 
+    mov quantity,al
     mov al,80
     MUL quantity
 
@@ -633,9 +698,22 @@ CLEAR_SCREEN ENDP
     call WriteFile   
    
     jmp Main_Dishes 
+       
+       
+               
+               
+               
+    calcDish8:    
     
-     calcDish8:
-     call QuantityNumber
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
 
     mov al,120
     MUL quantity
@@ -780,7 +858,16 @@ CLEAR_SCREEN ENDP
         
    calcAPP1: 
 
-   call QuantityNumber
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov AL,40 
     MUL quantity
@@ -805,7 +892,16 @@ CLEAR_SCREEN ENDP
     
     calcAPP2:
     
-    call QuantityNumber
+     LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov al,15
     MUL quantity
@@ -826,7 +922,16 @@ CLEAR_SCREEN ENDP
     
     calcAPP3:
     
-    call QuantityNumber
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov al,10
     MUL quantity
@@ -846,7 +951,16 @@ CLEAR_SCREEN ENDP
     
     calcAPP4:
     
-    call QuantityNumber
+     LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov al,40
     MUL quantity
@@ -866,7 +980,16 @@ CLEAR_SCREEN ENDP
     
     calcAPP5:
     
-    call QuantityNumber
+     LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov al,15
     MUL quantity
@@ -886,7 +1009,16 @@ CLEAR_SCREEN ENDP
     
     calcAPP6:
     
-    call QuantityNumber
+     LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov al,10
     MUL quantity
@@ -1030,7 +1162,16 @@ CLEAR_SCREEN ENDP
    
     calcSalad1:
     
-    call QuantityNumber
+     LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov al,20
     MUL quantity
@@ -1052,7 +1193,16 @@ CLEAR_SCREEN ENDP
    
     calcSalad2:
     
-    call QuantityNumber
+     LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov al,30
     MUL quantity
@@ -1074,7 +1224,16 @@ CLEAR_SCREEN ENDP
      
     calcSalad3:
     
-    call QuantityNumber
+     LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov al,20
     MUL quantity
@@ -1096,7 +1255,16 @@ CLEAR_SCREEN ENDP
     
     calcSalad4:
     
-    call QuantityNumber
+     LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov al,20
     MUL quantity
@@ -1118,7 +1286,16 @@ CLEAR_SCREEN ENDP
     
     calcSalad5:
     
-    call QuantityNumber
+     LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov al,25
     MUL quantity
@@ -1140,7 +1317,16 @@ CLEAR_SCREEN ENDP
     
     calcSalad6:
     
-    call QuantityNumber
+     LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov al,30
     MUL quantity
@@ -1273,8 +1459,16 @@ CLEAR_SCREEN ENDP
          
    calcDess1: 
 
-   call QuantityNumber
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
 
+    mov quantity,al
+   
     mov AL,35 
     MUL quantity
     
@@ -1300,7 +1494,16 @@ CLEAR_SCREEN ENDP
     
     calcDess2: 
 
-    call QuantityNumber
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov AL,50 
     MUL quantity
@@ -1326,8 +1529,16 @@ CLEAR_SCREEN ENDP
      
    calcDess3: 
 
-    call QuantityNumber
+     LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
 
+    mov quantity,al
+   
     mov AL,60 
     MUL quantity
     
@@ -1352,7 +1563,16 @@ CLEAR_SCREEN ENDP
     
     calcDess4: 
 
-    call QuantityNumber
+     LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov AL,35 
     MUL quantity
@@ -1380,7 +1600,16 @@ CLEAR_SCREEN ENDP
     
     calcDess5: 
 
-    call QuantityNumber
+     LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov AL,60
     MUL quantity
@@ -1534,8 +1763,16 @@ CLEAR_SCREEN ENDP
 
    calcDrink1:
     
-    call QuantityNumber
+     LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
 
+    mov quantity,al
+   
     mov al,8
     MUL quantity
     
@@ -1556,7 +1793,16 @@ CLEAR_SCREEN ENDP
   
    calcDrink2: 
     
-    call QuantityNumber
+     LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov al,7
     MUL quantity
@@ -1578,7 +1824,16 @@ CLEAR_SCREEN ENDP
          
    calcDrink3:
     
-    call QuantityNumber
+     LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov al,5
     MUL quantity
@@ -1602,7 +1857,16 @@ CLEAR_SCREEN ENDP
      
      calcDrink4:
     
-    call QuantityNumber
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
 
     mov al,8
     MUL quantity
@@ -1624,8 +1888,16 @@ CLEAR_SCREEN ENDP
     
     calcDrink5: 
     
-    call QuantityNumber
+     LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
 
+    mov quantity,al
+   
     mov al,7
     MUL quantity
     
@@ -1646,8 +1918,16 @@ CLEAR_SCREEN ENDP
     
  calcDrink6: 
     
-    call QuantityNumber
+     LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
 
+    mov quantity,al
+   
     mov al,16
     MUL quantity    
     
@@ -1669,7 +1949,16 @@ CLEAR_SCREEN ENDP
        
   calcDrink7: 
     
-    call QuantityNumber
+    LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+   
     mov al,23
     MUL quantity
 
@@ -1692,7 +1981,8 @@ CLEAR_SCREEN ENDP
     
      QuantityNumber PROC
 
-    LEA DX,Quantitynum              
+    printn " "
+    printn " Quantitynum"              
     MOV AH,9
     INT 21H 
  
