@@ -72,7 +72,7 @@ M9 DB 0AH,0DH,0AH,0DH,                  '  Choose your Salad from the menu$'
 MSG2 DB 0AH,0DH,0AH,0DH,                 '  --          Salad                        Price                   --$'
 
 MSG3 DB 0AH,0DH,0AH,0DH,                 '  --          Appetizer                        Price                   --$' 
-
+MSG5 DB 0AH,0DH,0AH,0DH,                 '  --          Dessert                        Price                   --$'
 
 M10 DB 0AH,0DH,0AH,0DH,                  '  Choose your Drink from the menu$' 
 
@@ -389,8 +389,10 @@ CLEAR_SCREEN ENDP
     INT 21H
     
     select_order1:
-    
-    LEA DX,Choice              
+                    
+                    
+    printn ' '               
+    printn 'enter your order'           
     MOV AH,9
     INT 21H 
     
@@ -726,8 +728,8 @@ CLEAR_SCREEN ENDP
     INT 21H
     
     select_order2:
-    
-    LEA DX,Choice              
+    printn ' '
+    printn 'enter your order'             
     MOV AH,9
     INT 21H 
     
@@ -980,8 +982,8 @@ CLEAR_SCREEN ENDP
     INT 21H
     
     select_order3:
-    
-    LEA DX,Choice              
+    printn ' '
+    printn 'enter your order'            
     MOV AH,9
     INT 21H 
     
@@ -1180,7 +1182,12 @@ CLEAR_SCREEN ENDP
     
     LEA DX,BR4
     MOV AH,9
-    INT 21H
+    INT 21H 
+    
+    
+    LEA DX,MSG5  
+    MOV AH,9
+    INT 21H 
     
     LEA DX,Dess1    
     MOV AH,9
@@ -1219,8 +1226,8 @@ CLEAR_SCREEN ENDP
     INT 21H
     
     select_order4:
-    
-    LEA DX,Choice              
+    printn ' '
+    printn 'enter your order'       
     MOV AH,9
     INT 21H 
     
@@ -1404,7 +1411,8 @@ CLEAR_SCREEN ENDP
     Drinks:
     
    ; CALL CLEAR_SCREEN
-      
+    printn ' '
+    printn "Enter your order"  
     LEA DX,M10   
     MOV AH,9
     INT 21H
@@ -1474,9 +1482,11 @@ CLEAR_SCREEN ENDP
     INT 21H
     
     
-    select_order5:
+    select_order5:  
     
-    LEA DX,Choice              
+    
+    printn " "
+    printn 'enter your order'             
     MOV AH,9
     INT 21H 
     
@@ -1825,4 +1835,4 @@ CLEAR_SCREEN ENDP
    
     
     
-END MAIN      
+END MAIN     
