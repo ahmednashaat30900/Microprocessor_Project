@@ -1184,28 +1184,28 @@ CLEAR_SCREEN ENDP
    
     
     CMP order,1
-    JE calc8 
+    JE calcDrink1 
     
     CMP order,2
-    JE calc7
+    JE calcDrink2
     
     
     CMP order,3
-    JE calc5
+    JE calcDrink3
     
     
     CMP order,4
-    JE calc8
+    JE calcDrink4   ;calc8
     
     
     CMP order,5
-    JE calc7
+    JE calcDrink5  ;calc7
     
     CMP order,6
-    JE calc16
+    JE calcDrink6
     
     CMP order,7
-    JE calc23
+    JE calcDrink7
     
     CMP order,8
     JE TOP
@@ -1218,61 +1218,159 @@ CLEAR_SCREEN ENDP
     
     
 
-   calc8:
+   calcDrink1:
     
     call QuantityNumber
 
     mov al,8
     MUL quantity
     
-    ADD sum, ax     
+    ADD sum, ax 
+        
+    MOV AX, @DATA
+    MOV DS,AX
+    MOV ES,AX
+    LEA SI,D1                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
     
+    call convert 
+    
+    call WriteFile
     jmp Drinks  
     
   
-   calc7: 
+   calcDrink2: 
     
     call QuantityNumber
 
     mov al,7
     MUL quantity
     
-    ADD sum, ax       
+    ADD sum, ax   
+        
+    MOV AX, @DATA
+    MOV DS,AX
+    MOV ES,AX
+    LEA SI,D2                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
     
+    call convert 
+    
+    call WriteFile
     jmp Drinks 
           
          
-   calc5:
+   calcDrink3:
     
     call QuantityNumber
 
     mov al,5
     MUL quantity
     
-    ADD sum, ax      
+    ADD sum, ax
+    
+    MOV AX, @DATA
+    MOV DS,AX
+    MOV ES,AX
+    LEA SI,D3                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile      
     
     jmp Drinks 
     
-   
-  calc16: 
+     
+     
+     calcDrink4:
+    
+    call QuantityNumber
+
+    mov al,8
+    MUL quantity
+    
+    ADD sum, ax 
+        
+    MOV AX, @DATA
+    MOV DS,AX
+    MOV ES,AX
+    LEA SI,D4                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile
+    
+    jmp Drinks
+    
+    calcDrink5: 
+    
+    call QuantityNumber
+
+    mov al,7
+    MUL quantity
+    
+    ADD sum, ax 
+    
+    MOV AX, @DATA
+    MOV DS,AX
+    MOV ES,AX
+    LEA SI,D5                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile      
+    
+    jmp Drinks   
+    
+ calcDrink6: 
     
     call QuantityNumber
 
     mov al,16
     MUL quantity    
     
-    ADD sum, ax  
+    ADD sum, ax
+    
+    MOV AX, @DATA
+    MOV DS,AX
+    MOV ES,AX
+    LEA SI,D6                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile  
     
     jmp Drinks       
            
        
-  calc23: 
+  calcDrink7: 
     
     call QuantityNumber
     mov al,23
     MUL quantity
 
-    ADD sum, ax     
+    ADD sum, ax
+    
+    MOV AX, @DATA
+    MOV DS,AX
+    MOV ES,AX
+    LEA SI,D7                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile     
 
     jmp Drinks       
                
@@ -1343,11 +1441,16 @@ CLEAR_SCREEN ENDP
       
   WriteFile ENDP
     
-     Create PROC NEAR
+     Create PROC NEAR 
+        mov al,00h
         mov ah,3ch
         LEA DX,filename
-        mov cl,0
-        int 21h
+        mov cx,00H
+        int 21h   
+        
+        ;Display part
+        JC EXIT    ; If carry Flag is Set, It means File is not Created
+        
         mov handler,ax
         RET
         Create ENDP
