@@ -135,7 +135,6 @@ MAIN PROC
     MOV AX,@DATA
     MOV DS,AX
     CALL Open
-    MOV counter, 01h
     CALL DRAW_MAIN_MENU 
     
     
@@ -299,11 +298,11 @@ CLEAR_SCREEN ENDP
    
      Finish_order: 
     ; CALL CLEAR_SCREEN
-     CALL Read
+    ; CALL Read
         mov ax,sum
         printn '  total price is'
         call DISPLAY_NUM
-    CALL Close
+   ; CALL Close
     mov ah,08h
     int 21h 
  
