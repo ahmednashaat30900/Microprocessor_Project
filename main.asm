@@ -20,14 +20,14 @@ M8 DB 0AH,0DH,0AH,0DH,              '  Choise your food from the menu$'
 MSG DB 0AH,0DH,0AH,0DH,       '  --          Dish                         Price                   --$'
                                                                                          
 ;Main Dishes  
-Dish1 DB 0AH,0DH,0AH,0DH,     '            1.Grilled Chicken            120LE$' 
-Dish2 DB 0AH,0DH,             '            2.Fried Chicken              120LE$'
-Dish3 DB 0AH,0DH,             '            3.Pasta                      100LE$'
-Dish4 DB 0AH,0DH,             '            4.Beef stack                 160LE$'
-Dish5 DB 0AH,0DH,             '            5.Grilled Shrimps            120LE$'
-Dish6 DB 0AH,0DH,             '            6.Mix Grill                  140LE$'
-Dish7 DB 0AH,0DH,             '            7.Stuffed cabbage            80LE $'
-Dish8 DB 0AH,0DH,             '            8.Kofta                      120LE$'
+Dish1 DB 0AH,0DH,0AH,0DH,     '            1.Grilled Chicken            120LE  $' 
+Dish2 DB 0AH,0DH,             '            2.Fried Chicken              120LE  $'
+Dish3 DB 0AH,0DH,             '            3.Pasta                      100LE  $'
+Dish4 DB 0AH,0DH,             '            4.Beef stack                 160LE  $'
+Dish5 DB 0AH,0DH,             '            5.Grilled Shrimps            120LE  $'
+Dish6 DB 0AH,0DH,             '            6.Mix Grill                  140LE  $'
+Dish7 DB 0AH,0DH,             '            7.Stuffed cabbage            80LE   $'
+Dish8 DB 0AH,0DH,             '            8.Kofta                      120LE $'
 B1 DB 0AH,0DH,                '            9.Back to Menu                    $'
 
 
@@ -86,7 +86,7 @@ Q3 DB 0AH,0DH,          '  --                 6.Finish Order            --$'
 
  
 Dish DB ? 
-LEN DB 0AH              
+space DB ' '             
 
 Choice DB 10,13,10,13,'Enter your order: $'
 
@@ -113,7 +113,7 @@ New_line DB 0AH,0DH,0AH,0DH,' $'
 Quantitynum DB 0AH,0DH, 'Enter quantity: $' 
 
 order DB ?
-quantity DB ?  
+quantity DB 0AH,0DH ?  
 sum DW ?
 Ans DB ? 
 counter DB  ?
@@ -133,6 +133,7 @@ counter DB  ?
 MAIN PROC
     MOV AX,@DATA
     MOV DS,AX
+    CALL Open
     MOV counter, 01h
     CALL DRAW_MAIN_MENU 
     
@@ -206,7 +207,7 @@ CLEAR_SCREEN ENDP
     
  
   TOP:
-  CALL Open 
+   
       CALL CLEAR_SCREEN
   
     LEA DX,M1
@@ -443,7 +444,7 @@ CLEAR_SCREEN ENDP
         
     CLD                           ; Clear the contents of Direction Flag
     MOV CH,00H                    ; Since CX should be 00xx
-    MOV CL,100
+    MOV CL,50
     REP MOVSB
     
     ret
@@ -473,9 +474,16 @@ CLEAR_SCREEN ENDP
     MOV ES,AX
     LEA SI,Dish1                  ; Location of STR1 is loaded to SI
     LEA DI,Dish                                                         
+
+    call Movestring 
+    
+    call convert
+    
+
     call Movestring
      
     call convert
+
     call WriteFile
                   
     jmp Main_Dishes 
@@ -490,8 +498,8 @@ CLEAR_SCREEN ENDP
     
     ADD sum, ax 
     
-    MOV AX, @DATA
-    MOV DS,AX
+    
+    MOV Ax,Ds
     MOV ES,AX
     LEA SI,Dish2                  ; Location of STR1 is loaded to SI
     LEA DI,Dish                                                         
@@ -535,8 +543,8 @@ CLEAR_SCREEN ENDP
  
     ADD sum, ax   
     
-    MOV AX, @DATA
-    MOV DS,AX
+    
+    MOV Ax,Ds
     MOV ES,AX
     LEA SI,Dish4                  ; Location of STR1 is loaded to SI
     LEA DI,Dish                                                         
@@ -561,14 +569,19 @@ CLEAR_SCREEN ENDP
  
     ADD sum, ax  
     
-    MOV AX, @DATA
-    MOV DS,AX
+    
+    MOV Ax,Ds
     MOV ES,AX
     LEA SI,Dish5                 ; Location of STR1 is loaded to SI
     LEA DI,Dish                                                         
+
+    call Movestring 
+    call convert
+
     call Movestring
     
     call convert 
+
     
     call WriteFile
    
@@ -584,8 +597,8 @@ CLEAR_SCREEN ENDP
 
     ADD sum, ax  
     
-    MOV AX, @DATA
-    MOV DS,AX
+    
+    MOV Ax,Ds
     MOV ES,AX
     LEA SI,Dish6                 ; Location of STR1 is loaded to SI
     LEA DI,Dish                                                         
@@ -605,14 +618,18 @@ CLEAR_SCREEN ENDP
 
     ADD sum, ax  
     
-    MOV AX, @DATA
-    MOV DS,AX
+  
+    MOV Ax,Ds
     MOV ES,AX
     LEA SI,Dish7                 ; Location of STR1 is loaded to SI
     LEA DI,Dish                                                         
+
+    
+
     call Movestring
     
     call convert 
+
     
     call WriteFile   
    
@@ -626,8 +643,8 @@ CLEAR_SCREEN ENDP
 
     ADD sum, ax  
     
-    MOV AX, @DATA
-    MOV DS,AX
+    
+    MOV Ax,Ds
     MOV ES,AX
     LEA SI,Dish8                 ; Location of STR1 is loaded to SI
     LEA DI,Dish                                                         
@@ -727,27 +744,27 @@ CLEAR_SCREEN ENDP
    
     
     CMP order,1
-    JE calc40
+    JE calcAPP1
     
     
     CMP order,2
-    JE calc15
+    JE calcAPP2
     
     
     CMP order,3
-    JE calc10
+    JE calcAPP3
     
     
     CMP order,4
-    JE calc40
+    JE calcAPP4
     
     
     CMP order,5
-    JE calc15
+    JE calcAPP5
     
     
     CMP order,6
-    JE calc10
+    JE calcAPP6
     
     CMP order,7
     JE TOP
@@ -762,14 +779,24 @@ CLEAR_SCREEN ENDP
                    
         
         
-   calc10: 
+   calcAPP1: 
 
    call QuantityNumber
 
-    mov AL,10  
+    mov AL,40 
     MUL quantity
     
     ADD sum, ax 
+    
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,APP1                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile
  
     jmp  Appetizers  
     
@@ -777,19 +804,48 @@ CLEAR_SCREEN ENDP
    
     
     
-    calc15:
+    calcAPP2:
     
     call QuantityNumber
 
     mov al,15
     MUL quantity
 
-    ADD sum, ax
+    ADD sum, ax 
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,APP2                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile
     
     jmp  Appetizers
     
     
-    calc40:
+    calcAPP3:
+    
+    call QuantityNumber
+
+    mov al,10
+    MUL quantity
+    
+    ADD sum, ax 
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,APP3                 ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile
+ 
+    jmp  Appetizers
+    
+    calcAPP4:
     
     call QuantityNumber
 
@@ -797,8 +853,57 @@ CLEAR_SCREEN ENDP
     MUL quantity
     
     ADD sum, ax 
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,APP4                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile
+ 
+    jmp  Appetizers
+    
+    calcAPP5:
+    
+    call QuantityNumber
+
+    mov al,15
+    MUL quantity
+    
+    ADD sum, ax 
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,APP5                 ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile
  
     jmp  Appetizers 
+    
+    calcAPP6:
+    
+    call QuantityNumber
+
+    mov al,10
+    MUL quantity
+    
+    ADD sum, ax 
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,APP6                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile
+ 
+    jmp  Appetizers   
         
         
         
@@ -1429,11 +1534,17 @@ CLEAR_SCREEN ENDP
    mov dx, offset Dish
    mov cx, 50
    mov ah, 40h
-   int 21h ; write to file...   
+   int 21h ; write to file...  
    
    mov bx, [handler]
-   mov dx, ax
-   mov cx, 1
+   mov dx, offset space
+   mov cx, 6
+   mov ah, 40h
+   int 21h ; write to file... 
+   
+   mov bx, [handler]
+   mov dx, offset quantity
+   mov cx, 2
    mov ah, 40h
    int 21h ; write to file... 
   
@@ -1469,6 +1580,7 @@ CLEAR_SCREEN ENDP
         mov handler,ax 
         RET
         Open ENDP
+     
      Read PROC NEAR
         mov ah,3fh
         lea dx,Dish
@@ -1513,11 +1625,6 @@ CLEAR_SCREEN ENDP
     MOV AH,4CH
     INT 21H
     HELP:
-    there:
+    
     
 END MAIN      
-
-
-
-
-  
