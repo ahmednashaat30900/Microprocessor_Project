@@ -998,27 +998,27 @@ CLEAR_SCREEN ENDP
    
     
     CMP order,1
-    JE calc20
+    JE calcSalad1
     
     
     CMP order,2
-    JE calc30
+    JE calcSalad2
     
     
     CMP order,3
-    JE calc20
+    JE calcSalad3
     
     
     CMP order,4
-    JE calc20
+    JE calcSalad4
     
     
     CMP order,5
-    JE calc25
+    JE calcSalad5
     
     
     CMP order,6
-    JE calc30
+    JE calcSalad6
     
     CMP order,7
     JE TOP
@@ -1029,7 +1029,7 @@ CLEAR_SCREEN ENDP
     jmp select_order3
     
    
-     calc20:
+    calcSalad1:
     
     call QuantityNumber
 
@@ -1037,31 +1037,128 @@ CLEAR_SCREEN ENDP
     MUL quantity
     
     ADD sum, ax
+    
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,Salad1                 ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile 
  
     jmp Salads
+    
    
-    calc25:
+    calcSalad2:
+    
+    call QuantityNumber
+
+    mov al,30
+    MUL quantity
+     
+    mov sum, ax
+    
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,Salad2                 ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile      
+
+    jmp Salads 
+    
+     
+    calcSalad3:
+    
+    call QuantityNumber
+
+    mov al,20
+    MUL quantity
+    
+    ADD sum, ax
+    
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,Salad3                 ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile      
+   
+    jmp Salads
+      
+    
+    calcSalad4:
+    
+    call QuantityNumber
+
+    mov al,20
+    MUL quantity
+    
+    ADD sum, ax
+    
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,Salad4                 ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile      
+   
+    jmp Salads
+     
+    
+    calcSalad5:
     
     call QuantityNumber
 
     mov al,25
     MUL quantity
-     
-    mov sum, ax     
-
-    jmp Salads 
     
+    ADD sum, ax
+    
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,Salad5                 ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile      
+   
+    jmp Salads 
      
-    calc30:
+    
+    calcSalad6:
     
     call QuantityNumber
 
     mov al,30
     MUL quantity
     
-    ADD sum, ax     
+    ADD sum, ax
+    
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,Salad6                 ; Location of STR1 is loaded to SI
+    LEA DI,Dish                                                         
+    call Movestring
+    
+    call convert 
+    
+    call WriteFile      
    
-    jmp Salads
+    jmp Salads   
     
           
       ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
