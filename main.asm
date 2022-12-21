@@ -32,6 +32,7 @@ B1 DB 0AH,0DH,                '            9.Back to Menu                    $'
 
 
 ;apptizers 
+<<<<<<< HEAD
 APP1 DB 0AH,0DH,              '            1.Mozzarella stickes         40LE                     $' 
 APP2 DB 0AH,0DH,              '            2.French Fries               15LE                     $'
 APP3 DB 0AH,0DH,              '            3.chips                      10LE                     $'
@@ -66,6 +67,42 @@ D5 DB 10,13,                  '            5.Milk                       7LE     
 D6 DB 10,13,                  '            6.Cocktail                   16LE                      $'
 D7 DB 10,13,                  '            7.Chocolate                  23LE                      $'
 B5 DB 10,13,                  '            8.Back to Menu                                         $'                                             
+=======
+APP1 DB 0AH,0DH,0AH,0DH,     '              1.Mozzarella stickes         40LE                     $' 
+APP2 DB 0AH,0DH,             '              2.French Fries               15LE                     $'
+APP3 DB 0AH,0DH,             '              3.chips                      10LE                     $'
+APP4 DB 0AH,0DH,             '              4.Hotdog Sandwich            40LE                     $'
+APP5 DB 0AH,0DH,             '              5.Onion Rings                15LE                     $'
+APP6 DB 0AH,0DH,             '              6.Wedge Fries                10LE                     $'
+B2 DB 0AH,0DH,               '              7.Back to Menu                                        $'
+
+;Salads
+Salad1 DB 0AH,0DH,0AH,0DH,              '              1.Green salad                20LE                      $'   
+Salad2 DB 0AH,0DH,                      '              2.Chicken caesar salad       30LE                      $'
+Salad3 DB 0AH,0DH,                      '              3.Caesar salad               20LE                      $'
+Salad4 DB 0AH,0DH,                      '              4.Greek salad                20LE                      $'
+Salad5 DB 0AH,0DH,                      '              5.Tuna salad                 25LE                      $'
+Salad6 DB 0AH,0DH,                      '              6.Italian pasta salad        30LE                      $' 
+B3 DB 0AH,0DH,                          '              7.Back to Menu                                         $'                       
+;Desserts
+ 
+Dess1 DB 0AH,0DH,0AH,0DH,     '              1.Cheesecake            35LE                     $' 
+Dess2 DB 0AH,0DH,             '              2.Cobbler               50LE                     $'
+Dess3 DB 0AH,0DH,             '              3.Cookies               60LE                     $'
+Dess4 DB 0AH,0DH,             '              4.Cakes                 35LE                     $'
+Dess5 DB 0AH,0DH,             '              5.Apple pie             60LE                     $'
+B4 DB 0AH,0DH,                '              6.Back to Menu                                   $'    
+                                                                                                                          
+;Drinks   
+D1 DB 10,13,                  '              1.Shoft Drinks               8LE                       $'
+D2 DB 10,13,                  '              2.Coffee                     7LE                       $'
+D3 DB 10,13,                  '              3.Tea                        5LE                       $'
+D4 DB 10,13,                  '              4.Orange juice               8LE                       $'
+D5 DB 10,13,                  '              5.Milk                       7LE                       $'
+D6 DB 10,13,                  '              6.Cocktail                   16LE                      $'
+D7 DB 10,13,                  '              7.Chocolate                  23LE                      $'
+B5 DB 10,13,                  '              8.Back to Menu                                         $'                                             
+>>>>>>> 8a90d82e303fdd11ab96c79ee8ea51fbdcffd768
 
 M9 DB 0AH,0DH,0AH,0DH,                  '  Choose your Salad from the menu$' 
 
@@ -302,6 +339,7 @@ CLEAR_SCREEN ENDP
     
    
      Finish_order: 
+<<<<<<< HEAD
      CALL CLEAR_SCREEN 
       mov ax,sum 
         printn ' '
@@ -318,6 +356,17 @@ CLEAR_SCREEN ENDP
     call readfile
        
   
+=======
+     CALL CLEAR_SCREEN
+    ; CALL Read   
+    call readfile
+        mov ax,sum
+      ;  printn '  total price is'
+       ; call DISPLAY_NUM
+    CALL Close
+    mov ah,08h
+    int 21h 
+>>>>>>> 8a90d82e303fdd11ab96c79ee8ea51fbdcffd768
  
    
 
@@ -1641,8 +1690,7 @@ CLEAR_SCREEN ENDP
     Drinks:
     
    ; CALL CLEAR_SCREEN
-    printn ' '
-    printn "Enter your order"  
+     
     LEA DX,M10   
     MOV AH,9
     INT 21H
@@ -2126,7 +2174,11 @@ CLEAR_SCREEN ENDP
         convert endp  
       
 
+<<<<<<< HEAD
    proc readfile 
+=======
+    readfile proc 
+>>>>>>> 8a90d82e303fdd11ab96c79ee8ea51fbdcffd768
     
     
             MOV AX,@DATA 
@@ -2159,7 +2211,7 @@ CLEAR_SCREEN ENDP
             lea si,buffer
                 
         
-    label:  
+    label1:  
     mov al,[si] 
     mov dl,al
     mov ah,2h
@@ -2172,7 +2224,7 @@ CLEAR_SCREEN ENDP
     dec cl
    
    
-    jnz label
+    jnz label1
     jz Print
            ;;;;;;;;;;;;;;;;; 
            
@@ -2181,7 +2233,7 @@ CLEAR_SCREEN ENDP
            je changefirst  
             inc si 
            dec cl
-           jnz label  
+           jnz label1  
            
            ;;;;;;;;;;;;;;;;       
 		             
@@ -2195,7 +2247,7 @@ CLEAR_SCREEN ENDP
 		   
 		  
            dec cl
-		   jnz label       
+		   jnz label1       
 		     ;ret                
 		     
 	Print:
@@ -2203,8 +2255,11 @@ CLEAR_SCREEN ENDP
 		mov dx,offset buffer  ; put the pointer back in DX.
 		mov ah,9
 		int 21h    ; call DOS Function 9 (Print String).
+<<<<<<< HEAD
 		 MOV AH,4CH
         INT 21H 
+=======
+>>>>>>> 8a90d82e303fdd11ab96c79ee8ea51fbdcffd768
 		 
 		  
     moving1: 
