@@ -27,45 +27,45 @@ Dish4 DB 0AH,0DH,             '            4.Beef stack                 160LE  $
 Dish5 DB 0AH,0DH,             '            5.Grilled Shrimps            120LE  $'
 Dish6 DB 0AH,0DH,             '            6.Mix Grill                  140LE  $'
 Dish7 DB 0AH,0DH,             '            7.Stuffed cabbage            80LE   $'
-Dish8 DB 0AH,0DH,             '            8.Kofta                      120LE $'
+Dish8 DB 0AH,0DH,             '            8.Kofta                      120LE  $'
 B1 DB 0AH,0DH,                '            9.Back to Menu                    $'
 
 
 ;apptizers 
-APP1 DB 0AH,0DH,0AH,0DH,     '  --          1.Mozzarella stickes         40LE                   --$' 
-APP2 DB 0AH,0DH,             '  --          2.French Fries               15LE                   --$'
-APP3 DB 0AH,0DH,             '  --          3.chips                      10LE                   --$'
-APP4 DB 0AH,0DH,             '  --          4.Hotdog Sandwich            40LE                   --$'
-APP5 DB 0AH,0DH,             '  --          5.Onion Rings                15LE                   --$'
-APP6 DB 0AH,0DH,             '  --          6.Wedge Fries                10LE                   --$'
-B2 DB 0AH,0DH,               '  --          7.Back to Menu                                      --$'
+APP1 DB 0AH,0DH,0AH,0DH,     '              1.Mozzarella stickes         40LE                     $' 
+APP2 DB 0AH,0DH,             '              2.French Fries               15LE                     $'
+APP3 DB 0AH,0DH,             '              3.chips                      10LE                     $'
+APP4 DB 0AH,0DH,             '              4.Hotdog Sandwich            40LE                     $'
+APP5 DB 0AH,0DH,             '              5.Onion Rings                15LE                     $'
+APP6 DB 0AH,0DH,             '              6.Wedge Fries                10LE                     $'
+B2 DB 0AH,0DH,               '              7.Back to Menu                                        $'
 
 ;Salads
-Salad1 DB 0AH,0DH,0AH,0DH,              '  --          1.Green salad                20LE                    --$'   
-Salad2 DB 0AH,0DH,                      '  --          2.Chicken caesar salad       30LE                    --$'
-Salad3 DB 0AH,0DH,                      '  --          3.Caesar salad               20LE                    --$'
-Salad4 DB 0AH,0DH,                      '  --          4.Greek salad                20LE                    --$'
-Salad5 DB 0AH,0DH,                      '  --          5.Tuna salad                 25LE                    --$'
-Salad6 DB 0AH,0DH,                      '  --          6.Italian pasta salad        30LE                    --$' 
-B3 DB 0AH,0DH,                          '  --          7.Back to Menu                                       --$'                       
+Salad1 DB 0AH,0DH,0AH,0DH,              '              1.Green salad                20LE                      $'   
+Salad2 DB 0AH,0DH,                      '              2.Chicken caesar salad       30LE                      $'
+Salad3 DB 0AH,0DH,                      '              3.Caesar salad               20LE                      $'
+Salad4 DB 0AH,0DH,                      '              4.Greek salad                20LE                      $'
+Salad5 DB 0AH,0DH,                      '              5.Tuna salad                 25LE                      $'
+Salad6 DB 0AH,0DH,                      '              6.Italian pasta salad        30LE                      $' 
+B3 DB 0AH,0DH,                          '              7.Back to Menu                                         $'                       
 ;Desserts
  
-Dess1 DB 0AH,0DH,0AH,0DH,     '  --          1.Cheesecake            35LE                   --$' 
-Dess2 DB 0AH,0DH,             '  --          2.Cobbler               50LE                   --$'
-Dess3 DB 0AH,0DH,             '  --          3.Cookies               60LE                   --$'
-Dess4 DB 0AH,0DH,             '  --          4.Cakes                 35LE                   --$'
-Dess5 DB 0AH,0DH,             '  --          5.Apple pie             60LE                   --$'
-B4 DB 0AH,0DH,                '  --          6.Back to Menu                                 --$'    
+Dess1 DB 0AH,0DH,0AH,0DH,     '              1.Cheesecake            35LE                     $' 
+Dess2 DB 0AH,0DH,             '              2.Cobbler               50LE                     $'
+Dess3 DB 0AH,0DH,             '              3.Cookies               60LE                     $'
+Dess4 DB 0AH,0DH,             '              4.Cakes                 35LE                     $'
+Dess5 DB 0AH,0DH,             '              5.Apple pie             60LE                     $'
+B4 DB 0AH,0DH,                '              6.Back to Menu                                   $'    
                                                                                                                           
 ;Drinks   
-D1 DB 10,13,                  ' --           1.Shoft Drinks               8LE                     --$'
-D2 DB 10,13,                  ' --           2.Coffee                     7LE                     --$'
-D3 DB 10,13,                  ' --           3.Tea                        5LE                     --$'
-D4 DB 10,13,                  ' --           4.Orange juice               8LE                     --$'
-D5 DB 10,13,                  ' --           5.Milk                       7LE                     --$'
-D6 DB 10,13,                  ' --           6.Cocktail                   16LE                    --$'
-D7 DB 10,13,                  ' --           7.Chocolate                  23LE                    --$'
-B5 DB 10,13,                  ' --           8.Back to Menu                                       --$'                                             
+D1 DB 10,13,                  '              1.Shoft Drinks               8LE                       $'
+D2 DB 10,13,                  '              2.Coffee                     7LE                       $'
+D3 DB 10,13,                  '              3.Tea                        5LE                       $'
+D4 DB 10,13,                  '              4.Orange juice               8LE                       $'
+D5 DB 10,13,                  '              5.Milk                       7LE                       $'
+D6 DB 10,13,                  '              6.Cocktail                   16LE                      $'
+D7 DB 10,13,                  '              7.Chocolate                  23LE                      $'
+B5 DB 10,13,                  '              8.Back to Menu                                         $'                                             
 
 M9 DB 0AH,0DH,0AH,0DH,                  '  Choose your Salad from the menu$' 
 
@@ -106,7 +106,7 @@ BR6 DB 0AH,0DH,'  --                                          --$'
 BR7 DB 0AH,0DH,'  ----------------------------------------------$'
 
 
-Invalid DB 10,13,10,13,'     ***&&INVALID ENTRY&&***$      ' 
+Invalid DB 10,13,10,13,'     *&&INVALID ENTRY&&*$      ' 
 
 
 New_line DB 0AH,0DH,0AH,0DH,' $'
@@ -2043,12 +2043,9 @@ CLEAR_SCREEN ENDP
   WriteFile ENDP   
    
    
-<<<<<<< HEAD
- 
-=======
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     
->>>>>>> f26837357873a0cc0e3fcb1b8ab6841d219c4514
+
      Create PROC NEAR 
         mov al,00h
         mov ah,3ch
@@ -2065,12 +2062,11 @@ CLEAR_SCREEN ENDP
      
      
      
-<<<<<<< HEAD
-=======
+
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
      
      
->>>>>>> f26837357873a0cc0e3fcb1b8ab6841d219c4514
+
      Close PROC NEAR 
         mov ah,3eh
         mov bx,handler
@@ -2078,13 +2074,10 @@ CLEAR_SCREEN ENDP
         RET
         Close ENDP
      
-     
-<<<<<<< HEAD
     
-=======
      
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
->>>>>>> f26837357873a0cc0e3fcb1b8ab6841d219c4514
+
      
      Open PROC NEAR
         mov ah,3dh
@@ -2094,15 +2087,14 @@ CLEAR_SCREEN ENDP
         mov handler,ax 
         RET
         Open ENDP
-<<<<<<< HEAD
                     
      
      
      
-=======
+
                 
            ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
->>>>>>> f26837357873a0cc0e3fcb1b8ab6841d219c4514
+
      
       convert proc
         
@@ -2133,37 +2125,8 @@ CLEAR_SCREEN ENDP
         
         convert endp  
       
-<<<<<<< HEAD
-      proc readfile
-    MOV AX,@DATA 
-    MOV DS,AX 
 
-		mov ah,3Dh   ; 3Dh of DOS Services opens a file.
-		mov al,0   ; 0 - for reading. 1 - for writing. 2 - both
-		mov dx,offset filename  ; make a pointer to the filename
-		int 21h   ; call DOS
-		mov handler,ax   ; Function 3Dh returns the file handle in AX, here we save it for later use.
-
-	;'DOS Service Function number 3Fh reads from a file.
-
-		mov ah,3Fh
-		mov cx,255   ; I will assume ELMO.TXT has atleast 4 bytes in it. CX is how many bytes to read.
-		mov dx,offset buffer  ; DOS Functions like DX having pointers for some reason.
-		mov bx,handler    ; BX needs the file handle.
-		int 21h   ; call DOS
-
-	;Here we will put a $ after 4 bytes in the buffer and print the data read:
-
-		mov dx,offset buffer
-		add dx,ax    ; Function 3Fh returns the actual amount of bytes read in AX (should be 4 if
-				; nothing went wrong.
-		mov bx,dx
-		mov byte [bx],'$'   ; byte pointer so we don't mess with the whole word (a word is 16bits).
-            
-               mov cl,10
-               mov bl,1
-=======
-   proc readfile 
+    readfile proc 
     
     
             MOV AX,@DATA 
@@ -2178,7 +2141,7 @@ CLEAR_SCREEN ENDP
     	;'DOS Service Function number 3Fh reads from a file.
     
     		mov ah,3Fh
-    		mov cx,255   ; I will assume ELMO.TXT has atleast 4 bytes in it. CX is how many bytes to read.
+    		mov cx,10000   ; I will assume ELMO.TXT has atleast 4 bytes in it. CX is how many bytes to read.
     		mov dx,offset buffer  ; DOS Functions like DX having pointers for some reason.
     		mov bx,handler    ; BX needs the file handle.
     		int 21h   ; call DOS
@@ -2191,9 +2154,8 @@ CLEAR_SCREEN ENDP
     		mov bx,dx
     		mov byte [bx],'$'   ; byte pointer so we don't mess with the whole word (a word is 16bits).
                 
-            mov cl,15
+            mov cl,10
             mov bl,1
->>>>>>> f26837357873a0cc0e3fcb1b8ab6841d219c4514
             lea si,buffer
                 
         
@@ -2241,14 +2203,7 @@ CLEAR_SCREEN ENDP
 		mov dx,offset buffer  ; put the pointer back in DX.
 		mov ah,9
 		int 21h    ; call DOS Function 9 (Print String).
-<<<<<<< HEAD
-		              
-=======
-		mov ah,4Ch
-		int 21h      ; Function 4Ch (Exit Program)               
 		 
-		 
->>>>>>> f26837357873a0cc0e3fcb1b8ab6841d219c4514
 		  
     moving1: 
     cmp al,' '
@@ -2276,4 +2231,4 @@ CLEAR_SCREEN ENDP
    
     
     
-END MAIN     
+END MAIN
