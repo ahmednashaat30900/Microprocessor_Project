@@ -300,13 +300,13 @@ CLEAR_SCREEN ENDP
     
    
      Finish_order: 
-    ; CALL CLEAR_SCREEN
+     CALL CLEAR_SCREEN
     ; CALL Read   
     call readfile
         mov ax,sum
-        printn '  total price is'
-        call DISPLAY_NUM
-   ; CALL Close
+      ;  printn '  total price is'
+       ; call DISPLAY_NUM
+    CALL Close
     mov ah,08h
     int 21h 
  
@@ -2043,10 +2043,7 @@ CLEAR_SCREEN ENDP
   WriteFile ENDP   
    
    
-   
-   
-   
-    
+ 
      Create PROC NEAR 
         mov al,00h
         mov ah,3ch
@@ -2063,9 +2060,6 @@ CLEAR_SCREEN ENDP
      
      
      
-     
-     
-     
      Close PROC NEAR 
         mov ah,3eh
         mov bx,handler
@@ -2074,8 +2068,7 @@ CLEAR_SCREEN ENDP
         Close ENDP
      
      
-     
-     
+    
      
      Open PROC NEAR
         mov ah,3dh
@@ -2086,22 +2079,6 @@ CLEAR_SCREEN ENDP
         RET
         Open ENDP
                     
-                    
-                    
-                    
-                    
-    ; Read PROC NEAR
-      ;  mov ah,3fh 
-      ;  mov bx,handler
-       ; mov cx,10000
-        ;lea dx,Dishdess
-        ;int 21h
-        ;mov dx,offset Dishdess
-        ;mov ah,09h
-        ;int 21h
-        ;RET
-        ;Read ENDP 
-     
      
      
      
@@ -2119,10 +2096,6 @@ CLEAR_SCREEN ENDP
         
         
         
-        
-        
-        
-        
        divide:
        
         mov ah, 0
@@ -2135,7 +2108,7 @@ CLEAR_SCREEN ENDP
         jne divide
     
         pop bp
-        ret 4
+        ret
         
         convert endp  
       
@@ -2165,7 +2138,7 @@ CLEAR_SCREEN ENDP
 		mov bx,dx
 		mov byte [bx],'$'   ; byte pointer so we don't mess with the whole word (a word is 16bits).
             
-               mov cl,20
+               mov cl,10
                mov bl,1
             lea si,buffer
             label:  
@@ -2200,8 +2173,7 @@ CLEAR_SCREEN ENDP
 		   mov [si],al
 		   mov bl,0
 		   
-		   dec si 
-		    inc si 
+		  
            dec cl
 		   jnz label       
 		     ;ret                
@@ -2211,8 +2183,7 @@ CLEAR_SCREEN ENDP
 		mov dx,offset buffer  ; put the pointer back in DX.
 		mov ah,9
 		int 21h    ; call DOS Function 9 (Print String).
-		mov ah,4Ch
-		int 21h      ; Function 4Ch (Exit Program)               
+		              
 		  
 moving1: 
 cmp al,' '
