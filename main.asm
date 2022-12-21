@@ -1,84 +1,81 @@
 include 'emu8086.inc'
 .MODEL LARGE
 .STACK 1000H
-.DATA
+.DATA  
+;----------------------------------------------------------------------------------------
 M1 DB 0AH,0DH,0AH,0DH,  '                   Welcome to Shobra Restaurants$' 
 M2 DB 0AH,0DH,0AH,0DH,                ' Please Enter your Choise $'
-  
-;Main menue  
+;---------------------------------------------------------------------------------------  
 Menu1  DB 0AH,0DH, '  --                 1.Main Dishes             --$' 
 Menu2  DB 0AH,0DH, '  --                 2.Appetizers              --$'
 Menu3  DB 0AH,0DH, '  --                 3.Salads                  --$'
 Menu4  DB 0AH,0DH, '  --                 4.Desserts                --$'
 Menu5  DB 0AH,0DH, '  --                 5.Drinks                  --$'
-           
+;---------------------------------------------------------------------------------------          
 filename db "project.txt",0
 handler dw ?
                
 M8 DB 0AH,0DH,0AH,0DH,              '  Choise your food from the menu$' 
+;----------------------------------------------------------------------------------------------------
+MSG DB 0AH,0DH,0AH,0DH,       '        Dish                        Price  $'                                                                                        
+Dish1 DB 0AH,0DH,             '       1.Grilled Chicken            120LE  $' 
+Dish2 DB 0AH,0DH,             '       2.Fried Chicken              120LE  $'
+Dish3 DB 0AH,0DH,             '       3.Pasta                      100LE  $'
+Dish4 DB 0AH,0DH,             '       4.Beef stack                 160LE  $'
+Dish5 DB 0AH,0DH,             '       5.Grilled Shrimps            120LE  $'
+Dish6 DB 0AH,0DH,             '       6.Mix Grill                  140LE  $'
+Dish7 DB 0AH,0DH,             '       7.Stuffed cabbage            80LE   $'
+Dish8 DB 0AH,0DH,             '       8.Kofta                      120LE  $'
+B1 DB 0AH,0DH,                '       9.Back to Menu                      $'
+;----------------------------------------------------------------------------------------------
 
-MSG DB 0AH,0DH,0AH,0DH,       '  --          Dish                         Price                   --$'
-                                                                                         
-;Main Dishes  
-Dish1 DB 0AH,0DH,             '            1.Grilled Chicken            120LE  $' 
-Dish2 DB 0AH,0DH,             '            2.Fried Chicken              120LE  $'
-Dish3 DB 0AH,0DH,             '            3.Pasta                      100LE  $'
-Dish4 DB 0AH,0DH,             '            4.Beef stack                 160LE  $'
-Dish5 DB 0AH,0DH,             '            5.Grilled Shrimps            120LE  $'
-Dish6 DB 0AH,0DH,             '            6.Mix Grill                  140LE  $'
-Dish7 DB 0AH,0DH,             '            7.Stuffed cabbage            80LE   $'
-Dish8 DB 0AH,0DH,             '            8.Kofta                      120LE  $'
-B1 DB 0AH,0DH,                '            9.Back to Menu                    $'
+MSG3 DB 0AH,0DH,0AH,0DH,      '       Appetizer                    Price  $'  
+APP1 DB 0AH,0DH,              '       1.Mozzarella stickes         40LE   $' 
+APP2 DB 0AH,0DH,              '       2.French Fries               15LE   $'
+APP3 DB 0AH,0DH,              '       3.chips                      10LE   $'
+APP4 DB 0AH,0DH,              '       4.Hotdog Sandwich            40LE   $'
+APP5 DB 0AH,0DH,              '       5.Onion Rings                15LE   $'
+APP6 DB 0AH,0DH,              '       6.Wedge Fries                10LE   $'
+B2 DB 0AH,0DH,                '       7.Back to Menu                      $'
 
-
-;apptizers 
-APP1 DB 0AH,0DH,              '            1.Mozzarella stickes         40LE                     $' 
-APP2 DB 0AH,0DH,              '            2.French Fries               15LE                     $'
-APP3 DB 0AH,0DH,              '            3.chips                      10LE                     $'
-APP4 DB 0AH,0DH,              '            4.Hotdog Sandwich            40LE                     $'
-APP5 DB 0AH,0DH,              '            5.Onion Rings                15LE                     $'
-APP6 DB 0AH,0DH,              '            6.Wedge Fries                10LE                     $'
-B2 DB 0AH,0DH,                '            7.Back to Menu                                        $'
-
-;Salads
-Salad1 DB 0AH,0DH,            '            1.Green salad                20LE                      $'   
-Salad2 DB 0AH,0DH,            '            2.Chicken caesar salad       30LE                      $'
-Salad3 DB 0AH,0DH,            '            3.Caesar salad               20LE                      $'
-Salad4 DB 0AH,0DH,            '            4.Greek salad                20LE                      $'
-Salad5 DB 0AH,0DH,            '            5.Tuna salad                 25LE                      $'
-Salad6 DB 0AH,0DH,            '            6.Italian pasta salad        30LE                      $' 
-B3 DB 0AH,0DH,                '            7.Back to Menu                                         $'                       
-;Desserts
- 
-Dess1 DB 0AH,0DH,             '            1.Cheesecake            35LE                     $' 
-Dess2 DB 0AH,0DH,             '            2.Cobbler               50LE                     $'
-Dess3 DB 0AH,0DH,             '            3.Cookies               60LE                     $'
-Dess4 DB 0AH,0DH,             '            4.Cakes                 35LE                     $'
-Dess5 DB 0AH,0DH,             '            5.Apple pie             60LE                     $'
-B4 DB 0AH,0DH,                '            6.Back to Menu                                   $'    
+MSG2 DB 0AH,0DH,0AH,0DH,      '       Salad                        Price  $'
+Salad1 DB 0AH,0DH,            '       1.Green salad                20LE   $'   
+Salad2 DB 0AH,0DH,            '       2.Chicken caesar salad       30LE   $'
+Salad3 DB 0AH,0DH,            '       3.Caesar salad               20LE   $'
+Salad4 DB 0AH,0DH,            '       4.Greek salad                20LE   $'
+Salad5 DB 0AH,0DH,            '       5.Tuna salad                 25LE   $'
+Salad6 DB 0AH,0DH,            '       6.Italian pasta salad        30LE   $' 
+B3 DB 0AH,0DH,                '       7.Back to Menu                      $'                       
+;--------------------------------------------------------------------------------
+MSG5 DB 0AH,0DH,0AH,0DH,      '       Dessert                      Price  $'
+Dess1 DB 0AH,0DH,             '       1.Cheesecake                 35LE   $' 
+Dess2 DB 0AH,0DH,             '       2.Cobbler                    50LE   $'
+Dess3 DB 0AH,0DH,             '       3.Cookies                    60LE   $'
+Dess4 DB 0AH,0DH,             '       4.Cakes                      35LE   $'
+Dess5 DB 0AH,0DH,             '       5.Apple pie                  60LE   $'
+B4 DB 0AH,0DH,                '       6.Back to Menu                      $'    
                                                                                                                           
-;Drinks   
-D1 DB 10,13,                  '            1.Shoft Drinks               8LE                       $'
-D2 DB 10,13,                  '            2.Coffee                     7LE                       $'
-D3 DB 10,13,                  '            3.Tea                        5LE                       $'
-D4 DB 10,13,                  '            4.Orange juice               8LE                       $'
-D5 DB 10,13,                  '            5.Milk                       7LE                       $'
-D6 DB 10,13,                  '            6.Cocktail                   16LE                      $'
-D7 DB 10,13,                  '            7.Chocolate                  23LE                      $'
-B5 DB 10,13,                  '            8.Back to Menu                                         $'                                             
+;--------------------------------------------------------------------------------------
+MSG4 DB 0AH,0DH,0AH,0DH,      '       Drink                        Price  $'   
+D1 DB 10,13,                  '       1.Shoft Drinks               8LE    $'
+D2 DB 10,13,                  '       2.Coffee                     7LE    $'
+D3 DB 10,13,                  '       3.Tea                        5LE    $'
+D4 DB 10,13,                  '       4.Orange juice               8LE    $'
+D5 DB 10,13,                  '       5.Milk                       7LE    $'
+D6 DB 10,13,                  '       6.Cocktail                   16LE   $'
+D7 DB 10,13,                  '       7.Chocolate                  23LE   $'
+B5 DB 10,13,                  '       8.Back to Menu                      $'                                             
 
 M9 DB 0AH,0DH,0AH,0DH,                  '  Choose your Salad from the menu$' 
 
-MSG2 DB 0AH,0DH,0AH,0DH,                 '  --          Salad                        Price                   --$'
 
-MSG3 DB 0AH,0DH,0AH,0DH,                 '  --          Appetizer                        Price                   --$' 
-MSG5 DB 0AH,0DH,0AH,0DH,                 '  --          Dessert                        Price                   --$'
- 
-finish DB '                 Item                    price    Quantity   total $' 
-total DB '                          Total Price is $'
+
+
+
 M10 DB 0AH,0DH,0AH,0DH,                  '  Choose your Drink from the menu$' 
 
-MSG4 DB 0AH,0DH,0AH,0DH,                 '  --          Drink                        Price                   --$'
+
+
   
 
 ;return_to_menu
@@ -99,12 +96,14 @@ BR2 DB 0AH,0DH,'  -----------------------------------------------$'
 BR3 DB 0AH,0DH,'  --                                           --$'
 
 
-BR4 DB 0AH,0DH,'  --                                                               --$'
+BR4 DB 0AH,0DH,'  --                                                               --$' 
+Recipt DB 0ah,0dh, '          Item           Price     Quantity     Total '
 BR5 DB 0AH,0DH,'  -------------------------------------------------------------------$'
 
 
 
-BR6 DB 0AH,0DH,'  --                                          --$'
+BR6 DB 0AH,0DH,'  --                                          --$' 
+price DB 0ah,0dh, 'Total price is: '
 BR7 DB 0AH,0DH,'  ----------------------------------------------$'
 
 
@@ -136,7 +135,7 @@ buffer DW ?
 MAIN PROC
     MOV AX,@DATA
     MOV DS,AX
-    CALL Create
+    call Create
     CALL DRAW_MAIN_MENU 
     
     
@@ -211,7 +210,7 @@ CLEAR_SCREEN ENDP
  
   TOP:
    
-    ;  CALL CLEAR_SCREEN
+      CALL CLEAR_SCREEN
   
     LEA DX,M1
     MOV AH,9
@@ -301,24 +300,23 @@ CLEAR_SCREEN ENDP
     jmp select_choice
     
    
-     Finish_order: 
-     CALL CLEAR_SCREEN 
-      
-        printn ' '
-        printn ' '
-         LEA DX,total   
-       MOV AH,9
-       INT 21H 
-        mov ax,sum
-        call DISPLAY_NUM
-       printn ' '
-       printn ' '  
-    LEA DX,finish    
+     Finish_order:
+     
+    LEA DX,BR5
     MOV AH,9
     INT 21H 
-    call readfile
-       
-  
+    
+    LEA DX,Recipt
+    MOV AH,9
+    INT 21H
+    
+   
+    call readfile   
+    
+        mov ax,sum
+       printn '  total price is'
+       call DISPLAY_NUM
+    
  
    
 
@@ -328,7 +326,7 @@ CLEAR_SCREEN ENDP
   
   
    Main_Dishes: 
-  ; CALL CLEAR_SCREEN
+   CALL CLEAR_SCREEN
     
     LEA DX,M8    
     MOV AH,9
@@ -405,7 +403,8 @@ CLEAR_SCREEN ENDP
     select_order1:
                     
                     
-    LEA DX,Choice         
+    printn ' '               
+    printn 'enter your order'           
     MOV AH,9
     INT 21H 
     
@@ -469,17 +468,9 @@ CLEAR_SCREEN ENDP
      
     calcDish1:
     
-   ; call QuantityNumber 
+    call QuantityNumber 
    
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+   
    
 
     mov al,120
@@ -504,15 +495,8 @@ CLEAR_SCREEN ENDP
     
     calcDish2:
     
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al 
+   call Quantitynumber
+    
     
     mov al,120
     MUL quantity
@@ -537,15 +521,8 @@ CLEAR_SCREEN ENDP
             
     calcDish3:
     
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+   call Quantitynumber
+   
 
     mov al,100
     MUL quantity
@@ -572,15 +549,9 @@ CLEAR_SCREEN ENDP
     
     calcDish4:
     
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+      call Quantitynumber
+   
+   
   
     mov al,160
     MUL quantity
@@ -606,15 +577,8 @@ CLEAR_SCREEN ENDP
     
     calcDish5: 
    
-  LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+   call Quantitynumber
+   
  
     mov al,120
     MUL quantity
@@ -637,15 +601,8 @@ CLEAR_SCREEN ENDP
      
      
     calcDish6:
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+   call Quantitynumber
+   
 
     mov al,140
     MUL quantity
@@ -673,15 +630,8 @@ CLEAR_SCREEN ENDP
     
     calcDish7:    
     
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+    call Quantitynumber
+   
     mov al,80
     MUL quantity
 
@@ -710,15 +660,8 @@ CLEAR_SCREEN ENDP
                
     calcDish8:    
     
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+      call Quantitynumber
+   
 
     mov al,120
     MUL quantity
@@ -863,15 +806,8 @@ CLEAR_SCREEN ENDP
         
    calcAPP1: 
 
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+   call Quantitynumber
+   
    
 
     mov AL,40 
@@ -897,15 +833,8 @@ CLEAR_SCREEN ENDP
     
     calcAPP2:
     
-     LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+      call Quantitynumber
+   
    
 
     mov al,15
@@ -927,15 +856,8 @@ CLEAR_SCREEN ENDP
     
     calcAPP3:
     
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+    call Quantitynumber
+   
    
 
     mov al,10
@@ -956,15 +878,8 @@ CLEAR_SCREEN ENDP
     
     calcAPP4:
     
-     LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+    call Quantitynumber
+   
    
 
     mov al,40
@@ -984,16 +899,7 @@ CLEAR_SCREEN ENDP
     jmp  Appetizers
     
     calcAPP5:
-    
-     LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+     call Quantitynumber
    
 
     mov al,15
@@ -1014,15 +920,7 @@ CLEAR_SCREEN ENDP
     
     calcAPP6:
     
-     LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+   call Quantitynumber
    
 
     mov al,10
@@ -1051,7 +949,7 @@ CLEAR_SCREEN ENDP
    
     Salads:
     
-   ; CALL CLEAR_SCREEN
+   CALL CLEAR_SCREEN
     
     LEA DX,M9    
     MOV AH,9
@@ -1167,15 +1065,8 @@ CLEAR_SCREEN ENDP
    
     calcSalad1:
     
-     LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+        call Quantitynumber
+   
    
 
     mov al,20
@@ -1198,15 +1089,8 @@ CLEAR_SCREEN ENDP
    
     calcSalad2:
     
-     LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+     call Quantitynumber
+   
    
 
     mov al,30
@@ -1229,15 +1113,8 @@ CLEAR_SCREEN ENDP
      
     calcSalad3:
     
-     LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+   call Quantitynumber
+   
    
 
     mov al,20
@@ -1260,15 +1137,8 @@ CLEAR_SCREEN ENDP
     
     calcSalad4:
     
-     LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+     call Quantitynumber
+   
    
 
     mov al,20
@@ -1291,15 +1161,8 @@ CLEAR_SCREEN ENDP
     
     calcSalad5:
     
-     LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+   call Quantitynumber
+   
    
 
     mov al,25
@@ -1322,15 +1185,8 @@ CLEAR_SCREEN ENDP
     
     calcSalad6:
     
-     LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+       call Quantitynumber
+   
    
 
     mov al,30
@@ -1464,15 +1320,8 @@ CLEAR_SCREEN ENDP
          
    calcDess1: 
 
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+      call Quantitynumber
+   
    
     mov AL,35 
     MUL quantity
@@ -1493,17 +1342,8 @@ CLEAR_SCREEN ENDP
     
      
     
-    calcDess2: 
-
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+    calcDess2:  
+       call Quantitynumber
    
 
     mov AL,50 
@@ -1530,15 +1370,8 @@ CLEAR_SCREEN ENDP
      
    calcDess3: 
 
-     LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+      call Quantitynumber
+   
    
     mov AL,60 
     MUL quantity
@@ -1564,15 +1397,8 @@ CLEAR_SCREEN ENDP
     
     calcDess4: 
 
-     LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+      call Quantitynumber
+   
    
 
     mov AL,35 
@@ -1601,15 +1427,8 @@ CLEAR_SCREEN ENDP
     
     calcDess5: 
 
-     LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+      call Quantitynumber
+   
    
 
     mov AL,60
@@ -1764,15 +1583,8 @@ CLEAR_SCREEN ENDP
 
    calcDrink1:
     
-     LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+        call Quantitynumber
+   
    
     mov al,8
     MUL quantity
@@ -1794,14 +1606,8 @@ CLEAR_SCREEN ENDP
   
    calcDrink2: 
     
-     LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
+    call Quantitynumber
+   
     mov quantity,al
    
 
@@ -1825,15 +1631,8 @@ CLEAR_SCREEN ENDP
          
    calcDrink3:
     
-     LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+      call Quantitynumber
+   
    
 
     mov al,5
@@ -1857,16 +1656,8 @@ CLEAR_SCREEN ENDP
      
      
      calcDrink4:
-    
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+   call Quantitynumber
+   
    
 
     mov al,8
@@ -1889,15 +1680,7 @@ CLEAR_SCREEN ENDP
     
     calcDrink5: 
     
-     LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+      call Quantitynumber
    
     mov al,7
     MUL quantity
@@ -1919,15 +1702,8 @@ CLEAR_SCREEN ENDP
     
  calcDrink6: 
     
-     LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+    call Quantitynumber
+   
    
     mov al,16
     MUL quantity    
@@ -1950,15 +1726,8 @@ CLEAR_SCREEN ENDP
        
   calcDrink7: 
     
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
-    mov quantity,al
+   call Quantitynumber
+   
    
     mov al,23
     MUL quantity
@@ -2010,7 +1779,9 @@ CLEAR_SCREEN ENDP
      
      
       
-   WriteFile PROC NEAR
+   WriteFile PROC NEAR   
+    
+  
 
    mov ah, 42h  ; "lseek"
    mov al, 2    ; position relative to end of file
@@ -2021,7 +1792,7 @@ CLEAR_SCREEN ENDP
                                    
    mov bx, [handler]
    mov dx, offset Dish
-   mov cx, 50
+   mov cx, 45
    mov ah, 40h
    int 21h ; write to file...  
    
@@ -2202,9 +1973,9 @@ CLEAR_SCREEN ENDP
 
 		mov dx,offset buffer  ; put the pointer back in DX.
 		mov ah,9
-		int 21h    ; call DOS Function 9 (Print String).
-		 MOV AH,4CH
-        INT 21H 
+		int 21h    ; call DOS Function 9 (Print String).   
+		
+		call new
 		 
 		  
     moving1: 
@@ -2219,7 +1990,24 @@ CLEAR_SCREEN ENDP
 
     ret
     ENDP
-       
+     
+    proc new 
+        
+    LEA DX,BR5
+    MOV AH,9
+    INT 21H
+    mov ax,sum 
+                 
+    LEA DX,price
+    MOV AH,9
+    INT 21H
+    mov ax,sum 
+   
+    call DISPLAY_NUM 
+    
+ 
+        
+        endp  
        
        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
      EXIT:
@@ -2229,7 +2017,23 @@ CLEAR_SCREEN ENDP
     
        
        ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-     HELP:
+     HELP:  
+     
+     
+     Quantitynumber proc 
+        
+         LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
+
+    mov quantity,al
+    
+    ret
+    ENDP
    
     
     
