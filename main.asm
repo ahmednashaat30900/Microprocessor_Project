@@ -1641,8 +1641,7 @@ CLEAR_SCREEN ENDP
     Drinks:
     
    ; CALL CLEAR_SCREEN
-    printn ' '
-    printn "Enter your order"  
+     
     LEA DX,M10   
     MOV AH,9
     INT 21H
@@ -2159,7 +2158,7 @@ CLEAR_SCREEN ENDP
             lea si,buffer
                 
         
-    label:  
+    label1:  
     mov al,[si] 
     mov dl,al
     mov ah,2h
@@ -2172,7 +2171,7 @@ CLEAR_SCREEN ENDP
     dec cl
    
    
-    jnz label
+    jnz label1
     jz Print
            ;;;;;;;;;;;;;;;;; 
            
@@ -2181,7 +2180,7 @@ CLEAR_SCREEN ENDP
            je changefirst  
             inc si 
            dec cl
-           jnz label  
+           jnz label1  
            
            ;;;;;;;;;;;;;;;;       
 		             
@@ -2195,7 +2194,7 @@ CLEAR_SCREEN ENDP
 		   
 		  
            dec cl
-		   jnz label       
+		   jnz label1       
 		     ;ret                
 		     
 	Print:
