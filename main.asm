@@ -1,4 +1,3 @@
-
 include 'emu8086.inc'
 .MODEL LARGE
 .STACK 1000H
@@ -11,18 +10,27 @@ Menu1  DB 0AH,0DH, '  --                 1.Main Dishes             --$'
 Menu2  DB 0AH,0DH, '  --                 2.Appetizers              --$'
 Menu3  DB 0AH,0DH, '  --                 3.Salads                  --$'
 Menu4  DB 0AH,0DH, '  --                 4.Desserts                --$'
-Menu5  DB 0AH,0DH, '  --                 5.Drinks                  --$'                                                                                        
-;------------------------------------------------------------------------------------------
-Dish1 DB 0AH,0DH,0AH,0DH,    '           1.Grilled Chicken            120LE$' 
-Dish2 DB 0AH,0DH,            '           2.Fried Chicken              120LE$'
-Dish3 DB 0AH,0DH,            '           3.Pasta                      100LE$'
-Dish4 DB 0AH,0DH,            '           4.Beef stack                 160LE$'
-Dish5 DB 0AH,0DH,            '           5.Grilled Shrimps            120LE$'  ;Main dishes
-Dish6 DB 0AH,0DH,            '           6.Mix Grill                  140LE$'
-Dish7 DB 0AH,0DH,            '           7.Stuffed cabbage            80LE $'
-Dish8 DB 0AH,0DH,            '           8.Kofta                      120LE$'
-B1 DB 0AH,0DH,               '           9.Back to Menu                    $'
-;------------------------------------------------------------------------------------------
+Menu5  DB 0AH,0DH, '  --                 5.Drinks                  --$'
+;---------------------------------------------------------------------------------------          
+filename db "project.txt",0
+savefile db "save.txt",0
+hand dw ?
+start dw ? 
+titem dw ?
+handler dw ?
+buffer DW ?              
+;----------------------------------------------------------------------------------------------------
+MSG DB 0AH,0DH,0AH,0DH,       '        Dish                        Price  $'                                                                                        
+Dish1 DB 0AH,0DH,             '       1.Grilled Chicken            120LE  $' 
+Dish2 DB 0AH,0DH,             '       2.Fried Chicken              120LE  $'
+Dish3 DB 0AH,0DH,             '       3.Pasta                      100LE  $'
+Dish4 DB 0AH,0DH,             '       4.Beef stack                 160LE  $'
+Dish5 DB 0AH,0DH,             '       5.Grilled Shrimps            120LE  $'
+Dish6 DB 0AH,0DH,             '       6.Mix Grill                  140LE  $'
+Dish7 DB 0AH,0DH,             '       7.Stuffed cabbage            80LE   $'
+Dish8 DB 0AH,0DH,             '       8.Kofta                      120LE  $'
+B1 DB 0AH,0DH,                '       9.Back to Menu                      $'
+;----------------------------------------------------------------------------------------------
 
 MSG3 DB 0AH,0DH,0AH,0DH,      '       Appetizer                    Price  $'  
 APP1 DB 0AH,0DH,              '       1.Mozzarella stickes         40LE   $' 
@@ -80,15 +88,10 @@ BR4 DB 0AH,0DH,'  --                                                            
 BR5 DB 0AH,0DH,'  -------------------------------------------------------------------$'
 BR6 DB 0AH,0DH,'  --                                          --$'        
 BR7 DB 0AH,0DH,'  ----------------------------------------------$'
-
-
-Invalid DB 10,13,10,13,'     ***&&INVALID ENTRY&&***$      ' 
-
-
-New_line DB 0AH,0DH,0AH,0DH,' $'
-
-Quantitynum DB 0AH,0DH, 'Enter quantity: $' 
-;--------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------- 
+Recipt DB 0ah,0dh, '        Item                 Price       Quantity      Total     $ '
+price DB 0ah,0dh, '         Total price is: $'  
+;---------------------------------------------------------------------------------------------
 order DB ?
 quantity DB 0AH,0DH ?  
 sum DW ?
@@ -108,9 +111,9 @@ TEXT_MAIN_MENU_EXIT DB 'EXIT press 3','$' ;text with the exit game message
 ;---------------------------------------------------------------------------------------
 MAIN PROC
     MOV AX,@DATA
-    MOV DS,AX  
-    CALL Open    
-    MOV counter, 01h
+    MOV DS,AX
+    call create
+    CALL Opensave
     CALL DRAW_MAIN_MENU 
 ;------------------------------------------------------------------------------------------    
     DRAW_MAIN_MENU PROC NEAR
@@ -175,8 +178,8 @@ MAIN PROC
 ;----------------------------------------------------------------------------------------------------   
  
   TOP:
- 
-    CALL CLEAR_SCREEN
+   
+      CALL CLEAR_SCREEN
   
     LEA DX,M1
     MOV AH,9
@@ -257,20 +260,28 @@ MAIN PROC
     LEA DX,invalid
     MOV AH,9
     INT 21H
-    jmp select_choice  
-; -----------------------------------------------------------------------------------  
-     Finish_order: 
-       CALL read
-        mov ax,sum
-        printn '  total price is'
-        call DISPLAY_NUM
-        
-        mov ah,08h
-        int 21h 
- ;----------------------------------------------------------------------------------
+    jmp select_choice
+ ;--------------------------------------------------------------------   
+   
+     Finish_order:
+     
+    LEA DX,BR5
+    MOV AH,9
+    INT 21H 
+    
+    LEA DX,Recipt
+    MOV AH,9
+    INT 21H
+    
+    LEA DX,BR5
+    MOV AH,9
+    INT 21H
+    call readfile
+       
+;--------------------------------------------------------------------
   
    Main_Dishes: 
-   
+   CALL CLEAR_SCREEN
     
     LEA DX,M8    
     MOV AH,9
@@ -409,7 +420,8 @@ MAIN PROC
 
     call Movestring  
     call convert
-    call WriteFile  
+    call WriteFile
+                  
     jmp Main_Dishes 
 ;------------------------------------------------------------------------------------------               
                
@@ -561,7 +573,7 @@ MAIN PROC
                             
     Appetizers:
     
-   ; CALL CLEAR_SCREEN
+    CALL CLEAR_SCREEN
     
     LEA DX,M8
     MOV AH,9 
@@ -1114,16 +1126,60 @@ MAIN PROC
     mov AL,50 
     MUL quantity
     
-    calc50:
+    ADD sum, ax 
+    
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,Dess2                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish    
+                                                         
+    call Movestring
+    call convert 
+    call WriteFile
+   
+ 
+    jmp  Desserts 
+;------------------------------------------------------------------------
+   
+   calcDess3: 
 
-    call QuantityNumber
+    call Quantitynumber  
+   
+    mov AL,60 
+    MUL quantity
+    
+    ADD sum, ax 
+    
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,Dess3                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish  
+                                                           
+    call Movestring
+    call convert 
+    call WriteFile
+   
+ 
+    jmp  Desserts  
+;----------------------------------------------------------------------- 
+    calcDess4: 
 
     call Quantitynumber
   
     mov AL,35 
     MUL quantity
-
-    ADD sum, ax
+    
+    ADD sum, ax 
+    
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,Dess4                ; Location of STR1 is loaded to SI
+    LEA DI,Dish  
+                                                           
+    call Movestring
+    call convert 
+    call WriteFile
+   
  
     jmp  Desserts  
 ;-------------------------------------------------------------------   
@@ -1137,7 +1193,19 @@ MAIN PROC
     
     ADD sum, ax 
     
- ;------------------------------------------------------------------------------    
+    MOV Ax,Ds
+    MOV ES,AX
+    LEA SI,Dess5                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish  
+                                                           
+    call Movestring
+    call convert 
+    call WriteFile
+
+ 
+    jmp  Desserts
+;------------------------------------------------------------------- 
+        
     Drinks:
     
     CALL CLEAR_SCREEN
@@ -1431,9 +1499,7 @@ MAIN PROC
  ;----------------------------------------------------------------   
      
    WriteFile PROC NEAR   
-   
-
-   mov bx, ax
+   mov bx,handler
    mov ah, 42h  ; "lseek"
    mov al, 2    ; position relative to end of file
    mov cx, 0    ; offset MSW
@@ -1470,14 +1536,17 @@ MAIN PROC
    mov ah, 40h
    int 21h ; write to file...
    
+   
   
     
   RET    
-      
-  WriteFile ENDP
-;---------------------------------------------------------------
-    
-     Create PROC NEAR
+                                 
+  WriteFile ENDP 
+  
+;----------------------------------------------------------------------     
+
+     Create PROC NEAR 
+        mov al,00h
         mov ah,3ch
         LEA DX,filename
         mov cx,00H
@@ -1496,8 +1565,16 @@ MAIN PROC
         mov bx,handler
         int 21h
         RET
-        Close ENDP     
-;------------------------------------------------------------
+        Close ENDP
+     
+     Closesave PROC NEAR 
+        mov ah,3eh
+        mov bx,hand
+        int 21h
+        RET
+        Closesave ENDP
+;------------------------------------------------------------------------
+
      Open PROC NEAR
         mov ah,3dh
         lea dx,filename
@@ -1506,17 +1583,50 @@ MAIN PROC
         mov handler,ax 
         RET
         Open ENDP
-;------------------------------------------------------------
-    proc   convert
-    push bp
-    mov bp, sp
+     
+     Opensave PROC NEAR
+        mov ah,3dh
+        lea dx,savefile
+        mov al,2
+        int 21h
+        mov hand,ax 
+        RET
+        Opensave ENDP
+;-------------------------------------------------------------------                  
+     
+      convert proc
+        
+        push bp
+        mov bp, sp
+    
+        mov si, offset quantity 
+        mov ax, [si]
+    
+        mov cl, "$"
+        mov [bx], cl 
+           
+       divide:
+       
+        mov ah, 0
+        mov cl, 10
+        div cl         ; div number(in ax) by 10
+        dec bx
+        add ah, 48     ;Make into a character
+        mov quantity, ah  
+        cmp al, 0
+        jne divide
+    
+        pop bp
+        ret
+        
+        convert endp 
+      
+;------------------------------------------------------------------------
 
    proc readfile 
     
     
-            MOV AX,@DATA 
-            MOV DS,AX 
-    
+         
     		mov ah,3Dh   ; 3Dh of DOS Services opens a file.
     		mov al,0   ; 0 - for reading. 1 - for writing. 2 - both
     		mov dx,offset filename  ; make a pointer to the filename
@@ -1539,7 +1649,7 @@ MAIN PROC
     		mov bx,dx
     		mov byte [bx],'$'   ; byte pointer so we don't mess with the whole word (a word is 16bits).
                 
-            mov cl,10
+            mov cl,9
             mov bl,1
             lea si,buffer
                 
@@ -1590,6 +1700,7 @@ MAIN PROC
 		int 21h    ; call DOS Function 9 (Print String).   
 		
 		call Displayprice
+		
 		 
 		  
     moving1: 
@@ -1602,31 +1713,92 @@ MAIN PROC
     increment:
     mov bl,1  
 
-je increment
- ret
-increment:
-mov bl,1  
-
-   ret
-        ENDP 
-;----------------------------------------------------------------------------
- Movestring PROC
+    ret   
+   ENDP 
+;------------------------------------------------------------------------------- 
+     
+    PROC DisplayPrice 
         
-    CLD                           ; Clear the contents of Direction Flag
-    MOV CH,00H                    ; Since CX should be 00xx
-    MOV CL,100
-    REP MOVSB
+    LEA DX,BR5
+    MOV AH,9
+    INT 21H 
     
-    ret
- ENDP
- ;---------------------------------------------------------------
-    EXIT:
+    mov ax,sum 
+                 
+    LEA DX,price
+    MOV AH,9
+    INT 21H
+    mov ax,sum 
+   
+    call DISPLAY_NUM 
+    
+    LEA DX,BR5
+    MOV AH,9
+    INT 21H  
+    
+    call Neworder
+    call Close
+       
+    ENDP  
+;--------------------------------------------------------------------------   
+    PROC Neworder
+        call Open 
+        LEA DX,BR5
+        MOV AH,9
+        INT 21H 
+        
+        LEA DX,Q1
+        MOV AH,9
+        INT 21H  
+        
+        LEA DX,Q2
+        MOV AH,9
+        INT 21H  
+        
+        LEA DX,BR5
+        MOV AH,9
+        INT 21H  
+        
+        MOV AH,1
+        INT 21H
+        SUB AL,48 
+        
+        cmp al,1
+        je TOP
+         
+        
+        cmp al,2 
+        je Exit
+      
+        
+    ENDP
+ ;-------------------------------------------------------------------------      
+
+     EXIT:
+     
     
     MOV AH,4CH
-    INT 21H  
-;--------------------------------------------------------------
-    HELP:
-    there: 
+    INT 21H
+    CALL Close 
+;------------------------------------------------------------------------------
+     HELP:  
+     
+;-----------------------------------------------------------------------------   
+     Quantitynumber proc 
+        
+         LEA DX,Quantitynum              
+    MOV AH,9
+    INT 21H 
+ 
+    MOV AH,1
+    INT 21H
+    SUB AL,48
 
+    mov quantity,al
     
-END MAIN      
+    ret
+    ENDP
+   
+    
+    
+END MAIN
