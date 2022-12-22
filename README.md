@@ -20,29 +20,3 @@ Assembly 8086
 Resturant Billing System is a system that allows user to make an order by choosing a various of items from
 5 main menues and finally when the user finish order the total recipt will printout
 
-## Project Function:
-
-| Function                          | 
-| -----------                       | 
-| Functions to Print the menues     |
-|     1.Main_Dishes                 |
-|     2.Appitizers                  |
-|     3.Salads                      |
-|     4.Desserts                    |
-|     5.Drinks                      | 
-|-------------                      |
-| Functions to Calc Chooices        |
-|           CalcDish1........Etc    |
-| -----------                       | 
-|Functions to store the iformation  |
-|of selected items                  |
-|     Select_order1.....etc         |
-|-------------                      |
-|Write to file function             |
-|--------------                     |
-|Read from file function            |
-|-----------                        |
-|Display price function             |
-|------------                       |
-|New order function                 |   
-|
