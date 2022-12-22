@@ -14,14 +14,14 @@ Menu5  DB 0AH,0DH, '  --                 5.Drinks                  --$'
 ;---------------------------------------------------------------------------------------          
 filename db "project.txt",0
 savefile db "save.txt",0
-hand dw ?
 start dw ? 
 titem dw ?
-handler dw ?
+handler dw ? 
+hand dw ?
 buffer DW ?
 totali DW ?              
 ;---------------------------------------------------------------------------------------------------- 
-MSH1 DB 0AH,0DH,0AH,0DH,  '                   How to use our System:  $'   
+MSH1 DB 0AH,0DH,0AH,0DH,  '                How to use our System:  $'   
 MSH2 DB 0AH,0DH,0AH,0DH,  ' * Resturant Billing System is a system that allows user to make an order    $'  
 MSH3 DB 0AH,0DH,0AH,0DH,  '   by choosing a various of items from 5 main menues. $'    
 MSH4 DB 0AH,0DH,0AH,0DH,  ' * The user can easily move between the menus and choose what he want. $' 
@@ -171,7 +171,10 @@ MAIN PROC
 	JE TOP 
 	
 	CMP AL,'2'
-	JE HELP
+	JE HELP    
+	
+	CMP AL,'3'
+	JE EXIT
 			
     JMP MAIN_MENU_WAIT_FOR_KEY	
     RET
@@ -1934,9 +1937,21 @@ MAIN PROC
     INT 21H
     CALL Close 
 ;------------------------------------------------------------------------------
-     HELP:   
+     HELP: 
+     
+     LEA DX,New_line
+     MOV AH,9
+     INT 21H 
+     
+     LEA DX,BR1
+     MOV AH,9
+     INT 21H 
      
      LEA DX,MSH1
+     MOV AH,9
+     INT 21H  
+     
+     LEA DX,BR2
      MOV AH,9
      INT 21H
      

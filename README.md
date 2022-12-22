@@ -18,5 +18,6 @@ Assembly 8086
 
 ### Project Features
 Resturant Billing System is a system that allows user to make an order by choosing a various of items from
-5 main menues and finally when the user finish order the total recipt will printout
+5 main menues and finally when the user finish order the total recipt will printout.
+
 
