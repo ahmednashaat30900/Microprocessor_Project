@@ -20,7 +20,16 @@ titem dw ?
 handler dw ?
 buffer DW ?
 totali DW ?              
-;----------------------------------------------------------------------------------------------------
+;---------------------------------------------------------------------------------------------------- 
+MSH1 DB 0AH,0DH,0AH,0DH,  '                   How to use our System:  $'   
+MSH2 DB 0AH,0DH,0AH,0DH,  ' * Resturant Billing System is a system that allows user to make an order    $'  
+MSH3 DB 0AH,0DH,0AH,0DH,  '   by choosing a various of items from 5 main menues. $'    
+MSH4 DB 0AH,0DH,0AH,0DH,  ' * The user can easily move between the menus and choose what he want. $' 
+MSH5 DB 0AH,0DH,0AH,0DH,  ' * After finish his order ,he must choose finish order and then:  $'
+MSH6 DB 0AH,0DH,0AH,0DH,  '   the total recipt will printout.  $'
+MSH7 DB 0AH,0DH,0AH,0DH,  ' * You can now use our system easily press 1 to start your order,best wishes :) $'    
+
+;---------------------------------------------------------------------------------------------------- 
 MSG DB 0AH,0DH,0AH,0DH,       '        Dish                        Price  $'                                                                                        
 Dish1 DB 0AH,0DH,             '       1.Grilled Chicken            120LE  $' 
 Dish2 DB 0AH,0DH,             '       2.Fried Chicken              120LE  $'
@@ -159,7 +168,10 @@ MAIN PROC
 		
 ;       Check whick key was pressed
 	CMP AL,'1'
-	JE TOP
+	JE TOP 
+	
+	CMP AL,'2'
+	JE HELP
 			
     JMP MAIN_MENU_WAIT_FOR_KEY	
     RET
@@ -1922,7 +1934,38 @@ MAIN PROC
     INT 21H
     CALL Close 
 ;------------------------------------------------------------------------------
-     HELP:  
+     HELP:   
+     
+     LEA DX,MSH1
+     MOV AH,9
+     INT 21H
+     
+     LEA DX,MSH2
+     MOV AH,9
+     INT 21H 
+     
+     LEA DX,MSH3
+     MOV AH,9
+     INT 21H 
+     
+     LEA DX,MSH4
+     MOV AH,9
+     INT 21H
+     
+     LEA DX,MSH5
+     MOV AH,9
+     INT 21H  
+     
+     LEA DX,MSH6
+     MOV AH,9
+     INT 21H
+     
+     LEA DX,MSH7
+     MOV AH,9
+     INT 21H 
+     
+     
+     jmp MAIN_MENU_WAIT_FOR_KEY 
      
 ;-----------------------------------------------------------------------------   
      Quantitynumber proc 
