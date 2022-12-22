@@ -175,9 +175,12 @@ MAIN PROC
 	
 	CMP AL,'3'
 	JE EXIT
+<<<<<<< HEAD
 	LEA DX,invalid
     MOV AH,9
     INT 21H
+=======
+>>>>>>> 640ee599ec410e9e7b13897abbb5fd0521427149
 			
     JMP MAIN_MENU_WAIT_FOR_KEY	
     RET
@@ -185,12 +188,22 @@ MAIN PROC
     DRAW_MAIN_MENU ENDp
 ;---------------------------------------------------------------------------------------------------
     CLEAR_SCREEN PROC NEAR               ;clear the screen by restarting the video mode
+<<<<<<< HEAD
    xor cx,cx
    mov dh,25
    mov dl,80
    mov bh,7
    mov ax,700h
    INT 10h                           ;execute the configuration
+=======
+    MOV AH,00h                   ;set the configuration to video mode
+    MOV AL,12h                   ;choose the video mode
+    INT 10h                         ;execute the configuration
+    MOV AH,00h                      ;set the configuration
+    MOV BH,00h                      ;to the background color
+    MOV BL,00h                      ;choose black as background color
+    INT 10h                            ;execute the configuration
+>>>>>>> 640ee599ec410e9e7b13897abbb5fd0521427149
     RET
     CLEAR_SCREEN ENDP
 ;----------------------------------------------------------------------------------------------------   
@@ -1317,9 +1330,16 @@ MAIN PROC
     
     select_order5:  
     
+<<<<<<< HEAD
     printn ' '
     print 'enter your order '             
    
+=======
+    printn " "
+    printn 'enter your order'             
+    MOV AH,9
+    INT 21H 
+>>>>>>> 640ee599ec410e9e7b13897abbb5fd0521427149
     
     MOV AH,1
     INT 21H
@@ -1925,11 +1945,18 @@ MAIN PROC
 
      EXIT:
      
+<<<<<<< HEAD
      CALL Close
      CALL Closesave
     MOV AH,4CH
     INT 21H
      
+=======
+    
+    MOV AH,4CH
+    INT 21H
+    CALL Close 
+>>>>>>> 640ee599ec410e9e7b13897abbb5fd0521427149
 ;------------------------------------------------------------------------------
      HELP: 
      
