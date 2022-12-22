@@ -18,7 +18,8 @@ hand dw ?
 start dw ? 
 titem dw ?
 handler dw ?
-buffer DW ?              
+buffer DW ?
+totali DW ?              
 ;----------------------------------------------------------------------------------------------------
 MSG DB 0AH,0DH,0AH,0DH,       '        Dish                        Price  $'                                                                                        
 Dish1 DB 0AH,0DH,             '       1.Grilled Chicken            120LE  $' 
@@ -411,7 +412,8 @@ MAIN PROC
     mov al,120
     MUL quantity
     
-    ADD sum, ax 
+    ADD sum, ax
+    mov totali,ax 
     
     MOV Ax,Ds
     MOV ES,AX
@@ -432,7 +434,8 @@ MAIN PROC
     mov al,120
     MUL quantity
     
-    ADD sum, ax 
+    ADD sum, ax
+    mov totali,ax 
     
     MOV Ax,Ds
     MOV ES,AX
@@ -452,7 +455,8 @@ MAIN PROC
     mov al,100
     MUL quantity
     
-    ADD sum, ax  
+    ADD sum, ax
+    mov totali,ax  
     
     MOV AX, @DATA
     MOV DS,AX
@@ -473,7 +477,8 @@ MAIN PROC
     mov al,160
     MUL quantity
  
-    ADD sum, ax   
+    ADD sum, ax
+    mov totali,ax   
     
     MOV Ax,Ds
     MOV ES,AX
@@ -494,7 +499,8 @@ MAIN PROC
     mov al,120
     MUL quantity
  
-    ADD sum, ax  
+    ADD sum, ax
+    mov totali,ax  
     
     MOV Ax,Ds
     MOV ES,AX
@@ -515,7 +521,8 @@ MAIN PROC
     mov al,140
     MUL quantity
 
-    ADD sum, ax  
+    ADD sum, ax
+    mov totali,ax  
     
     MOV Ax,Ds
     MOV ES,AX
@@ -536,7 +543,8 @@ MAIN PROC
     mov al,80
     MUL quantity
 
-    ADD sum, ax  
+    ADD sum, ax
+    mov totali,ax  
     
     MOV Ax,Ds
     MOV ES,AX
@@ -557,7 +565,8 @@ MAIN PROC
     mov al,120
     MUL quantity
 
-    ADD sum, ax  
+    ADD sum, ax
+    mov totali,ax  
     
     MOV Ax,Ds
     MOV ES,AX
@@ -676,7 +685,8 @@ MAIN PROC
     mov AL,40 
     MUL quantity
     
-    ADD sum, ax 
+    ADD sum, ax
+    mov totali,ax 
     
     MOV Ax,Ds
     MOV ES,AX
@@ -697,7 +707,9 @@ MAIN PROC
     mov al,15
     MUL quantity
 
-    ADD sum, ax 
+    ADD sum, ax
+    mov totali,ax
+     
     MOV Ax,Ds
     MOV ES,AX
     LEA SI,APP2                  ; Location of STR1 is loaded to SI
@@ -717,7 +729,9 @@ MAIN PROC
     mov al,10
     MUL quantity
     
-    ADD sum, ax 
+    ADD sum, ax
+    mov totali,ax
+     
     MOV Ax,Ds
     MOV ES,AX
     LEA SI,APP3                 ; Location of STR1 is loaded to SI
@@ -736,7 +750,9 @@ MAIN PROC
     mov al,40
     MUL quantity
     
-    ADD sum, ax 
+    ADD sum, ax
+    mov totali,ax
+     
     MOV Ax,Ds
     MOV ES,AX
     LEA SI,APP4                  ; Location of STR1 is loaded to SI
@@ -754,7 +770,9 @@ MAIN PROC
     mov al,15
     MUL quantity
     
-    ADD sum, ax 
+    ADD sum, ax
+    mov totali,ax
+     
     MOV Ax,Ds
     MOV ES,AX
     LEA SI,APP5                 ; Location of STR1 is loaded to SI
@@ -773,7 +791,9 @@ MAIN PROC
     mov al,10
     MUL quantity
     
-    ADD sum, ax 
+    ADD sum, ax
+    mov totali,ax
+     
     MOV Ax,Ds
     MOV ES,AX
     LEA SI,APP6                  ; Location of STR1 is loaded to SI
@@ -892,6 +912,7 @@ MAIN PROC
     MUL quantity
     
     ADD sum, ax
+    mov totali,ax
     
     MOV Ax,Ds
     MOV ES,AX
@@ -913,6 +934,7 @@ MAIN PROC
     MUL quantity
      
     mov sum, ax
+    mov totali,ax
     
     MOV Ax,Ds
     MOV ES,AX
@@ -933,6 +955,7 @@ MAIN PROC
     MUL quantity
     
     ADD sum, ax
+    mov totali,ax
     
     MOV Ax,Ds
     MOV ES,AX
@@ -954,6 +977,7 @@ MAIN PROC
     MUL quantity
     
     ADD sum, ax
+    mov totali,ax
     
     MOV Ax,Ds
     MOV ES,AX
@@ -975,6 +999,7 @@ MAIN PROC
     MUL quantity
     
     ADD sum, ax
+    mov totali,ax
     
     MOV Ax,Ds
     MOV ES,AX
@@ -996,6 +1021,7 @@ MAIN PROC
     MUL quantity
     
     ADD sum, ax
+    mov totali,ax
     
     MOV Ax,Ds
     MOV ES,AX
@@ -1106,7 +1132,8 @@ MAIN PROC
     mov AL,35 
     MUL quantity
     
-    ADD sum, ax 
+    ADD sum, ax
+    mov totali,ax 
     
     MOV Ax,Ds
     MOV ES,AX
@@ -1126,7 +1153,8 @@ MAIN PROC
     mov AL,50 
     MUL quantity
     
-    ADD sum, ax 
+    ADD sum, ax
+    mov totali,ax 
     
     MOV Ax,Ds
     MOV ES,AX
@@ -1148,7 +1176,8 @@ MAIN PROC
     mov AL,60 
     MUL quantity
     
-    ADD sum, ax 
+    ADD sum, ax
+    mov totali,ax 
     
     MOV Ax,Ds
     MOV ES,AX
@@ -1169,7 +1198,8 @@ MAIN PROC
     mov AL,35 
     MUL quantity
     
-    ADD sum, ax 
+    ADD sum, ax
+    mov totali,ax 
     
     MOV Ax,Ds
     MOV ES,AX
@@ -1191,7 +1221,8 @@ MAIN PROC
     mov AL,60
     MUL quantity
     
-    ADD sum, ax 
+    ADD sum, ax
+    mov totali,ax 
     
     MOV Ax,Ds
     MOV ES,AX
@@ -1209,8 +1240,7 @@ MAIN PROC
     Drinks:
     
     CALL CLEAR_SCREEN
-    printn ' '
-    printn "Enter your order"  
+    
     LEA DX,M10   
     MOV AH,9
     INT 21H
@@ -1327,7 +1357,8 @@ MAIN PROC
     mov al,8
     MUL quantity
     
-    ADD sum, ax 
+    ADD sum, ax
+    mov totali,ax 
         
     MOV AX, @DATA
     MOV DS,AX
@@ -1351,7 +1382,8 @@ MAIN PROC
     mov al,7
     MUL quantity
     
-    ADD sum, ax   
+    ADD sum, ax
+    mov totali,ax   
         
     MOV AX, @DATA
     MOV DS,AX
@@ -1373,6 +1405,7 @@ MAIN PROC
     MUL quantity
     
     ADD sum, ax
+    mov totali,ax
     
     MOV AX, @DATA
     MOV DS,AX
@@ -1393,7 +1426,8 @@ MAIN PROC
     mov al,8
     MUL quantity
     
-    ADD sum, ax 
+    ADD sum, ax
+    mov totali,ax 
         
     MOV AX, @DATA
     MOV DS,AX
@@ -1414,7 +1448,8 @@ MAIN PROC
     mov al,7
     MUL quantity
     
-    ADD sum, ax 
+    ADD sum, ax
+    mov totali,ax 
     
     MOV AX, @DATA
     MOV DS,AX
@@ -1437,6 +1472,7 @@ MAIN PROC
     MUL quantity    
     
     ADD sum, ax
+    mov totali,ax
     
     MOV AX, @DATA
     MOV DS,AX
@@ -1459,6 +1495,7 @@ MAIN PROC
     MUL quantity
 
     ADD sum, ax
+    mov totali,ax
     
     MOV AX, @DATA
     MOV DS,AX
@@ -1518,6 +1555,58 @@ MAIN PROC
    mov ah, 40h
    int 21h ; write to file...
    
+   conv1:          
+     mov ax,totali
+    ;initialize count
+    mov cx,0
+    mov dx,0
+    label2:
+        ; if ax is zero
+        cmp ax,0
+        je print1     
+         
+        ;initialize bx to 10
+        mov bx,10       
+         
+        ; extract the last digit
+        div bx                 
+         
+        ;push it in the stack
+        push dx             
+         
+        ;increment the count
+        inc cx             
+         
+        ;set dx to 0
+        xor dx,dx
+        jmp label2
+        
+        print1:
+        ;check if count
+        ;is greater than zero
+        cmp cx,0
+        je label3
+         
+        ;pop the top of stack
+        pop dx
+         
+        ;add 48 so that it
+        ;represents the ASCII
+        ;value of digits
+        add dx,48
+        mov totali,dx
+         
+        mov bx, [handler]
+        mov dx, offset totali
+        mov ah, 40h
+        int 21h ; write to file...
+         
+        ;decrease the count
+        dec cx
+        jmp print1
+        
+   label3:
+   
    mov bx,hand
    mov ah, 42h  ; "lseek"
    mov al, 2    ; position relative to end of file
@@ -1535,6 +1624,58 @@ MAIN PROC
    mov cx, 2
    mov ah, 40h
    int 21h ; write to file...
+   
+   conv2:          
+     mov ax,totali
+    ;initialize count
+    mov cx,0
+    mov dx,0
+    label4:
+        ; if ax is zero
+        cmp ax,0
+        je print2     
+         
+        ;initialize bx to 10
+        mov bx,10       
+         
+        ; extract the last digit
+        div bx                 
+         
+        ;push it in the stack
+        push dx             
+         
+        ;increment the count
+        inc cx             
+         
+        ;set dx to 0
+        xor dx,dx
+        jmp label4
+        
+        print2:
+        ;check if count
+        ;is greater than zero
+        cmp cx,0
+        je label5
+         
+        ;pop the top of stack
+        pop dx
+         
+        ;add 48 so that it
+        ;represents the ASCII
+        ;value of digits
+        add dx,48
+        mov totali,dx
+         
+        mov bx, [hand]
+        mov dx, offset totali
+        mov ah, 40h
+        int 21h ; write to file...
+         
+        ;decrease the count
+        dec cx
+        jmp print2
+        
+  label5:
    
    
   
