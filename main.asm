@@ -1695,14 +1695,11 @@ MAIN PROC
      
       convert proc
         
-        push bp
-        mov bp, sp
+        
     
         mov si, offset quantity 
         mov ax, [si]
     
-        mov cl, "$"
-        mov [bx], cl 
                                                          ;Convert quantity into string
        divide:
        
@@ -1714,7 +1711,6 @@ MAIN PROC
         mov quantity, ah  
         cmp al, 0
         jne divide
-        pop bp
         ret
         
         convert endp
