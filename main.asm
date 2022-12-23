@@ -27,7 +27,7 @@ MSH2 DB 0AH,0DH,0AH,0DH,  ' * Resturant Billing System is a system that allows u
 MSH3 DB 0AH,0DH,0AH,0DH,  '   by choosing a various of items from 5 main menues. $'    
 MSH4 DB 0AH,0DH,0AH,0DH,  ' * The user can easily move between the menus and choose what he want. $' 
 MSH5 DB 0AH,0DH,0AH,0DH,  ' * After finish his order ,he must choose finish order and then:  $'
-MSH6 DB 0AH,0DH,0AH,0DH,  '   the total recipt will printout.  $'
+MSH6 DB 0AH,0DH,          '   the total recipt will printout.  $'
 MSH7 DB 0AH,0DH,0AH,0DH,  ' * You can now use our system easily press 1 to start your order,best wishes :) $'    
 
 ;---------------------------------------------------------------------------------------------------- 
@@ -71,22 +71,24 @@ Dess5 DB 0AH,0DH,             '       5.Apple pie                  60LE   $'
 B4 DB 0AH,0DH,                '       6.Back to Menu                      $'    
                                                                                                                           
 ;--------------------------------------------------------------------------------------
-M10 DB 0AH,0DH,0AH,0DH,       '    Choose your Drink from the menu        $' 
-MSG4 DB 0AH,0DH,              '       Drink                        Price  $'   
-D1 DB 0AH,0DH,                '       1.Shoft                      18LE   $'
-D2 DB 0AH,0DH,                '       1.Coffee                     17LE   $'
-D3 DB 0AH,0DH,                '       2.Tea                        15LE   $'
-D4 DB 0AH,0DH,                '       3.Orange juice               18LE   $'
-D5 DB 0AH,0DH,                '       4.Milk                       17LE   $'
-D6 DB 0AH,0DH,                '       5.Cocktail                   16LE   $'
-D7 DB 0AH,0DH,                '       6.Chocolate                  23LE   $'
-B5 DB 0AH,0DH,                '       7.Back to Menu                      $'                                             
+
+M10 DB 0AH,0DH,0AH,0DH,       '    Choose your Drink from the menu$' 
+MSG4 DB 0AH,0DH,0AH,0DH,      '       Drink                        Price   $'   
+D1 DB 10,13,                  '       1.Shoft Drinks               25LE    $'
+D2 DB 10,13,                  '       1.Coffee                     30LE    $'
+D3 DB 10,13,                  '       2.Tea                        25LE    $'
+D4 DB 10,13,                  '       3.Orange juice               35LE    $'
+D5 DB 10,13,                  '       4.Milk                       40LE    $'
+D6 DB 10,13,                  '       5.Cocktail                   45LE    $'
+D7 DB 10,13,                  '       6.Chocolate                  44LE    $'
+B5 DB 10,13,                  '       8.Back to Menu                       $'                                              
 ;-------------------------------------------------------------------------------------
 Q1 DB 0AH,0DH,0AH,0DH,  '  --         1.Make new order                --$ '
 Q2 DB 0AH,0DH,0AH,0DH,  '  --         2.Exit                          --$'  
 Q3 DB 0AH,0DH,          '  --                 6.Finish Order            --$' 
 ;--------------------------------------------------------------------------------------    
 M8 DB 0AH,0DH,0AH,0DH,       '  Choise your food from the menu$' 
+
 Quantitynum DB 0AH,0DH, '    Enter quantity: $'    
 Invalid DB 0AH,0DH,0AH,0DH, '     &&INVALID ENTRY&&$ '    
 New_line DB 0AH,0DH,0AH,0DH,' $'
@@ -300,10 +302,8 @@ MAIN PROC
     
     LEA DX,BR5
     MOV AH,9
+
     INT 21H
-      
- 
-    
     call writeprice
        
 ;--------------------------------------------------------------------
@@ -379,7 +379,7 @@ MAIN PROC
                     
                     
     printn ' '               
-    print '    Enter your order '           
+    print '    Enter your order '          
     
     MOV AH,01h
     INT 21H
@@ -675,6 +675,7 @@ MAIN PROC
 ;-----------------------------------------------------------------------------------------
     select_order2:
     printn ' '
+
     print '    Enter your order '             
     
     MOV AH,1
@@ -905,7 +906,7 @@ MAIN PROC
 ;---------------------------------------------------------------------------------------------   
     select_order3:
     printn ' '
-    print '    Enter your order '            
+    print '    Enter your order '           
     
     MOV AH,1
     INT 21H
@@ -1304,7 +1305,6 @@ MAIN PROC
     LEA DX,MSG4   
     MOV AH,9
     INT 21H 
-
     
     LEA DX,D2  
     MOV AH,9
@@ -1384,7 +1384,7 @@ MAIN PROC
     jmp select_order5
 ;------------------------------------------------------------------------------
 
-  
+
  ;----------------------------------------------------------------------------   
   
    calcDrink1: 
@@ -1561,6 +1561,43 @@ MAIN PROC
    mov cx, 45
    mov ah, 40h
    int 21h ; write to file...
+
+   mov dx, offset space
+   mov cx, 7
+   mov ah, 40h
+   int 21h ; write to file...  
+   
+   mov dx, offset quantity
+   mov cx, 1
+   mov ah, 40h
+   int 21h ; write to file...   
+   
+
+   mov dx, offset space
+   mov cx, 7
+   mov ah, 40h
+   int 21h ; write to file... 
+   
+   
+   mov dx, offset strout
+   mov cx, 5
+   mov ah, 40h
+   int 21h ; write to file...
+  
+
+   mov bx,hand
+
+   mov ah, 42h  ; "lseek"
+   mov al, 2    ; position relative to end of file
+   mov cx, 0    ; offset MSW
+   mov dx, 0    ; offset LSW
+   int 21h                       
+   
+   mov dx, offset Dish
+   mov cx, 45
+   mov ah, 40h
+   int 21h ; write to file...
+   
    
    
    mov dx, offset space
@@ -1572,7 +1609,7 @@ MAIN PROC
    mov dx, offset quantity
    mov cx, 1
    mov ah, 40h
-   int 21h ; write to file...   
+   int 21h ; write to file...  
    
    
    mov dx, offset space
@@ -1586,20 +1623,6 @@ MAIN PROC
    mov cx, 5
    mov ah, 40h
    int 21h ; write to file...
-  
-   mov bx,hand
-   mov ah, 42h  ; "lseek"
-   mov al, 2    ; position relative to end of file
-   mov cx, 0    ; offset MSW
-   mov dx, 0    ; offset LSW
-   int 21h                       
-   
-   mov dx, offset Dish
-   mov cx, 45
-   mov ah, 40h
-   int 21h ; write to file...
-   
-   
    
    mov dx, offset space
    mov cx, 7
@@ -1848,8 +1871,15 @@ MAIN PROC
     
     LEA DX,BR5
     MOV AH,9
+<<<<<<< HEAD
     INT 21H 
     jmp EXIT 
+=======
+    INT 21H  
+    jmp EXIT
+    
+       
+>>>>>>> 007de8e23f384e054dbe58d13dba35f82bddd1d9
     ENDP  
 ;--------------------------------------------------------------------------   
    
@@ -1862,7 +1892,11 @@ MAIN PROC
    mov dx, 0    ; offset LSW
    int 21h
                                                                    
+<<<<<<< HEAD
    
+=======
+   mov bx, [hand]
+>>>>>>> 007de8e23f384e054dbe58d13dba35f82bddd1d9
    mov dx, offset BR5
    mov cx, 60
    mov ah, 40h
@@ -1875,14 +1909,22 @@ MAIN PROC
    mov dx, 0    ; offset LSW
    int 21h
    
+<<<<<<< HEAD
    
+=======
+   mov bx, [hand]
+>>>>>>> 007de8e23f384e054dbe58d13dba35f82bddd1d9
    mov dx, offset price
    mov cx, 30
    mov ah, 40h
    int 21h ; write to file...  
    call convprice
    
+<<<<<<< HEAD
    
+=======
+   mov bx, [hand]
+>>>>>>> 007de8e23f384e054dbe58d13dba35f82bddd1d9
    mov dx, offset finalprice
    mov cx, 5
    mov ah, 40h
@@ -1895,7 +1937,11 @@ MAIN PROC
    mov dx, 0    ; offset LSW
    int 21h 
    
+<<<<<<< HEAD
    
+=======
+   mov bx, [hand]
+>>>>>>> 007de8e23f384e054dbe58d13dba35f82bddd1d9
    mov dx, offset BR5
    mov cx, 60
    mov ah, 40h
