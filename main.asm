@@ -1197,11 +1197,7 @@ MAIN PROC
     
     MOV Ax,Ds
     MOV ES,AX
-<<<<<<< HEAD
     LEA SI,Dess2                 
-=======
-    LEA SI,Dess2                  ; Location of STR1 is loaded to SI
->>>>>>> master
     LEA DI,Dish    
                                                          
     call Movestring
@@ -1225,11 +1221,7 @@ MAIN PROC
     
     MOV Ax,Ds
     MOV ES,AX
-<<<<<<< HEAD
     LEA SI,Dess3                  
-=======
-    LEA SI,Dess3                  ; Location of STR1 is loaded to SI
->>>>>>> master
     LEA DI,Dish  
                                                            
     call Movestring
@@ -1252,11 +1244,7 @@ MAIN PROC
     
     MOV Ax,Ds
     MOV ES,AX
-<<<<<<< HEAD
     LEA SI,Dess4                
-=======
-    LEA SI,Dess4                ; Location of STR1 is loaded to SI
->>>>>>> master
     LEA DI,Dish  
                                                            
     call Movestring
@@ -1280,11 +1268,7 @@ MAIN PROC
     
     MOV Ax,Ds
     MOV ES,AX
-<<<<<<< HEAD
     LEA SI,Dess5                  
-=======
-    LEA SI,Dess5                  ; Location of STR1 is loaded to SI
->>>>>>> master
     LEA DI,Dish  
                                                            
     call Movestring
@@ -1382,11 +1366,7 @@ MAIN PROC
     JE calcDrink3
     
     CMP order,4
-<<<<<<< HEAD
     JE calcDrink4                                  ;store selected item
-=======
-    JE calcDrink4   
->>>>>>> master
     
     CMP order,5
     JE calcDrink5 
@@ -1418,11 +1398,7 @@ MAIN PROC
         
     MOV AX,Ds
     MOV ES,AX
-<<<<<<< HEAD
     LEA SI,D2                  
-=======
-    LEA SI,D2                  ; Location of STR1 is loaded to SI
->>>>>>> master
     LEA DI,Dish      
                                                        
     call Movestring
@@ -1446,11 +1422,7 @@ MAIN PROC
         
     MOV AX,Ds
     MOV ES,AX
-<<<<<<< HEAD
     LEA SI,D3                  
-=======
-    LEA SI,D3                  ; Location of STR1 is loaded to SI
->>>>>>> master
     LEA DI,Dish   
                                                           
     call Movestring 
@@ -1472,11 +1444,7 @@ MAIN PROC
     
     MOV AX,Ds
     MOV ES,AX
-<<<<<<< HEAD
     LEA SI,D4                  
-=======
-    LEA SI,D4                  ; Location of STR1 is loaded to SI
->>>>>>> master
     LEA DI,Dish  
                                                            
     call Movestring
@@ -1498,11 +1466,7 @@ MAIN PROC
         
     MOV AX,Ds
     MOV ES,AX
-<<<<<<< HEAD
     LEA SI,D5                 
-=======
-    LEA SI,D5                  ; Location of STR1 is loaded to SI
->>>>>>> master
     LEA DI,Dish 
                                                             
     call Movestring  
@@ -1524,11 +1488,7 @@ MAIN PROC
     
     MOV AX,Ds
     MOV ES,AX
-<<<<<<< HEAD
     LEA SI,D6                  
-=======
-    LEA SI,D6                  ; Location of STR1 is loaded to SI
->>>>>>> master
     LEA DI,Dish  
                                                            
     call Movestring
@@ -1613,11 +1573,7 @@ MAIN PROC
    mov dx, offset quantity
    mov cx, 1
    mov ah, 40h
-<<<<<<< HEAD
    int 21h ; write to file...                          ;Write at files
-=======
-   int 21h ; write to file...   
->>>>>>> master
    
    
    mov dx, offset space
@@ -1674,11 +1630,7 @@ MAIN PROC
                                  
   WriteFile ENDP 
   
-<<<<<<< HEAD
 ;------------------------------------------------------------------------------     
-=======
-;----------------------------------------------------------------------     
->>>>>>> master
 
      Create PROC NEAR 
         mov al,00h
@@ -1695,11 +1647,7 @@ MAIN PROC
         Create ENDP
      
         Createsave PROC NEAR 
-<<<<<<< HEAD
         mov al,00h                                      ;create files
-=======
-        mov al,00h
->>>>>>> master
         mov ah,3ch
         LEA DX,savefile
         mov cx,00H
@@ -1708,11 +1656,7 @@ MAIN PROC
         mov handler,ax
         RET
         Createsave ENDP  
-<<<<<<< HEAD
 ;-------------------------------------------------------------------------------------  
-=======
-;----------------------------------------------------------------------  
->>>>>>> master
 
      Close PROC NEAR 
         mov ah,3eh
@@ -1726,20 +1670,8 @@ MAIN PROC
         mov bx,hand
         int 21h
         RET
-<<<<<<< HEAD
         Closesave ENDP
 ;---------------------------------------------------------------------------------------
-=======
-        Close ENDP
-     
-     Closesave PROC NEAR 
-        mov ah,3eh
-        mov bx,hand
-        int 21h
-        RET
-        Closesave ENDP
-;------------------------------------------------------------------------
->>>>>>> master
 
      Open PROC NEAR
         mov ah,3dh
@@ -1749,11 +1681,7 @@ MAIN PROC
         mov handler,ax 
         RET
         Open ENDP
-<<<<<<< HEAD
                                                     ;open files
-=======
-     
->>>>>>> master
      Opensave PROC NEAR
         mov ah,3dh 
         lea dx,savefile
@@ -1763,17 +1691,12 @@ MAIN PROC
         mov hand,ax 
         RET
         Opensave ENDP
-<<<<<<< HEAD
 ;--------------------------------------------------------------------------------------------                 
-=======
-;-------------------------------------------------------------------                  
->>>>>>> master
      
       convert proc
         
         push bp
         mov bp, sp
-<<<<<<< HEAD
     
         mov si, offset quantity 
         mov ax, [si]
@@ -1848,91 +1771,6 @@ MAIN PROC
 ;---------------------------------------------------------------------------------------------
 
    proc readfile 
-=======
-    
-        mov si, offset quantity 
-        mov ax, [si]
-    
-        mov cl, "$"
-        mov [bx], cl 
-           
-       divide:
-       
-        mov ah, 0
-        mov cl, 10
-        div cl         ; div number(in ax) by 10
-        dec bx
-        add ah, 48     ;Make into a character
-        mov quantity, ah  
-        cmp al, 0
-        jne divide
-        pop bp
-        ret
-        
-        convert endp
-      
-      conv proc 
-        mov ax,totali
-        mov cx,10
-        xor bx,bx
-        divv:
-        xor dx,dx
-        div cx
-        push dx
-        inc bx
-        test ax,ax
-        jnz divv
-        mov cx,bx
-        lea si,strout
-        get_digit:
-        pop ax
-        add al,'0'
-        mov [si],al
-        inc si
-        loop get_digit
-        mov al,' '
-        mov [si],al
-        RET
-        conv ENDP   
-      
-      
-       
-      convprice proc 
-        mov ax,sum
-        mov cx,10
-        xor bx,bx
-        divv1:
-        xor dx,dx
-        div cx
-        push dx
-        inc bx
-        test ax,ax
-        jnz divv1
-        mov cx,bx
-        lea si,finalprice
-        get_digit1:
-        pop ax
-        add al,'0'
-        mov [si],al
-        inc si
-        loop get_digit1
-        mov al,' '
-        mov [si],al
-        RET
-        convprice ENDP
-      
-;------------------------------------------------------------------------
-
-   proc readfile 
-    
-    
-         
-    		mov ah,3Dh   ; 3Dh of DOS Services opens a file.
-    		mov al,0   ; 0 - for reading. 1 - for writing. 2 - both
-    		mov dx,offset filename  ; make a pointer to the filename
-    		int 21h   ; call DOS
-    		mov handler,ax   ; Function 3Dh returns the file handle in AX, here we save it for later use.
->>>>>>> master
     
          	mov ah,3Dh   
     		mov al,0 
@@ -1946,13 +1784,8 @@ MAIN PROC
     		mov bx,handler    
     		int 21h   
     
-<<<<<<< HEAD
     		add dx,ax    
     		
-=======
-    		add dx,ax    ; Function 3Fh returns the actual amount of bytes read in AX (should be 4 if
-    				; nothing went wrong.
->>>>>>> master
     		mov bx,dx
     		mov byte [bx],'$'   
                 
@@ -1961,7 +1794,6 @@ MAIN PROC
             lea si,buffer
                 
         
-<<<<<<< HEAD
            label:  
            mov al,[si] 
            mov dl,al
@@ -1978,24 +1810,6 @@ MAIN PROC
   
            
 	    Print:
-=======
-    label:  
-    mov al,[si] 
-    mov dl,al
-    mov ah,2h
-    int 21h
-    call moving1      
-    
-    inc si 
-    dec cl
-   
-   
-    jnz label
-    jz Print
-           ;;;;;;;;;;;;;;;;; 
-           
-	Print:
->>>>>>> master
 
 		mov dx,offset buffer  ; put the pointer back in DX.
 		mov ah,9
@@ -2015,15 +1829,9 @@ MAIN PROC
       increment:
       mov bl,1  
 
-<<<<<<< HEAD
        ret   
      ENDP 
 ;--------------------------------------------------------------------------------------- 
-=======
-    ret   
-   ENDP 
-;------------------------------------------------------------------------------- 
->>>>>>> master
      
     PROC DisplayPrice 
         
@@ -2034,11 +1842,7 @@ MAIN PROC
     mov ax,sum 
                  
     LEA DX,price
-<<<<<<< HEAD
     MOV AH,9                        ;Function to Display Price at Recipt
-=======
-    MOV AH,9
->>>>>>> master
     INT 21H
     mov ax,sum 
    
@@ -2051,11 +1855,7 @@ MAIN PROC
     
        
     ENDP  
-<<<<<<< HEAD
 ;-----------------------------------------------------------------------------------------   
-=======
-;--------------------------------------------------------------------------   
->>>>>>> master
    
     Writeprice proc
         
@@ -2084,11 +1884,7 @@ MAIN PROC
    mov cx, 30
    mov ah, 40h
    int 21h ; write to file...  
-<<<<<<< HEAD
    call convprice                                           ;Function to write total price at save file
-=======
-   call convprice
->>>>>>> master
    
    mov bx, [hand]
    mov dx, offset finalprice
@@ -2113,7 +1909,6 @@ MAIN PROC
         
      ENDP
  ;-------------------------------------------------------------------------      
-<<<<<<< HEAD
 
      EXIT:
      CALL Close
@@ -2178,72 +1973,6 @@ MAIN PROC
     INT 21H
     SUB AL,48
 
-=======
-
-     EXIT:
-     CALL Close
-     CALL Closesave
-    MOV AH,4CH
-    INT 21H
-  
-;------------------------------------------------------------------------------
-     HELP: 
-     
-     LEA DX,New_line
-     MOV AH,9
-     INT 21H 
-     
-     LEA DX,BR1
-     MOV AH,9
-     INT 21H 
-     
-     LEA DX,MSH1
-     MOV AH,9
-     INT 21H  
-     
-     LEA DX,BR2
-     MOV AH,9
-     INT 21H
-     
-     LEA DX,MSH2
-     MOV AH,9
-     INT 21H 
-     
-     LEA DX,MSH3
-     MOV AH,9
-     INT 21H 
-     
-     LEA DX,MSH4
-     MOV AH,9
-     INT 21H
-     
-     LEA DX,MSH5
-     MOV AH,9
-     INT 21H  
-     
-     LEA DX,MSH6
-     MOV AH,9
-     INT 21H
-     
-     LEA DX,MSH7
-     MOV AH,9
-     INT 21H 
-     
-     
-     jmp MAIN_MENU_WAIT_FOR_KEY 
-     
-;-----------------------------------------------------------------------------   
-     Quantitynumber proc 
-        
-    LEA DX,Quantitynum              
-    MOV AH,9
-    INT 21H 
- 
-    MOV AH,1
-    INT 21H
-    SUB AL,48
-
->>>>>>> master
     mov quantity,al
     
     ret
