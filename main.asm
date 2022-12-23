@@ -1,4 +1,4 @@
-                    include 'emu8086.inc'
+include 'emu8086.inc'
 .MODEL LARGE
 .STACK 1000H
 .DATA  
@@ -14,15 +14,14 @@ Menu5  DB 0AH,0DH, '  --                 5.Drinks                  --$'
 ;---------------------------------------------------------------------------------------          
 filename db "project.txt",0
 savefile db "save.txt",0
-start dw ? 
-titem dw ?
 handler dw ? 
 hand dw ?
 buffer DW ?
 totali DW ?
 strout db 16 dup(0) 
 finalprice db 16 dup(0) 
-space DB '      $'            
+space DB '       $'
+hr DB ?            
 ;---------------------------------------------------------------------------------------------------- 
 MSH1 DB 0AH,0DH,0AH,0DH,  '                How to use our System:  $'   
 MSH2 DB 0AH,0DH,0AH,0DH,  ' * Resturant Billing System is a system that allows user to make an order    $'  
@@ -82,7 +81,7 @@ D4 DB 10,13,                  '       4.Orange juice               35LE    $'
 D5 DB 10,13,                  '       5.Milk                       40LE    $'
 D6 DB 10,13,                  '       6.Cocktail                   45LE    $'
 D7 DB 10,13,                  '       7.Chocolate                  44LE    $'
-B5 DB 10,13,                  '       8.Back to Menu                       $'                                             
+B5 DB 10,13,                  '       8.Back to Menu                       $'                                              
 ;-------------------------------------------------------------------------------------
 Q1 DB 0AH,0DH,0AH,0DH,  '  --         1.Make new order                --$ '
 Q2 DB 0AH,0DH,0AH,0DH,  '  --         2.Exit                          --$'  
@@ -102,7 +101,7 @@ BR5 DB 0AH,0DH,'  --------------------------------------------------------------
 BR6 DB 0AH,0DH,'  --                                          --$'        
 BR7 DB 0AH,0DH,'  ----------------------------------------------$'
 ;---------------------------------------------------------------------------------------------- 
-Recipt DB 0ah,0dh, '        Item                 Price       Quantity      Total     $ '
+Recipt DB 0ah,0dh, '            Item                   Price       Quantity    Total     $'
 price DB 0ah,0dh, '         Total price is:     $'  
 ;---------------------------------------------------------------------------------------------
 order DB ?
@@ -167,17 +166,18 @@ MAIN PROC
 
     MAIN_MENU_WAIT_FOR_KEY:
 ;       Waits for a key press
-	MOV AH,00h
-    INT 16h
+	MOV AH,01h
+    INT 21h
+    SUB AL,48
 		
 ;       Check whick key was pressed
-	CMP AL,'1'
+	CMP AL,1
 	JE TOP 
 	
-	CMP AL,'2'
+	CMP AL,2
 	JE HELP    
 	
-	CMP AL,'3'
+	CMP AL,3
 	JE EXIT
 
 	LEA DX,invalid
@@ -1546,7 +1546,7 @@ MAIN PROC
     call conv 
     call WriteFile     
 
-    jmp Drinks       
+    jmp Drinks   
 ;----------------------------------------------------------------------
   
      DISPLAY_NUM PROC NEAR
@@ -1586,7 +1586,13 @@ MAIN PROC
    mov dx, offset Dish
    mov cx, 45
    mov ah, 40h
-   int 21h ; write to file...  
+   int 21h ; write to file...
+   
+   mov bx, [handler]
+   mov dx, offset space
+   mov cx, 7
+   mov ah, 40h
+   int 21h ; write to file...   
    
    mov bx, [handler]
    mov dx, offset quantity
@@ -1596,7 +1602,7 @@ MAIN PROC
    
    mov bx, [handler]
    mov dx, offset space
-   mov cx, 5
+   mov cx, 7
    mov ah, 40h
    int 21h ; write to file... 
      
@@ -1617,7 +1623,14 @@ MAIN PROC
    mov dx, offset Dish
    mov cx, 45
    mov ah, 40h
-   int 21h ; write to file...  
+   int 21h ; write to file...
+   
+   
+   mov bx, [hand]
+   mov dx, offset space
+   mov cx, 7
+   mov ah, 40h
+   int 21h ; write to file...   
    
    mov bx, [hand]
    mov dx, offset quantity
@@ -1627,7 +1640,7 @@ MAIN PROC
    
    mov bx, [hand]
    mov dx, offset space
-   mov cx, 5
+   mov cx, 7
    mov ah, 40h
    int 21h ; write to file... 
      
@@ -1637,8 +1650,6 @@ MAIN PROC
    mov cx, 5
    mov ah, 40h
    int 21h ; write to file...
-   
-   
    
   RET    
                                  
@@ -1728,7 +1739,6 @@ MAIN PROC
         mov quantity, ah  
         cmp al, 0
         jne divide
-    
         pop bp
         ret
         
@@ -1898,45 +1908,12 @@ MAIN PROC
     LEA DX,BR5
     MOV AH,9
     INT 21H  
-    call Close
-
-    call Neworder
+    jmp EXIT
     
        
     ENDP  
 ;--------------------------------------------------------------------------   
-    PROC Neworder
-        CALL Create 
-        LEA DX,BR5
-        MOV AH,9
-        INT 21H 
-        
-        LEA DX,Q1
-        MOV AH,9
-        INT 21H  
-        
-        LEA DX,Q2
-        MOV AH,9
-        INT 21H  
-        
-        LEA DX,BR5
-        MOV AH,9
-        INT 21H  
-        
-        MOV AH,1
-        INT 21H
-        SUB AL,48 
-        
-        cmp al,1
-        je TOP
-         
-        
-        cmp al,2 
-        je Exit
-      
-        
-    ENDP       
-    
+   
     Writeprice proc
         
    mov bx,hand
