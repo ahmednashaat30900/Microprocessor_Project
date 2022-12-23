@@ -31,11 +31,11 @@ Records of orders will be stored using files. Implement a command line interface
 ## Project Screens
 ![mainpage](https://user-images.githubusercontent.com/65959637/209413859-24062dd3-580b-4cad-9d16-2f6227615a95.png)
 
-####Main Page
+Main Page
 
 ![mainpage](https://user-images.githubusercontent.com/65959637/209413885-bd60226d-c8c1-4397-aab3-6c049b70f5d2.png)
 
-####Main Menue
+Main Menue
 
 ![maindishes](https://user-images.githubusercontent.com/65959637/209413904-b7591808-46af-40df-9f08-769085213208.png)
 
@@ -43,15 +43,15 @@ Main Dishes
 
 ![appetisers](https://user-images.githubusercontent.com/65959637/209413921-9385027d-7769-4388-bac1-8aa0810e764c.png)
 
-####Appetisers
+Appetisers
 
 ![sajads](https://user-images.githubusercontent.com/65959637/209413949-21101897-2e68-41cf-8dfb-ce575c488547.png)
 
-####Salads
+Salads
 
 ![Desserts](https://user-images.githubusercontent.com/65959637/209413999-2166ab69-f295-4bfd-a414-a8e129d51c2d.png)
 
-####Desserts
+Desserts
 
 ![Screenshot 2022-12-24 005026](https://user-images.githubusercontent.com/65959637/209414051-89b56a79-6304-454d-9b33-309a5f62e23b.png)
 
@@ -59,4 +59,4 @@ Main Dishes
 
 ![Screenshot (49)](https://user-images.githubusercontent.com/65959637/209414075-a54aea0c-820f-4f19-b3c5-fb27e098e66c.png)
 
-####Final Recipt
+Final Recipt
