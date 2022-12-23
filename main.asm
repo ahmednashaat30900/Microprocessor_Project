@@ -1,4 +1,4 @@
-include 'emu8086.inc'
+                    include 'emu8086.inc'
 .MODEL LARGE
 .STACK 1000H
 .DATA  
@@ -20,7 +20,8 @@ handler dw ?
 hand dw ?
 buffer DW ?
 totali DW ?
-strout db 16 dup(0)  
+strout db 16 dup(0) 
+finalprice db 16 dup(0) 
 space DB '      $'            
 ;---------------------------------------------------------------------------------------------------- 
 MSH1 DB 0AH,0DH,0AH,0DH,  '                How to use our System:  $'   
@@ -28,7 +29,7 @@ MSH2 DB 0AH,0DH,0AH,0DH,  ' * Resturant Billing System is a system that allows u
 MSH3 DB 0AH,0DH,0AH,0DH,  '   by choosing a various of items from 5 main menues. $'    
 MSH4 DB 0AH,0DH,0AH,0DH,  ' * The user can easily move between the menus and choose what he want. $' 
 MSH5 DB 0AH,0DH,0AH,0DH,  ' * After finish his order ,he must choose finish order and then:  $'
-MSH6 DB 0AH,0DH,0AH,0DH,  '   the total recipt will printout.  $'
+MSH6 DB 0AH,0DH,          '   the total recipt will printout.  $'
 MSH7 DB 0AH,0DH,0AH,0DH,  ' * You can now use our system easily press 1 to start your order,best wishes :) $'    
 
 ;---------------------------------------------------------------------------------------------------- 
@@ -73,15 +74,15 @@ B4 DB 0AH,0DH,                '       6.Back to Menu                      $'
                                                                                                                           
 ;--------------------------------------------------------------------------------------
 M10 DB 0AH,0DH,0AH,0DH,       '    Choose your Drink from the menu$' 
-MSG4 DB 0AH,0DH,0AH,0DH,      '       Drink                        Price  $'   
-D1 DB 10,13,                  '       1.Shoft Drinks               8LE    $'
-D2 DB 10,13,                  '       2.Coffee                     7LE    $'
-D3 DB 10,13,                  '       3.Tea                        5LE    $'
-D4 DB 10,13,                  '       4.Orange juice               8LE    $'
-D5 DB 10,13,                  '       5.Milk                       7LE    $'
-D6 DB 10,13,                  '       6.Cocktail                   16LE   $'
-D7 DB 10,13,                  '       7.Chocolate                  23LE   $'
-B5 DB 10,13,                  '       8.Back to Menu                      $'                                             
+MSG4 DB 0AH,0DH,0AH,0DH,      '       Drink                        Price   $'   
+D1 DB 10,13,                  '       1.Shoft Drinks               25LE    $'
+D2 DB 10,13,                  '       2.Coffee                     30LE    $'
+D3 DB 10,13,                  '       3.Tea                        25LE    $'
+D4 DB 10,13,                  '       4.Orange juice               35LE    $'
+D5 DB 10,13,                  '       5.Milk                       40LE    $'
+D6 DB 10,13,                  '       6.Cocktail                   45LE    $'
+D7 DB 10,13,                  '       7.Chocolate                  44LE    $'
+B5 DB 10,13,                  '       8.Back to Menu                       $'                                             
 ;-------------------------------------------------------------------------------------
 Q1 DB 0AH,0DH,0AH,0DH,  '  --         1.Make new order                --$ '
 Q2 DB 0AH,0DH,0AH,0DH,  '  --         2.Exit                          --$'  
@@ -89,7 +90,7 @@ Q3 DB 0AH,0DH,          '  --                 6.Finish Order            --$'
 ;--------------------------------------------------------------------------------------    
 M8 DB 0AH,0DH,0AH,0DH,       '  Choise your food from the menu$' 
 Choice DB 10,13,10,13,       'Enter your order: $'
-Quantitynum DB 0AH,0DH, 'Enter quantity: $'    
+Quantitynum DB 0AH,0DH, '    Enter quantity: $'    
 Invalid DB 10,13,10,13,'     &&INVALID ENTRY&&$ '    
 New_line DB 0AH,0DH,0AH,0DH,' $'
 ;---------------------------------------------------------------------------------------------
@@ -102,7 +103,7 @@ BR6 DB 0AH,0DH,'  --                                          --$'
 BR7 DB 0AH,0DH,'  ----------------------------------------------$'
 ;---------------------------------------------------------------------------------------------- 
 Recipt DB 0ah,0dh, '        Item                 Price       Quantity      Total     $ '
-price DB 0ah,0dh, '         Total price is: $'  
+price DB 0ah,0dh, '         Total price is:     $'  
 ;---------------------------------------------------------------------------------------------
 order DB ?
 quantity DB ?  
@@ -299,8 +300,10 @@ MAIN PROC
     
     LEA DX,BR5
     MOV AH,9
-    INT 21H
-    call readfile
+    INT 21H  
+ 
+    
+    call writeprice
        
 ;--------------------------------------------------------------------
   
@@ -375,7 +378,7 @@ MAIN PROC
                     
                     
     printn ' '               
-    print 'enter your order '           
+    print '    Enter your order: '           
     
     MOV AH,01h
     INT 21H
@@ -671,7 +674,7 @@ MAIN PROC
 ;-----------------------------------------------------------------------------------------
     select_order2:
     printn ' '
-    print 'enter your order '             
+    print '    Enter your order: '             
     
     MOV AH,1
     INT 21H
@@ -720,7 +723,8 @@ MAIN PROC
     LEA SI,APP1                  ; Location of STR1 is loaded to SI
     LEA DI,Dish  
                                                            
-    call Movestring
+    call Movestring 
+    call conv
     call convert 
     call WriteFile
  
@@ -900,7 +904,7 @@ MAIN PROC
 ;---------------------------------------------------------------------------------------------   
     select_order3:
     printn ' '
-    print 'enter your order '            
+    print '    Enter your order: '            
     
     MOV AH,1
     INT 21H
@@ -1128,7 +1132,7 @@ MAIN PROC
  ;------------------------------------------------------------------------   
     select_order4:
     printn ' '
-    print 'enter your order '       
+    print '    Enter your order: '       
     
     MOV AH,1
     INT 21H
@@ -1300,9 +1304,6 @@ MAIN PROC
     MOV AH,9
     INT 21H 
 
-    LEA DX,New_line
-    MOV AH,9
-    INT 21H
     
     LEA DX,D1    
     MOV AH,9
@@ -1349,7 +1350,7 @@ MAIN PROC
     
 
     printn ' '
-    print 'Enter your order '             
+    print '    Enter your order: '             
     
     
     MOV AH,1
@@ -1368,10 +1369,10 @@ MAIN PROC
     JE calcDrink3
     
     CMP order,4
-    JE calcDrink4   ;calc8
+    JE calcDrink4   
     
     CMP order,5
-    JE calcDrink5  ;calc7
+    JE calcDrink5 
     
     CMP order,6
     JE calcDrink6
@@ -1393,21 +1394,20 @@ MAIN PROC
     
    call Quantitynumber
    
-    mov al,8
+    mov al,25
     MUL quantity
     
     ADD sum, ax
     mov totali,ax 
         
-    MOV AX, @DATA
-    MOV DS,AX
+    MOV AX,Ds
     MOV ES,AX
     LEA SI,D1                  ; Location of STR1 is loaded to SI
     LEA DI,Dish      
                                                        
     call Movestring
     call convert
-     call conv 
+    call conv 
     call WriteFile 
     
     jmp Drinks  
@@ -1417,23 +1417,21 @@ MAIN PROC
     
     call Quantitynumber
    
-    mov quantity,al
 
-    mov al,7
+    mov al,30
     MUL quantity
     
     ADD sum, ax
     mov totali,ax   
         
-    MOV AX, @DATA
-    MOV DS,AX
+    MOV AX,Ds
     MOV ES,AX
     LEA SI,D2                  ; Location of STR1 is loaded to SI
     LEA DI,Dish   
                                                           
     call Movestring 
     call convert
-     call conv 
+    call conv 
     call WriteFile
     jmp Drinks 
 ;--------------------------------------------------------------------------          
@@ -1442,21 +1440,20 @@ MAIN PROC
     
     call Quantitynumber
   
-    mov al,5
+    mov al,25
     MUL quantity
     
     ADD sum, ax
     mov totali,ax
     
-    MOV AX, @DATA
-    MOV DS,AX
+    MOV AX,Ds
     MOV ES,AX
     LEA SI,D3                  ; Location of STR1 is loaded to SI
     LEA DI,Dish  
                                                            
     call Movestring
     call convert 
-     call conv
+    call conv
     call WriteFile      
     
     jmp Drinks 
@@ -1465,21 +1462,20 @@ MAIN PROC
      calcDrink4:
      call Quantitynumber
 
-    mov al,8
+    mov al,35
     MUL quantity
     
     ADD sum, ax
     mov totali,ax 
         
-    MOV AX, @DATA
-    MOV DS,AX
+    MOV AX,Ds
     MOV ES,AX
     LEA SI,D4                  ; Location of STR1 is loaded to SI
     LEA DI,Dish 
                                                             
     call Movestring  
     call convert
-     call conv 
+    call conv 
     call WriteFile
     
     jmp Drinks
@@ -1488,21 +1484,20 @@ MAIN PROC
     
     call Quantitynumber
    
-    mov al,7
+    mov al,40
     MUL quantity
     
     ADD sum, ax
     mov totali,ax 
     
-    MOV AX, @DATA
-    MOV DS,AX
+    MOV AX,Ds
     MOV ES,AX
     LEA SI,D5                  ; Location of STR1 is loaded to SI
     LEA DI,Dish  
                                                            
     call Movestring
     call convert
-     call conv 
+    call conv 
     call WriteFile      
     
     jmp Drinks 
@@ -1512,21 +1507,20 @@ MAIN PROC
     
     call Quantitynumber
    
-    mov al,16
+    mov al,45
     MUL quantity    
     
     ADD sum, ax
     mov totali,ax
     
-    MOV AX, @DATA
-    MOV DS,AX
+    MOV AX,Ds
     MOV ES,AX
     LEA SI,D6                  ; Location of STR1 is loaded to SI
     LEA DI,Dish  
                                                            
     call Movestring
     call convert
-     call conv 
+    call conv 
     call WriteFile  
     
     jmp Drinks     
@@ -1536,21 +1530,20 @@ MAIN PROC
     
    call Quantitynumber
    
-    mov al,23
+    mov al,44
     MUL quantity
 
     ADD sum, ax
     mov totali,ax
     
-    MOV AX, @DATA
-    MOV DS,AX
+    MOV AX,Ds
     MOV ES,AX
     LEA SI,D7                  ; Location of STR1 is loaded to SI
     LEA DI,Dish    
                                                          
     call Movestring
     call convert
-     call conv 
+    call conv 
     call WriteFile     
 
     jmp Drinks       
@@ -1622,7 +1615,7 @@ MAIN PROC
    int 21h                       
    mov bx, [hand]
    mov dx, offset Dish
-   mov cx, 40
+   mov cx, 45
    mov ah, 40h
    int 21h ; write to file...  
    
@@ -1763,7 +1756,33 @@ MAIN PROC
         mov al,' '
         mov [si],al
         RET
-        conv ENDP
+        conv ENDP   
+      
+      
+       
+      convprice proc 
+        mov ax,sum
+        mov cx,10
+        xor bx,bx
+        divv1:
+        xor dx,dx
+        div cx
+        push dx
+        inc bx
+        test ax,ax
+        jnz divv1
+        mov cx,bx
+        lea si,finalprice
+        get_digit1:
+        pop ax
+        add al,'0'
+        mov [si],al
+        inc si
+        loop get_digit1
+        mov al,' '
+        mov [si],al
+        RET
+        convprice ENDP
       
 ;------------------------------------------------------------------------
 
@@ -1916,7 +1935,59 @@ MAIN PROC
         je Exit
       
         
-    ENDP
+    ENDP       
+    
+    Writeprice proc
+        
+   mov bx,hand
+   mov ah, 42h  ; "lseek"
+   mov al, 2    ; position relative to end of file
+   mov cx, 0    ; offset MSW
+   mov dx, 0    ; offset LSW
+   int 21h
+                                                                   
+   mov bx, [hand]
+   mov dx, offset BR5
+   mov cx, 60
+   mov ah, 40h
+   int 21h ; write to file...   
+   
+   mov bx,hand
+   mov ah, 42h  ; "lseek"
+   mov al, 2    ; position relative to end of file
+   mov cx, 0    ; offset MSW
+   mov dx, 0    ; offset LSW
+   int 21h
+   
+   mov bx, [hand]
+   mov dx, offset price
+   mov cx, 30
+   mov ah, 40h
+   int 21h ; write to file...  
+   call convprice
+   
+   mov bx, [hand]
+   mov dx, offset finalprice
+   mov cx, 5
+   mov ah, 40h
+   int 21h ; write to file...  
+    
+   mov bx,hand
+   mov ah, 42h  ; "lseek"
+   mov al, 2    ; position relative to end of file
+   mov cx, 0    ; offset MSW
+   mov dx, 0    ; offset LSW
+   int 21h 
+   
+   mov bx, [hand]
+   mov dx, offset BR5
+   mov cx, 60
+   mov ah, 40h
+   int 21h ; write to file...   
+        
+   call readfile 
+        
+     ENDP
  ;-------------------------------------------------------------------------      
 
      EXIT:
