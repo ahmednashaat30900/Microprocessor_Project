@@ -20,7 +20,8 @@ handler dw ?
 hand dw ?
 buffer DW ?
 totali DW ?
-strout db 16 dup(0)              
+strout db 16 dup(0)  
+space DB '      $'            
 ;---------------------------------------------------------------------------------------------------- 
 MSH1 DB 0AH,0DH,0AH,0DH,  '                How to use our System:  $'   
 MSH2 DB 0AH,0DH,0AH,0DH,  ' * Resturant Billing System is a system that allows user to make an order    $'  
@@ -104,7 +105,7 @@ Recipt DB 0ah,0dh, '        Item                 Price       Quantity      Total
 price DB 0ah,0dh, '         Total price is: $'  
 ;---------------------------------------------------------------------------------------------
 order DB ?
-quantity DB 0AH,0DH ?  
+quantity DB ?  
 sum DW ?
 Ans DB ? 
 counter DB  ? 
@@ -1596,16 +1597,23 @@ MAIN PROC
    
    mov bx, [handler]
    mov dx, offset quantity
-   mov cx, 2
+   mov cx, 1
+   mov ah, 40h
+   int 21h ; write to file...   
+   
+   mov bx, [handler]
+   mov dx, offset space
+   mov cx, 5
    mov ah, 40h
    int 21h ; write to file... 
+     
    
    mov bx, [handler]
    mov dx, offset strout
-   mov cx, 6
+   mov cx, 5
    mov ah, 40h
    int 21h ; write to file...
-     
+  
     mov bx,hand
    mov ah, 42h  ; "lseek"
    mov al, 2    ; position relative to end of file
@@ -1614,13 +1622,26 @@ MAIN PROC
    int 21h                       
    mov bx, [hand]
    mov dx, offset Dish
-   mov cx, 45
+   mov cx, 40
    mov ah, 40h
    int 21h ; write to file...  
    
    mov bx, [hand]
    mov dx, offset quantity
-   mov cx, 2
+   mov cx, 1
+   mov ah, 40h
+   int 21h ; write to file...  
+   
+   mov bx, [hand]
+   mov dx, offset space
+   mov cx, 5
+   mov ah, 40h
+   int 21h ; write to file... 
+     
+   
+   mov bx, [hand]
+   mov dx, offset strout
+   mov cx, 5
    mov ah, 40h
    int 21h ; write to file...
    
@@ -1739,7 +1760,7 @@ MAIN PROC
         mov [si],al
         inc si
         loop get_digit
-        mov al,'$'
+        mov al,' '
         mov [si],al
         RET
         conv ENDP
@@ -1859,7 +1880,7 @@ MAIN PROC
     MOV AH,9
     INT 21H  
     call Close
-    call Delete
+
     call Neworder
     
        
