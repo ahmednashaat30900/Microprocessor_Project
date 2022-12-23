@@ -1,5 +1,6 @@
 include 'emu8086.inc'
-
+.MODEL LARGE
+.STACK 1000H
 .DATA  
 ;----------------------------------------------------------------------------------------
 M1 DB 0AH,0DH,0AH,0DH,  '                   Welcome to Shobra Restaurants$' 
@@ -71,7 +72,6 @@ Dess5 DB 0AH,0DH,             '       5.Apple pie                  60LE   $'
 B4 DB 0AH,0DH,                '       6.Back to Menu                      $'    
                                                                                                                           
 ;--------------------------------------------------------------------------------------
-
 M10 DB 0AH,0DH,0AH,0DH,       '    Choose your Drink from the menu$' 
 MSG4 DB 0AH,0DH,0AH,0DH,      '       Drink                        Price   $'   
 D1 DB 10,13,                  '       1.Shoft Drinks               25LE    $'
@@ -81,16 +81,16 @@ D4 DB 10,13,                  '       3.Orange juice               35LE    $'
 D5 DB 10,13,                  '       4.Milk                       40LE    $'
 D6 DB 10,13,                  '       5.Cocktail                   45LE    $'
 D7 DB 10,13,                  '       6.Chocolate                  44LE    $'
-B5 DB 10,13,                  '       8.Back to Menu                       $'                                              
+B5 DB 10,13,                  '       7.Back to Menu                       $'                                              
 ;-------------------------------------------------------------------------------------
 Q1 DB 0AH,0DH,0AH,0DH,  '  --         1.Make new order                --$ '
 Q2 DB 0AH,0DH,0AH,0DH,  '  --         2.Exit                          --$'  
 Q3 DB 0AH,0DH,          '  --                 6.Finish Order            --$' 
 ;--------------------------------------------------------------------------------------    
 M8 DB 0AH,0DH,0AH,0DH,       '  Choise your food from the menu$' 
-
+Choice DB 10,13,10,13,       'Enter your order: $'
 Quantitynum DB 0AH,0DH, '    Enter quantity: $'    
-Invalid DB 0AH,0DH,0AH,0DH, '     &&INVALID ENTRY&&$ '    
+Invalid DB 10,13,10,13,'     &&INVALID ENTRY&&$ '    
 New_line DB 0AH,0DH,0AH,0DH,' $'
 ;---------------------------------------------------------------------------------------------
 BR1 DB 0AH,0DH,'  --                                           --$'
@@ -112,10 +112,10 @@ counter DB  ?
 Dish DB ?
 Dishdess DB ? 
 ;------------------------------------------------------------------------------------------
-TEXT_GAME_OVER_MAIN_MENU DB 'Press E to exit to main menu','$' 
-TEXT_MAIN_MENU_TITLE DB 'MAIN MENU press 1','$'
-TEXT_MAIN_MENU_HELP DB 'HELP press 2','$' 
-TEXT_MAIN_MENU_EXIT DB 'EXIT press 3','$'
+TEXT_GAME_OVER_MAIN_MENU DB 'Press E to exit to main menu','$' ;text main menu message
+TEXT_MAIN_MENU_TITLE DB 'MAIN MENU press 1','$' ;text with the main menu title
+TEXT_MAIN_MENU_HELP DB 'HELP press 2','$' ;text with the help message
+TEXT_MAIN_MENU_EXIT DB 'EXIT press 3 ','$' ;text with the exit game message
 ;------------------------------------------------------------------------------------------
 
 .CODE 
@@ -138,30 +138,29 @@ MAIN PROC
     MOV DL,04h                         ;set column
     INT 10h
 
-    MOV AH,09h                       
-    LEA DX,TEXT_MAIN_MENU_TITLE      
-    INT 21h                         
+    MOV AH,09h                       ;WRITE STRING TO STANDARD OUTPUT
+    LEA DX,TEXT_MAIN_MENU_TITLE      ;give DX a pointer
+    INT 21h                          ;print the string
 
 ;       Shows the help message
-    MOV AH,02h                       
-    MOV BH,00h                       
-    MOV DH,06h                      
-    MOV DL,04h                        
+    MOV AH,02h                       ;set cursor position
+    MOV BH,00h                       ;set page number
+    MOV DH,06h                       ;set row
+    MOV DL,04h                         ;set column
     INT 10h
 
-    MOV AH,09h                       
-    LEA DX,TEXT_MAIN_MENU_HELP     
-    INT 21h                          
+    MOV AH,09h                       ;WRITE STRING TO STANDARD OUTPUT
+    LEA DX,TEXT_MAIN_MENU_HELP     ;give DX a pointer
+    INT 21h                          ;print the string
 
 ;       Shows the exit message
-    MOV AH,02h                       
-    MOV BH,00h                      
-    MOV DH,08h                       
-    MOV DL,04h                        
-    INT 10h 
-      
-    MOV AH,09h                      
-    LEA DX,TEXT_MAIN_MENU_EXIT
+    MOV AH,02h                       ;set cursor position
+    MOV BH,00h                       ;set page number
+    MOV DH,08h                       ;set row
+    MOV DL,04h                         ;set column
+    INT 10h   
+    MOV AH,09h                       ;WRITE STRING TO STANDARD OUTPUT
+    LEA DX,TEXT_MAIN_MENU_EXIT      ;give DX a pointer 
     INT 21h 
                         ;print the string
 
@@ -198,8 +197,8 @@ MAIN PROC
    mov bh,10
    mov ax,700h
    INT 10h                           ;execute the configuration
-   RET
-   CLEAR_SCREEN ENDP
+    RET
+    CLEAR_SCREEN ENDP
 ;----------------------------------------------------------------------------------------------------   
  
   TOP: 
@@ -290,7 +289,6 @@ MAIN PROC
  ;--------------------------------------------------------------------   
    
      Finish_order:
-     call CLEAR_SCREEN
      
     LEA DX,BR5
     MOV AH,9
@@ -302,8 +300,9 @@ MAIN PROC
     
     LEA DX,BR5
     MOV AH,9
-
-    INT 21H
+    INT 21H  
+ 
+    
     call writeprice
        
 ;--------------------------------------------------------------------
@@ -379,7 +378,7 @@ MAIN PROC
                     
                     
     printn ' '               
-    print '    Enter your order '          
+    print '    Enter your order: '           
     
     MOV AH,01h
     INT 21H
@@ -422,8 +421,8 @@ MAIN PROC
 ;---------------------------------------------------------------------------------------------------------
     Movestring PROC
         
-    CLD                          
-    MOV CH,00H               
+    CLD                           ; Clear the contents of Direction Flag
+    MOV CH,00H                    ; Since CX should be 00xx
     MOV CL,50
     REP MOVSB
     
@@ -442,7 +441,7 @@ MAIN PROC
     
     MOV Ax,Ds
     MOV ES,AX
-    LEA SI,Dish1                  
+    LEA SI,Dish1                  ; Location of STR1 is loaded to SI
     LEA DI,Dish                                                         
 
     call Movestring  
@@ -465,7 +464,7 @@ MAIN PROC
     
     MOV Ax,Ds
     MOV ES,AX
-    LEA SI,Dish2                  
+    LEA SI,Dish2                  ; Location of STR1 is loaded to SI
     LEA DI,Dish 
                                                             
     call Movestring   
@@ -488,7 +487,7 @@ MAIN PROC
     MOV AX, @DATA
     MOV DS,AX
     MOV ES,AX
-    LEA SI,Dish3                
+    LEA SI,Dish3                  ; Location of STR1 is loaded to SI
     LEA DI,Dish 
                                                             
     call Movestring 
@@ -510,7 +509,7 @@ MAIN PROC
     
     MOV Ax,Ds
     MOV ES,AX
-    LEA SI,Dish4                 
+    LEA SI,Dish4                  ; Location of STR1 is loaded to SI
     LEA DI,Dish 
                                                             
     call Movestring
@@ -533,7 +532,7 @@ MAIN PROC
     
     MOV Ax,Ds
     MOV ES,AX
-    LEA SI,Dish5                 
+    LEA SI,Dish5                 ; Location of STR1 is loaded to SI
     LEA DI,Dish                                                         
 
     call Movestring 
@@ -556,7 +555,7 @@ MAIN PROC
     
     MOV Ax,Ds
     MOV ES,AX
-    LEA SI,Dish6                
+    LEA SI,Dish6                 ; Location of STR1 is loaded to SI
     LEA DI,Dish 
                                                             
     call Movestring
@@ -579,7 +578,7 @@ MAIN PROC
     
     MOV Ax,Ds
     MOV ES,AX
-    LEA SI,Dish7                 
+    LEA SI,Dish7                 ; Location of STR1 is loaded to SI
     LEA DI,Dish                                                         
 
     call Movestring    
@@ -602,7 +601,7 @@ MAIN PROC
     
     MOV Ax,Ds
     MOV ES,AX
-    LEA SI,Dish8                 
+    LEA SI,Dish8                 ; Location of STR1 is loaded to SI
     LEA DI,Dish 
                                                             
     call Movestring
@@ -675,8 +674,7 @@ MAIN PROC
 ;-----------------------------------------------------------------------------------------
     select_order2:
     printn ' '
-
-    print '    Enter your order '             
+    print '    Enter your order: '             
     
     MOV AH,1
     INT 21H
@@ -906,7 +904,7 @@ MAIN PROC
 ;---------------------------------------------------------------------------------------------   
     select_order3:
     printn ' '
-    print '    Enter your order '           
+    print '    Enter your order: '            
     
     MOV AH,1
     INT 21H
@@ -970,7 +968,7 @@ MAIN PROC
     mov al,30
     MUL quantity
      
-    ADD sum, ax
+    mov sum, ax
     mov totali,ax
     
     MOV Ax,Ds
@@ -1134,7 +1132,7 @@ MAIN PROC
  ;------------------------------------------------------------------------   
     select_order4:
     printn ' '
-    print '    Enter your order '       
+    print '    Enter your order: '       
     
     MOV AH,1
     INT 21H
@@ -1305,6 +1303,8 @@ MAIN PROC
     LEA DX,MSG4   
     MOV AH,9
     INT 21H 
+
+
     
     LEA DX,D2  
     MOV AH,9
@@ -1374,7 +1374,9 @@ MAIN PROC
     CMP order,6
     JE calcDrink6
     
-    CMP order,8
+ 
+    
+    CMP order,7
     JE TOP
       
     LEA DX,invalid
@@ -1384,15 +1386,35 @@ MAIN PROC
     jmp select_order5
 ;------------------------------------------------------------------------------
 
-
+   calcDrink1:
+    
+   call Quantitynumber
+   
+    mov al,30
+    MUL quantity
+    
+    ADD sum, ax
+    mov totali,ax 
+        
+    MOV AX,Ds
+    MOV ES,AX
+    LEA SI,D2                  ; Location of STR1 is loaded to SI
+    LEA DI,Dish      
+                                                       
+    call Movestring
+    call convert
+    call conv 
+    call WriteFile 
+    
+    jmp Drinks  
  ;----------------------------------------------------------------------------   
   
-   calcDrink1: 
+   calcDrink2: 
     
     call Quantitynumber
    
 
-    mov al,30
+    mov al,25
     MUL quantity
     
     ADD sum, ax
@@ -1400,7 +1422,7 @@ MAIN PROC
         
     MOV AX,Ds
     MOV ES,AX
-    LEA SI,D2                  ; Location of STR1 is loaded to SI
+    LEA SI,D3                  ; Location of STR1 is loaded to SI
     LEA DI,Dish   
                                                           
     call Movestring 
@@ -1410,11 +1432,11 @@ MAIN PROC
     jmp Drinks 
 ;--------------------------------------------------------------------------          
          
-   calcDrink2:
+   calcDrink3:
     
     call Quantitynumber
   
-    mov al,25
+    mov al,35
     MUL quantity
     
     ADD sum, ax
@@ -1422,7 +1444,7 @@ MAIN PROC
     
     MOV AX,Ds
     MOV ES,AX
-    LEA SI,D3                  ; Location of STR1 is loaded to SI
+    LEA SI,D4                  ; Location of STR1 is loaded to SI
     LEA DI,Dish  
                                                            
     call Movestring
@@ -1433,10 +1455,10 @@ MAIN PROC
     jmp Drinks 
 ;--------------------------------------------------------------------------
     
-     calcDrink3:
+     calcDrink4:
      call Quantitynumber
 
-    mov al,35
+    mov al,40
     MUL quantity
     
     ADD sum, ax
@@ -1444,7 +1466,7 @@ MAIN PROC
         
     MOV AX,Ds
     MOV ES,AX
-    LEA SI,D4                  ; Location of STR1 is loaded to SI
+    LEA SI,D5                  ; Location of STR1 is loaded to SI
     LEA DI,Dish 
                                                             
     call Movestring  
@@ -1454,11 +1476,11 @@ MAIN PROC
     
     jmp Drinks
 ;----------------------------------------------------------------------- 
-    calcDrink4: 
+    calcDrink5: 
     
     call Quantitynumber
    
-    mov al,40
+    mov al,45
     MUL quantity
     
     ADD sum, ax
@@ -1466,7 +1488,7 @@ MAIN PROC
     
     MOV AX,Ds
     MOV ES,AX
-    LEA SI,D5                  ; Location of STR1 is loaded to SI
+    LEA SI,D6                  ; Location of STR1 is loaded to SI
     LEA DI,Dish  
                                                            
     call Movestring
@@ -1477,7 +1499,7 @@ MAIN PROC
     jmp Drinks 
 ;---------------------------------------------------------------------  
     
- calcDrink5: 
+ calcDrink6: 
     
     call Quantitynumber
    
@@ -1500,31 +1522,10 @@ MAIN PROC
     jmp Drinks     
 ;-----------------------------------------------------------------------  
            
-  calcDrink6: 
-    
-   call Quantitynumber
-   
-    mov al,44
-    MUL quantity
-
-    ADD sum, ax
-    mov totali,ax
-    
-    MOV AX,Ds
-    MOV ES,AX
-    LEA SI,D7                  ; Location of STR1 is loaded to SI
-    LEA DI,Dish    
-                                                         
-    call Movestring
-    call convert
-    call conv 
-    call WriteFile     
-
-    jmp Drinks   
-;----------------------------------------------------------------------
+ 
   
      DISPLAY_NUM PROC NEAR
-        XOR CX, CX 
+        XOR CX, CX ;To count the digits
         MOV BX, 10 ;Fixed divider
         
         DIGITS:
@@ -1561,43 +1562,6 @@ MAIN PROC
    mov cx, 45
    mov ah, 40h
    int 21h ; write to file...
-
-   mov dx, offset space
-   mov cx, 7
-   mov ah, 40h
-   int 21h ; write to file...  
-   
-   mov dx, offset quantity
-   mov cx, 1
-   mov ah, 40h
-   int 21h ; write to file...   
-   
-
-   mov dx, offset space
-   mov cx, 7
-   mov ah, 40h
-   int 21h ; write to file... 
-   
-   
-   mov dx, offset strout
-   mov cx, 5
-   mov ah, 40h
-   int 21h ; write to file...
-  
-
-   mov bx,hand
-
-   mov ah, 42h  ; "lseek"
-   mov al, 2    ; position relative to end of file
-   mov cx, 0    ; offset MSW
-   mov dx, 0    ; offset LSW
-   int 21h                       
-   
-   mov dx, offset Dish
-   mov cx, 45
-   mov ah, 40h
-   int 21h ; write to file...
-   
    
    
    mov dx, offset space
@@ -1609,7 +1573,7 @@ MAIN PROC
    mov dx, offset quantity
    mov cx, 1
    mov ah, 40h
-   int 21h ; write to file...  
+   int 21h ; write to file...   
    
    
    mov dx, offset space
@@ -1623,6 +1587,20 @@ MAIN PROC
    mov cx, 5
    mov ah, 40h
    int 21h ; write to file...
+  
+    mov bx,hand
+   mov ah, 42h  ; "lseek"
+   mov al, 2    ; position relative to end of file
+   mov cx, 0    ; offset MSW
+   mov dx, 0    ; offset LSW
+   int 21h                       
+  
+   mov dx, offset Dish
+   mov cx, 45
+   mov ah, 40h
+   int 21h ; write to file...
+   
+   
    
    mov dx, offset space
    mov cx, 7
@@ -1667,6 +1645,17 @@ MAIN PROC
         mov handler,ax
         RET
         Create ENDP
+     
+        Createsave PROC NEAR 
+        mov al,00h
+        mov ah,3ch
+        LEA DX,savefile
+        mov cx,00H
+        int 21h   
+        
+        mov handler,ax
+        RET
+        Createsave ENDP  
 ;----------------------------------------------------------------------  
 
      Close PROC NEAR 
@@ -1687,7 +1676,7 @@ MAIN PROC
      Open PROC NEAR
         mov ah,3dh
         lea dx,filename
-        mov al,2 ; access and sharing modes
+        mov al,2
         int 21h
         mov handler,ax 
         RET
@@ -1705,9 +1694,15 @@ MAIN PROC
 ;-------------------------------------------------------------------                  
      
       convert proc
+        
+        push bp
+        mov bp, sp
     
         mov si, offset quantity 
         mov ax, [si]
+    
+        mov cl, "$"
+        mov [bx], cl 
            
        divide:
        
@@ -1719,6 +1714,7 @@ MAIN PROC
         mov quantity, ah  
         cmp al, 0
         jne divide
+        pop bp
         ret
         
         convert endp
@@ -1777,26 +1773,32 @@ MAIN PROC
 
    proc readfile 
     
-    call Open
+    
+         
+    		mov ah,3Dh   ; 3Dh of DOS Services opens a file.
+    		mov al,0   ; 0 - for reading. 1 - for writing. 2 - both
+    		mov dx,offset filename  ; make a pointer to the filename
+    		int 21h   ; call DOS
+    		mov handler,ax   ; Function 3Dh returns the file handle in AX, here we save it for later use.
+    
     	;'DOS Service Function number 3Fh reads from a file.
     
-     mov ah,3Fh
-     mov cx,10000   ; I will assume ELMO.TXT has atleast 4 bytes in it. CX is how many bytes to read.
-     mov dx,offset buffer  ; DOS Functions like DX having pointers for some reason.
-     mov bx,handler    ; BX needs the file handle.
-     int 21h   ; call DOS
+    		mov ah,3Fh
+    		mov cx,10000   ; I will assume ELMO.TXT has atleast 4 bytes in it. CX is how many bytes to read.
+    		mov dx,offset buffer  ; DOS Functions like DX having pointers for some reason.
+    		mov bx,handler    ; BX needs the file handle.
+    		int 21h   ; call DOS
     
     	;Here we will put a $ after 4 bytes in the buffer and print the data read:
     
-   ;  mov dx,offset buffer
-     add dx,ax    ; Function 3Fh returns the actual amount of bytes read in AX 
-    				
-     mov bx,dx
-     mov byte [bx],'$'   ; byte pointer so we don't mess with the whole word (a word is 16bits).
+    		add dx,ax    ; Function 3Fh returns the actual amount of bytes read in AX (should be 4 if
+    				; nothing went wrong.
+    		mov bx,dx
+    		mov byte [bx],'$'   ; byte pointer so we don't mess with the whole word (a word is 16bits).
                 
-   ;  mov cl,9
-     mov bl,1
-     lea si,buffer
+            mov cl,9
+            mov bl,1
+            lea si,buffer
                 
         
     label:  
@@ -1805,9 +1807,7 @@ MAIN PROC
     mov ah,2h
     int 21h
     call moving1      
-    cmp al,'a'
-    jge changeLetter
-
+    
     inc si 
     dec cl
    
@@ -1816,51 +1816,37 @@ MAIN PROC
     jz Print
            ;;;;;;;;;;;;;;;;; 
            
-   changeLetter:
-      cmp bl,1
-      je changefirst  
-      inc si 
-      dec cl
-      jnz label  
-          
-           ;;;;;;;;;;;;;;;;       
-		             
-   changefirst:
-	  inc si  
-	  mov al,[si]
-	  sub al,32d  
-	  mov [si],al
-	  mov bl,0
-      dec cl
-	  jnz label       
-		                   
-		     
 	Print:
 
-	  mov dx,offset buffer  ; put the pointer back in DX.
-      mov ah,9
-	  int 21h    ; call DOS Function 9 (Print String).   
-	  call Displayprice
+		mov dx,offset buffer  ; put the pointer back in DX.
+		mov ah,9
+		int 21h    ; call DOS Function 9 (Print String).   
+		
+		call Displayprice
+		
+		 
 		  
     moving1: 
     cmp al,' '
+    
     je increment
-    ret
-      
+     ret
+     
+     
     increment:
     mov bl,1  
+
     ret   
-  readfile ENDP 
+   ENDP 
 ;------------------------------------------------------------------------------- 
      
-    PROC DisplayPrice
-       
+    PROC DisplayPrice 
         
     LEA DX,BR5
     MOV AH,9
     INT 21H 
     
-    
+    mov ax,sum 
                  
     LEA DX,price
     MOV AH,9
@@ -1871,15 +1857,10 @@ MAIN PROC
     
     LEA DX,BR5
     MOV AH,9
-<<<<<<< HEAD
-    INT 21H 
-    jmp EXIT 
-=======
     INT 21H  
     jmp EXIT
     
        
->>>>>>> 007de8e23f384e054dbe58d13dba35f82bddd1d9
     ENDP  
 ;--------------------------------------------------------------------------   
    
@@ -1892,11 +1873,7 @@ MAIN PROC
    mov dx, 0    ; offset LSW
    int 21h
                                                                    
-<<<<<<< HEAD
-   
-=======
    mov bx, [hand]
->>>>>>> 007de8e23f384e054dbe58d13dba35f82bddd1d9
    mov dx, offset BR5
    mov cx, 60
    mov ah, 40h
@@ -1909,22 +1886,14 @@ MAIN PROC
    mov dx, 0    ; offset LSW
    int 21h
    
-<<<<<<< HEAD
-   
-=======
    mov bx, [hand]
->>>>>>> 007de8e23f384e054dbe58d13dba35f82bddd1d9
    mov dx, offset price
    mov cx, 30
    mov ah, 40h
    int 21h ; write to file...  
    call convprice
    
-<<<<<<< HEAD
-   
-=======
    mov bx, [hand]
->>>>>>> 007de8e23f384e054dbe58d13dba35f82bddd1d9
    mov dx, offset finalprice
    mov cx, 5
    mov ah, 40h
@@ -1937,11 +1906,7 @@ MAIN PROC
    mov dx, 0    ; offset LSW
    int 21h 
    
-<<<<<<< HEAD
-   
-=======
    mov bx, [hand]
->>>>>>> 007de8e23f384e054dbe58d13dba35f82bddd1d9
    mov dx, offset BR5
    mov cx, 60
    mov ah, 40h
