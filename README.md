@@ -28,3 +28,19 @@ Records of orders will be stored using files. Implement a command line interface
 3. List all food in a given order
 4. Show total cost for a given order
 
+### Project Screens
+![mainpage](https://user-images.githubusercontent.com/65959637/209413859-24062dd3-580b-4cad-9d16-2f6227615a95.png)
+Main Page
+
+![mainpage](https://user-images.githubusercontent.com/65959637/209413885-bd60226d-c8c1-4397-aab3-6c049b70f5d2.png)
+Main Menue
+
+![maindishes](https://user-images.githubusercontent.com/65959637/209413904-b7591808-46af-40df-9f08-769085213208.png)
+Main Dishes
+
+![appetisers](https://user-images.githubusercontent.com/65959637/209413921-9385027d-7769-4388-bac1-8aa0810e764c.png)
+Appetisers
+
+![sajads](https://user-images.githubusercontent.com/65959637/209413949-21101897-2e68-41cf-8dfb-ce575c488547.png)
+Salads
+
