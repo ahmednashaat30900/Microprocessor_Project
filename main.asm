@@ -19,7 +19,8 @@ titem dw ?
 handler dw ? 
 hand dw ?
 buffer DW ?
-totali DW ?              
+totali DW ?
+strout db 16 dup(0)              
 ;---------------------------------------------------------------------------------------------------- 
 MSH1 DB 0AH,0DH,0AH,0DH,  '                How to use our System:  $'   
 MSH2 DB 0AH,0DH,0AH,0DH,  ' * Resturant Billing System is a system that allows user to make an order    $'  
@@ -122,12 +123,13 @@ TEXT_MAIN_MENU_EXIT DB 'EXIT press 3','$' ;text with the exit game message
 MAIN PROC
     MOV AX,@DATA
     MOV DS,AX
-    call create
+    CALL Create
     CALL Opensave
+    
     CALL DRAW_MAIN_MENU 
 ;------------------------------------------------------------------------------------------    
     DRAW_MAIN_MENU PROC NEAR
-      ;  CALL CLEAR_SCREEN
+        CALL CLEAR_SCREEN
     ;       Shows the menu title
     MOV AH,02h                       ;set cursor position
     MOV BH,00h                       ;set page number
@@ -190,14 +192,15 @@ MAIN PROC
    xor cx,cx
    mov dh,25
    mov dl,80
-   mov bh,7
+   mov bh,10
    mov ax,700h
    INT 10h                           ;execute the configuration
     RET
     CLEAR_SCREEN ENDP
 ;----------------------------------------------------------------------------------------------------   
  
-  TOP:
+  TOP: 
+   
    
       CALL CLEAR_SCREEN
   
@@ -373,7 +376,7 @@ MAIN PROC
     printn ' '               
     print 'enter your order '           
     
-    MOV AH,1
+    MOV AH,01h
     INT 21H
     SUB AL,48    
     mov order,AL
@@ -439,6 +442,7 @@ MAIN PROC
 
     call Movestring  
     call convert
+    call conv
     call WriteFile
                   
     jmp Main_Dishes 
@@ -460,7 +464,8 @@ MAIN PROC
     LEA DI,Dish 
                                                             
     call Movestring   
-    call convert    
+    call convert
+     call conv    
     call WriteFile                  
     jmp Main_Dishes    
  ;------------------------------------------------------------------------------
@@ -483,6 +488,7 @@ MAIN PROC
                                                             
     call Movestring 
     call convert
+     call conv
     call WriteFile    
     
     jmp Main_Dishes 
@@ -503,7 +509,8 @@ MAIN PROC
     LEA DI,Dish 
                                                             
     call Movestring
-    call convert  
+    call convert
+    call conv  
     call WriteFile
     
     jmp Main_Dishes 
@@ -526,6 +533,7 @@ MAIN PROC
 
     call Movestring 
     call convert
+     call conv
     call WriteFile
    
     jmp Main_Dishes
@@ -547,7 +555,8 @@ MAIN PROC
     LEA DI,Dish 
                                                             
     call Movestring
-    call convert 
+    call convert
+     call conv 
     call WriteFile   
    
     jmp Main_Dishes 
@@ -569,7 +578,8 @@ MAIN PROC
     LEA DI,Dish                                                         
 
     call Movestring    
-    call convert 
+    call convert
+     call conv 
     call WriteFile   
    
     jmp Main_Dishes 
@@ -591,7 +601,8 @@ MAIN PROC
     LEA DI,Dish 
                                                             
     call Movestring
-    call convert 
+    call convert
+     call conv 
     call WriteFile
       
     jmp Main_Dishes
@@ -731,7 +742,8 @@ MAIN PROC
     LEA DI,Dish  
                                                            
     call Movestring
-    call convert 
+    call convert
+     call conv 
     call WriteFile
     
     jmp  Appetizers
@@ -753,7 +765,8 @@ MAIN PROC
     LEA DI,Dish 
                                                             
     call Movestring
-    call convert 
+    call convert
+     call conv 
     call WriteFile
  
     jmp  Appetizers
@@ -774,7 +787,8 @@ MAIN PROC
     LEA DI,Dish   
                                                           
     call Movestring
-    call convert   
+    call convert
+     call conv   
     call WriteFile
  
     jmp  Appetizers
@@ -794,7 +808,8 @@ MAIN PROC
     LEA DI,Dish
                                                              
     call Movestring
-    call convert 
+    call convert
+     call conv 
     call WriteFile
  
     jmp  Appetizers 
@@ -815,7 +830,8 @@ MAIN PROC
     LEA DI,Dish 
                                                             
     call Movestring
-    call convert 
+    call convert
+     call conv 
     call WriteFile
  
     jmp  Appetizers   
@@ -933,7 +949,8 @@ MAIN PROC
     LEA DI,Dish  
                                                            
     call Movestring
-    call convert 
+    call convert
+     call conv 
     call WriteFile 
  
     jmp Salads
@@ -955,7 +972,8 @@ MAIN PROC
     LEA DI,Dish  
                                                            
     call Movestring
-    call convert     
+    call convert
+    call conv     
     call WriteFile      
 
     jmp Salads 
@@ -976,7 +994,8 @@ MAIN PROC
     LEA DI,Dish   
                                                           
     call Movestring
-    call convert   
+    call convert
+     call conv   
     call WriteFile      
    
     jmp Salads
@@ -998,7 +1017,8 @@ MAIN PROC
     LEA DI,Dish     
                                                         
     call Movestring 
-    call convert   
+    call convert 
+     call conv  
     call WriteFile      
    
     jmp Salads
@@ -1020,7 +1040,8 @@ MAIN PROC
     LEA DI,Dish 
                                                             
     call Movestring
-    call convert 
+    call convert
+     call conv 
     call WriteFile      
    
     jmp Salads 
@@ -1042,7 +1063,8 @@ MAIN PROC
     LEA DI,Dish   
                                                           
     call Movestring
-    call convert 
+    call convert
+     call conv 
     call WriteFile      
    
     jmp Salads   
@@ -1152,7 +1174,8 @@ MAIN PROC
     LEA DI,Dish 
                                                             
     call Movestring
-    call convert 
+    call convert
+     call conv 
     call WriteFile
  
     jmp  Desserts 
@@ -1173,7 +1196,8 @@ MAIN PROC
     LEA DI,Dish    
                                                          
     call Movestring
-    call convert 
+    call convert
+     call conv 
     call WriteFile
    
  
@@ -1196,7 +1220,8 @@ MAIN PROC
     LEA DI,Dish  
                                                            
     call Movestring
-    call convert 
+    call convert
+     call conv 
     call WriteFile
    
  
@@ -1218,7 +1243,8 @@ MAIN PROC
     LEA DI,Dish  
                                                            
     call Movestring
-    call convert 
+    call convert
+     call conv 
     call WriteFile
    
  
@@ -1241,7 +1267,8 @@ MAIN PROC
     LEA DI,Dish  
                                                            
     call Movestring
-    call convert 
+    call convert
+     call conv 
     call WriteFile
 
  
@@ -1322,10 +1349,7 @@ MAIN PROC
 
     printn ' '
     print 'Enter your order '             
-              
-    MOV AH,9
-    INT 21H 
-
+    
     
     MOV AH,1
     INT 21H
@@ -1381,7 +1405,8 @@ MAIN PROC
     LEA DI,Dish      
                                                        
     call Movestring
-    call convert 
+    call convert
+     call conv 
     call WriteFile 
     
     jmp Drinks  
@@ -1406,7 +1431,8 @@ MAIN PROC
     LEA DI,Dish   
                                                           
     call Movestring 
-    call convert 
+    call convert
+     call conv 
     call WriteFile
     jmp Drinks 
 ;--------------------------------------------------------------------------          
@@ -1429,6 +1455,7 @@ MAIN PROC
                                                            
     call Movestring
     call convert 
+     call conv
     call WriteFile      
     
     jmp Drinks 
@@ -1450,7 +1477,8 @@ MAIN PROC
     LEA DI,Dish 
                                                             
     call Movestring  
-    call convert 
+    call convert
+     call conv 
     call WriteFile
     
     jmp Drinks
@@ -1472,7 +1500,8 @@ MAIN PROC
     LEA DI,Dish  
                                                            
     call Movestring
-    call convert 
+    call convert
+     call conv 
     call WriteFile      
     
     jmp Drinks 
@@ -1495,7 +1524,8 @@ MAIN PROC
     LEA DI,Dish  
                                                            
     call Movestring
-    call convert 
+    call convert
+     call conv 
     call WriteFile  
     
     jmp Drinks     
@@ -1518,7 +1548,8 @@ MAIN PROC
     LEA DI,Dish    
                                                          
     call Movestring
-    call convert 
+    call convert
+     call conv 
     call WriteFile     
 
     jmp Drinks       
@@ -1567,61 +1598,15 @@ MAIN PROC
    mov dx, offset quantity
    mov cx, 2
    mov ah, 40h
+   int 21h ; write to file... 
+   
+   mov bx, [handler]
+   mov dx, offset strout
+   mov cx, 6
+   mov ah, 40h
    int 21h ; write to file...
-   
-   conv1:          
-     mov ax,totali
-    ;initialize count
-    mov cx,0
-    mov dx,0
-    label2:
-        ; if ax is zero
-        cmp ax,0
-        je print1     
-         
-        ;initialize bx to 10
-        mov bx,10       
-         
-        ; extract the last digit
-        div bx                 
-         
-        ;push it in the stack
-        push dx             
-         
-        ;increment the count
-        inc cx             
-         
-        ;set dx to 0
-        xor dx,dx
-        jmp label2
-        
-        print1:
-        ;check if count
-        ;is greater than zero
-        cmp cx,0
-        je label3
-         
-        ;pop the top of stack
-        pop dx
-         
-        ;add 48 so that it
-        ;represents the ASCII
-        ;value of digits
-        add dx,48
-        mov totali,dx
-         
-        mov bx, [handler]
-        mov dx, offset totali
-        mov ah, 40h
-        int 21h ; write to file...
-         
-        ;decrease the count
-        dec cx
-        jmp print1
-        
-   label3:
-   
-   mov bx,hand
+     
+    mov bx,hand
    mov ah, 42h  ; "lseek"
    mov al, 2    ; position relative to end of file
    mov cx, 0    ; offset MSW
@@ -1639,61 +1624,8 @@ MAIN PROC
    mov ah, 40h
    int 21h ; write to file...
    
-   conv2:          
-     mov ax,totali
-    ;initialize count
-    mov cx,0
-    mov dx,0
-    label4:
-        ; if ax is zero
-        cmp ax,0
-        je print2     
-         
-        ;initialize bx to 10
-        mov bx,10       
-         
-        ; extract the last digit
-        div bx                 
-         
-        ;push it in the stack
-        push dx             
-         
-        ;increment the count
-        inc cx             
-         
-        ;set dx to 0
-        xor dx,dx
-        jmp label4
-        
-        print2:
-        ;check if count
-        ;is greater than zero
-        cmp cx,0
-        je label5
-         
-        ;pop the top of stack
-        pop dx
-         
-        ;add 48 so that it
-        ;represents the ASCII
-        ;value of digits
-        add dx,48
-        mov totali,dx
-         
-        mov bx, [hand]
-        mov dx, offset totali
-        mov ah, 40h
-        int 21h ; write to file...
-         
-        ;decrease the count
-        dec cx
-        jmp print2
-        
-  label5:
    
    
-  
-    
   RET    
                                  
   WriteFile ENDP 
@@ -1712,7 +1644,18 @@ MAIN PROC
         
         mov handler,ax
         RET
-        Create ENDP  
+        Create ENDP
+     
+        Createsave PROC NEAR 
+        mov al,00h
+        mov ah,3ch
+        LEA DX,savefile
+        mov cx,00H
+        int 21h   
+        
+        mov handler,ax
+        RET
+        Createsave ENDP  
 ;----------------------------------------------------------------------  
 
      Close PROC NEAR 
@@ -1740,10 +1683,11 @@ MAIN PROC
         Open ENDP
      
      Opensave PROC NEAR
-        mov ah,3dh
+        mov ah,3dh 
         lea dx,savefile
         mov al,2
-        int 21h
+        int 21h 
+       
         mov hand,ax 
         RET
         Opensave ENDP
@@ -1774,7 +1718,31 @@ MAIN PROC
         pop bp
         ret
         
-        convert endp 
+        convert endp
+      
+      conv proc 
+        mov ax,totali
+        mov cx,10
+        xor bx,bx
+        divv:
+        xor dx,dx
+        div cx
+        push dx
+        inc bx
+        test ax,ax
+        jnz divv
+        mov cx,bx
+        lea si,strout
+        get_digit:
+        pop ax
+        add al,'0'
+        mov [si],al
+        inc si
+        loop get_digit
+        mov al,'$'
+        mov [si],al
+        RET
+        conv ENDP
       
 ;------------------------------------------------------------------------
 
@@ -1890,14 +1858,15 @@ MAIN PROC
     LEA DX,BR5
     MOV AH,9
     INT 21H  
-    
-    call Neworder
     call Close
+    call Delete
+    call Neworder
+    
        
     ENDP  
 ;--------------------------------------------------------------------------   
     PROC Neworder
-        call Open 
+        CALL Create 
         LEA DX,BR5
         MOV AH,9
         INT 21H 
@@ -1984,7 +1953,7 @@ MAIN PROC
 ;-----------------------------------------------------------------------------   
      Quantitynumber proc 
         
-         LEA DX,Quantitynum              
+    LEA DX,Quantitynum              
     MOV AH,9
     INT 21H 
  
