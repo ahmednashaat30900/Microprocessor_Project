@@ -1,6 +1,4 @@
 include 'emu8086.inc'
-.MODEL LARGE
-.STACK 1000H
 .DATA  
 ;----------------------------------------------------------------------------------------
 M1 DB 0AH,0DH,0AH,0DH,  '                   Welcome to Shobra Restaurants$' 
@@ -20,8 +18,7 @@ buffer DW ?
 totali DW ?
 strout db 16 dup(0) 
 finalprice db 16 dup(0) 
-space DB '       $'
-hr DB ?            
+space DB '       $'           
 ;---------------------------------------------------------------------------------------------------- 
 MSH1 DB 0AH,0DH,0AH,0DH,  '                How to use our System:  $'   
 MSH2 DB 0AH,0DH,0AH,0DH,  ' * Resturant Billing System is a system that allows user to make an order    $'  
@@ -29,7 +26,7 @@ MSH3 DB 0AH,0DH,0AH,0DH,  '   by choosing a various of items from 5 main menues.
 MSH4 DB 0AH,0DH,0AH,0DH,  ' * The user can easily move between the menus and choose what he want. $' 
 MSH5 DB 0AH,0DH,0AH,0DH,  ' * After finish his order ,he must choose finish order and then:  $'
 MSH6 DB 0AH,0DH,          '   the total recipt will printout.  $'
-MSH7 DB 0AH,0DH,0AH,0DH,  ' * You can now use our system easily press 1 to start your order,best wishes :) $'    
+MSH7 DB 0AH,0DH,0AH,0DH,  ' * You can now use our system easily press any key to start your order,best wishes :) $'    
 
 ;---------------------------------------------------------------------------------------------------- 
 MSG DB 0AH,0DH,0AH,0DH,       '        Dish                        Price  $'                                                                                        
@@ -88,7 +85,6 @@ Q2 DB 0AH,0DH,0AH,0DH,  '  --         2.Exit                          --$'
 Q3 DB 0AH,0DH,          '  --                 6.Finish Order            --$' 
 ;--------------------------------------------------------------------------------------    
 M8 DB 0AH,0DH,0AH,0DH,       '  Choise your food from the menu$' 
-Choice DB 10,13,10,13,       'Enter your order: $'
 Quantitynum DB 0AH,0DH, '    Enter quantity: $'    
 Invalid DB 10,13,10,13,'     &&INVALID ENTRY&&$ '    
 New_line DB 0AH,0DH,0AH,0DH,' $'
@@ -107,15 +103,12 @@ price DB 0ah,0dh, '         Total price is:     $'
 order DB ?
 quantity DB ?  
 sum DW ?
-Ans DB ? 
-counter DB  ? 
-Dish DB ?
-Dishdess DB ? 
+Dish DB ? 
 ;------------------------------------------------------------------------------------------
-TEXT_GAME_OVER_MAIN_MENU DB 'Press E to exit to main menu','$' ;text main menu message
-TEXT_MAIN_MENU_TITLE DB 'MAIN MENU press 1','$' ;text with the main menu title
-TEXT_MAIN_MENU_HELP DB 'HELP press 2','$' ;text with the help message
-TEXT_MAIN_MENU_EXIT DB 'EXIT press 3 ','$' ;text with the exit game message
+TEXT_GAME_OVER_MAIN_MENU DB 'Press E to exit to main menu','$' 
+TEXT_MAIN_MENU_TITLE DB 'MAIN MENU press 1','$' 
+TEXT_MAIN_MENU_HELP DB 'HELP press 2','$' 
+TEXT_MAIN_MENU_EXIT DB 'EXIT press 3 ','$'
 ;------------------------------------------------------------------------------------------
 
 .CODE 
@@ -138,39 +131,39 @@ MAIN PROC
     MOV DL,04h                         ;set column
     INT 10h
 
-    MOV AH,09h                       ;WRITE STRING TO STANDARD OUTPUT
-    LEA DX,TEXT_MAIN_MENU_TITLE      ;give DX a pointer
-    INT 21h                          ;print the string
+    MOV AH,09h                       
+    LEA DX,TEXT_MAIN_MENU_TITLE      
+    INT 21h                          
 
 ;       Shows the help message
-    MOV AH,02h                       ;set cursor position
-    MOV BH,00h                       ;set page number
-    MOV DH,06h                       ;set row
-    MOV DL,04h                         ;set column
+    MOV AH,02h                      
+    MOV BH,00h                       
+    MOV DH,06h                       
+    MOV DL,04h                       
     INT 10h
 
-    MOV AH,09h                       ;WRITE STRING TO STANDARD OUTPUT
-    LEA DX,TEXT_MAIN_MENU_HELP     ;give DX a pointer
-    INT 21h                          ;print the string
+    MOV AH,09h                      
+    LEA DX,TEXT_MAIN_MENU_HELP     
+    INT 21h                         
 
 ;       Shows the exit message
-    MOV AH,02h                       ;set cursor position
-    MOV BH,00h                       ;set page number
-    MOV DH,08h                       ;set row
-    MOV DL,04h                         ;set column
+    MOV AH,02h                     
+    MOV BH,00h                     
+    MOV DH,08h                      
+    MOV DL,04h                       
     INT 10h   
-    MOV AH,09h                       ;WRITE STRING TO STANDARD OUTPUT
-    LEA DX,TEXT_MAIN_MENU_EXIT      ;give DX a pointer 
+    MOV AH,09h                      
+    LEA DX,TEXT_MAIN_MENU_EXIT     
     INT 21h 
-                        ;print the string
+                        
 
     MAIN_MENU_WAIT_FOR_KEY:
-;       Waits for a key press
+
 	MOV AH,01h
     INT 21h
     SUB AL,48
 		
-;       Check whick key was pressed
+       
 	CMP AL,1
 	JE TOP 
 	
@@ -189,14 +182,14 @@ MAIN PROC
 
     DRAW_MAIN_MENU ENDp
 ;---------------------------------------------------------------------------------------------------
-    CLEAR_SCREEN PROC NEAR               ;clear the screen by restarting the video mode
+    CLEAR_SCREEN PROC NEAR               
 
    xor cx,cx
    mov dh,25
    mov dl,80
    mov bh,10
    mov ax,700h
-   INT 10h                           ;execute the configuration
+   INT 10h                           
     RET
     CLEAR_SCREEN ENDP
 ;----------------------------------------------------------------------------------------------------   
@@ -1567,7 +1560,8 @@ MAIN PROC
    mov dx, offset space
    mov cx, 7
    mov ah, 40h
-   int 21h ; write to file...   
+   int 21h ; write to file...
+      
    
    
    mov dx, offset quantity
@@ -1780,7 +1774,7 @@ MAIN PROC
     		mov bx,handler    
     		int 21h   
     
-    		add dx,ax    
+    		add dx,ax ; ax has actual number of bytes   
     		
     		mov bx,dx
     		mov byte [bx],'$'   
@@ -1846,7 +1840,9 @@ MAIN PROC
     
     LEA DX,BR5
     MOV AH,9
-    INT 21H  
+    INT 21H
+    mov ah,08h
+    int 21h  
     jmp EXIT
     
        
@@ -1956,7 +1952,9 @@ MAIN PROC
      INT 21H 
      
      
-     jmp MAIN_MENU_WAIT_FOR_KEY 
+     mov ah,08h
+     int 21h
+     jmp TOP 
      
 ;-----------------------------------------------------------------------------   
      Quantitynumber proc 
